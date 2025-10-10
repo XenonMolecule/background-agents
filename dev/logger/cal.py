@@ -201,7 +201,8 @@ class Calendar(Observer):
                 delta_str += " ago"
 
             lines += [
-                f"\n{kind} calendar event:",
+                "",
+                f"{kind} calendar event:",
                 f"  Title      : {ev['title']}",
                 f"  When       : {ev['start']} → {ev['end']}",
                 f"  Location   : {ev['loc']}",
@@ -211,7 +212,9 @@ class Calendar(Observer):
                 lines.append("  Description:")
                 for line in ev["desc"].splitlines():
                     lines.append(f"    {line}")
-        return "\n".join(lines)
+            # event delimiter
+            lines.append("\n----------\n")
+        return "\n".join(lines).strip()
 
     # ─────────────────────────────── daily snapshot
     async def _emit_snapshot(self) -> None:
@@ -258,3 +261,101 @@ class Calendar(Observer):
         await self.update_queue.put(Update(content="\n".join(lines), content_type="input_text"))
         if self.debug:
             print("[Calendar] Snapshot emitted.")
+
+    # ─────────────────────────────── public query API
+    def query(
+        self,
+        start_delta: timedelta = timedelta(seconds=0),
+        end_delta: timedelta = timedelta(days=1),
+    ) -> List[Dict]:
+        """
+        Query cached calendar events within a time window relative to now.
+
+        Args:
+            start_delta (timedelta, optional): Offset from now for window start.
+                Defaults to 0 (i.e., now).
+            end_delta (timedelta, optional): Offset from now for window end.
+                Defaults to 1 day.
+
+        Returns:
+            List[Dict]: List of events (dicts) in the requested timeframe.
+        """
+        if not self._cache:
+            if self.debug:
+                print("[Calendar] Cache is empty; nothing to query.")
+            return []
+
+        now = datetime.now(self.local_tz)
+        start_time = now + start_delta
+        end_time = now + end_delta
+
+        results = []
+        for ev in self._cache.values():
+            ev_start = ev["start"]
+            ev_end = ev["end"] or ev_start
+            if ev_end >= start_time and ev_start <= end_time:
+                results.append(ev)
+
+        results.sort(key=lambda e: e["start"])
+        if self.debug:
+            print(f"[Calendar] Query returned {len(results)} events from {start_time} to {end_time}.")
+        return results
+
+    def query_str(
+        self,
+        start_delta: timedelta = timedelta(seconds=0),
+        end_delta: timedelta = timedelta(days=1),
+    ) -> str:
+        """
+        Return a formatted string representation of cached events
+        within a time window relative to now.
+
+        Uses the same formatting style as the batched updates emitted
+        by the observer, for human readability.
+
+        Args:
+            start_delta (timedelta, optional): Offset from now for window start.
+                Defaults to 0 (now).
+            end_delta (timedelta, optional): Offset from now for window end.
+                Defaults to 1 day.
+
+        Returns:
+            str: Readable text of calendar events in the time range.
+        """
+        events = self.query(start_delta=start_delta, end_delta=end_delta)
+        now = datetime.now(self.local_tz)
+        if not events:
+            return f"Current Time: {now.strftime('%Y-%m-%d %H:%M %Z')}\nNo events found in this range."
+
+        lines = [
+            f"Current Time: {now.strftime('%Y-%m-%d %H:%M %Z')}",
+            f"Calendar Events ({len(events)} found):",
+        ]
+
+        for ev in events:
+            delta = ev["start"] - now
+            total = int(delta.total_seconds())
+            neg = total < 0
+            total = abs(total)
+            days, rem = divmod(total, 86400)
+            hours, rem = divmod(rem, 3600)
+            minutes = rem // 60
+            delta_str = f"{days}d {hours}h {minutes}m"
+            if neg:
+                delta_str += " ago"
+
+            lines += [
+                "",
+                f"  Title      : {ev['title']}",
+                f"  When       : {ev['start']} → {ev['end']}",
+                f"  Location   : {ev['loc']}",
+                f"  Starts In  : {delta_str}",
+            ]
+            if ev["desc"]:
+                lines.append("  Description:")
+                for line in ev["desc"].splitlines():
+                    lines.append(f"    {line}")
+            # visual delimiter between events
+            lines.append("\n----------\n")
+
+        return "\n".join(lines).strip()
