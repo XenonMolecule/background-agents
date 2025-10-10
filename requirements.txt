@@ -1,0 +1,4 @@
+gum-ai
+python-dotenv
+ics
+aiohttp
