@@ -201,7 +201,6 @@ class Calendar(Observer):
                 delta_str += " ago"
 
             lines += [
-                "",
                 f"{kind} calendar event:",
                 f"  Title      : {ev['title']}",
                 f"  When       : {ev['start']} → {ev['end']}",
@@ -345,7 +344,6 @@ class Calendar(Observer):
                 delta_str += " ago"
 
             lines += [
-                "",
                 f"  Title      : {ev['title']}",
                 f"  When       : {ev['start']} → {ev['end']}",
                 f"  Location   : {ev['loc']}",
