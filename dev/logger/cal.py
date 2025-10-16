@@ -34,18 +34,33 @@ class Calendar(Observer):
         ics_url: Optional[str] = None,
         polling_interval: int = 60,          # poll every 60 s
         snapshot_interval: int = 24 * 3600,  # daily summary
-        timezone: str = "America/Los_Angeles",
+        timezone: Optional[str] = None,      # auto-detect if not provided
         debug: bool = False,
     ) -> None:
         self.ics_url = ics_url or os.getenv("CALENDAR_ICS")
         if not self.ics_url:
             raise ValueError(
-                "No ICS URL provided. Pass via constructor or CALENDAR_ICS environment variable."
+                "No ICS URL provided. Pass via constructor or CALENDAR_ICS environment variable.\n"
+                "See https://learn.microsoft.com/en-us/answers/questions/4617072/how-to-export-outlook-calendar-to-ics-link for more information."
             )
 
         self.polling_interval = polling_interval
         self.snapshot_interval = snapshot_interval
-        self.local_tz = ZoneInfo(timezone)
+
+        # auto-detect system timezone if not specified
+        if timezone is None:
+            try:
+                detected_tz = datetime.now().astimezone().tzinfo
+                self.local_tz = ZoneInfo(str(detected_tz))
+                if debug:
+                    print(f"[Calendar] Auto-detected local timezone: {self.local_tz}")
+            except Exception:
+                self.local_tz = ZoneInfo("America/Los_Angeles")
+                if debug:
+                    print("[Calendar] Failed to detect local timezone, defaulting to America/Los_Angeles")
+        else:
+            self.local_tz = ZoneInfo(timezone)
+
         self.debug = debug
 
         # persistent cache on disk
