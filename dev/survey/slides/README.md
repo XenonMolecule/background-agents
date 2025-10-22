@@ -25,6 +25,7 @@ http://localhost:8000/dev/survey/slides/
 
 - The app loads `../context_log.csv` and `../survey_responses.csv` relative to `slides/`, which resolves to `/dev/survey/context_log.csv` and `/dev/survey/survey_responses.csv` when served from the repo root.
 - Screenshot URLs are resolved under `/dev/survey/screenshots/...`, which also assumes repo root hosting.
+ - Optional: if present, `dev/survey/context_project_predictions.csv` will be loaded and joined by `timestamp` to display a Predicted Project on context slides.
 
 ### Useful URL parameters
 

@@ -1,6 +1,10 @@
 (function () {
   const CONTEXT_PATH = '../context_log.csv';
   const SURVEY_PATH = '../survey_responses.csv';
+  const PROJ_PRED_PATH = (new URL(window.location.href)).searchParams.get('pred')
+    || '../analysis/project_classification/results/context_project_predictions_latest.csv';
+  const SCRATCHPAD_PATH = (new URL(window.location.href)).searchParams.get('spad')
+    || '../analysis/project_scratchpad/results/project_scratchpad_latest.csv';
   const REPO_ROOT_PREFIX = '/Users/michaelryan/Documents/School/Stanford/Research/background-agents';
 
   const shotEl = document.getElementById('shot');
@@ -220,6 +224,36 @@
       panelEl.appendChild(sec);
     }
 
+    // Predicted Project (if available)
+    if (s.predicted_project) {
+      const { sec } = makeSection('Predicted Project');
+      const card = document.createElement('div');
+      card.className = 'card';
+      const title = document.createElement('div');
+      title.className = 'title';
+      title.textContent = s.predicted_project;
+      card.appendChild(title);
+      sec.appendChild(card);
+      panelEl.appendChild(sec);
+    }
+
+    // Scratchpad (collapsible, with project label if available)
+    if (s.scratchpad_text) {
+      const pre = document.createElement('pre');
+      pre.className = 'monospace';
+      pre.textContent = s.scratchpad_text;
+      const label = s.scratchpad_project ? `Scratchpad (${s.scratchpad_project})` : 'Scratchpad';
+      panelEl.appendChild(makeCollapsible(label, pre));
+    }
+
+    // Scratchpad Edit Summary (collapsible)
+    if (s.scratchpad_summary) {
+      const pre = document.createElement('pre');
+      pre.className = 'monospace';
+      pre.textContent = s.scratchpad_summary;
+      panelEl.appendChild(makeCollapsible('Scratchpad Edit Summary', pre));
+    }
+
     // Propositions / User details (collapsible)
     if (Array.isArray(s.user_details) && s.user_details.length) {
       const list = document.createElement('div');
@@ -272,17 +306,26 @@
     badgeEl.textContent = 'Survey';
     timestampEl.textContent = fmtDate(s._ts_display);
     // Surveys generally have no screenshot; keep frame visible
-    shotEl.removeAttribute('src');
+    // Reuse previous screenshot if available
+    if (!shotEl.getAttribute('src')) {
+      const prevIdx = (idx - 1 + slides.length) % slides.length;
+      const prev = slides[prevIdx];
+      if (prev && prev.screenshot_path) {
+        let url = toRelativePath(prev.screenshot_path);
+        if (url) {
+          url = url.startsWith('/') ? url : `/${url}`;
+          if (CACHE_BUSTER) url += (url.includes('?') ? '&' : '?') + CACHE_BUSTER;
+          shotEl.src = url;
+        }
+      }
+    }
     shotEl.parentElement.parentElement.classList.remove('hidden');
     panelEl.innerHTML = '';
     // Tint background
     const slideRoot = document.getElementById('slide');
     slideRoot.classList.add('survey');
 
-    // What I was actually doing (Q/A boxes)
-    const { sec: actualSec } = makeSection('What I was actually doing');
-    const qaWrap = document.createElement('div');
-    qaWrap.className = 'qa-grid';
+    // Helper for a titled section with QA boxes
     const qa = (q, a) => {
       const box = document.createElement('div');
       box.className = 'qa';
@@ -296,37 +339,32 @@
       box.appendChild(aEl);
       return box;
     };
-    qaWrap.appendChild(qa('Project now', s.project_now));
-    qaWrap.appendChild(qa('Task now', s.task_now));
-    qaWrap.appendChild(qa('Helpful task context now', s.helpful_task_context_now));
-    qaWrap.appendChild(qa('Helpful project context now', s.helpful_project_context_now));
-    qaWrap.appendChild(qa('Helpful task background work (past)', s.helpful_task_background_work_past));
-    qaWrap.appendChild(qa('Helpful project background work (past)', s.helpful_project_background_work_past));
-    actualSec.appendChild(qaWrap);
-    panelEl.appendChild(actualSec);
+    const addQASection = (title, items) => {
+      const { sec } = makeSection(title);
+      const wrap = document.createElement('div');
+      wrap.className = 'qa-grid';
+      items.forEach(([label, val]) => wrap.appendChild(qa(label, val)));
+      sec.appendChild(wrap);
+      panelEl.appendChild(sec);
+    };
 
-    // Helpful fields grouped
-    const { sec: helpSec } = makeSection('What help would have been useful');
-    const helpKv = document.createElement('div');
-    helpKv.className = 'kv';
-    const pairs = [
-      ['Helpful task context now', s.helpful_task_context_now],
-      ['Helpful project context now', s.helpful_project_context_now],
-      ['Helpful task background work (past)', s.helpful_task_background_work_past],
-      ['Helpful project background work (past)', s.helpful_project_background_work_past],
-    ];
-    pairs.forEach(([k, v]) => {
-      const kEl = document.createElement('div');
-      kEl.className = 'k';
-      kEl.textContent = k;
-      const vEl = document.createElement('div');
-      vEl.className = 'v';
-      vEl.textContent = v || '—';
-      helpKv.appendChild(kEl);
-      helpKv.appendChild(vEl);
-    });
-    helpSec.appendChild(helpKv);
-    panelEl.appendChild(helpSec);
+    // 1) What are you working on (project — task)
+    addQASection('What I was actually doing', [
+      ['What project are you working on right now?', s.project_now],
+      ['What task are you working on right now?', s.task_now],
+    ]);
+
+    // 2) Background context (project and task)
+    addQASection('Background context that could be helpful', [
+      ['What background context could be helpful with this project?', s.helpful_project_context_now],
+      ['What background context could be helpful with this task?', s.helpful_task_context_now],
+    ]);
+
+    // 3) Background work (project and task)
+    addQASection('Background work that would have been helpful', [
+      ['What background work would have been helpful with this project?', s.helpful_project_background_work_past],
+      ['What background work would have been helpful for this task?', s.helpful_task_background_work_past],
+    ]);
   }
 
   function renderCurrent() {
@@ -523,12 +561,39 @@
 
   async function init() {
     try {
-      const [ctxRows, surveyRows] = await Promise.all([
+      const [ctxRows, surveyRows, predsRows, scratchRows] = await Promise.all([
         parseCsv(CONTEXT_PATH),
-        parseCsv(SURVEY_PATH)
+        parseCsv(SURVEY_PATH),
+        parseCsv(PROJ_PRED_PATH).catch(() => []),
+        parseCsv(SCRATCHPAD_PATH).catch(() => [])
       ]);
       const ctxSlides = ctxRows.map(normalizeContextRow);
       const surveySlides = surveyRows.map(normalizeSurveyRow);
+      const predsMap = new Map();
+      (predsRows || []).forEach(r => {
+        if (r && r.timestamp) predsMap.set(String(r.timestamp), r.predicted_project);
+      });
+      const scratchMap = new Map();
+      (scratchRows || []).forEach(r => {
+        if (r && r.timestamp) {
+          scratchMap.set(String(r.timestamp), {
+            project: r.project,
+            scratchpad: r.scratchpad,
+            summary: r.summary
+          });
+        }
+      });
+      // attach predictions onto context slides for display later if desired
+      ctxSlides.forEach(s => {
+        const key = s._ts_display || '';
+        if (predsMap.has(key)) s.predicted_project = predsMap.get(key);
+        if (scratchMap.has(key)) {
+          const sp = scratchMap.get(key);
+          s.scratchpad_text = sp.scratchpad || '';
+          s.scratchpad_summary = sp.summary || '';
+          s.scratchpad_project = sp.project || '';
+        }
+      });
       slides = [...ctxSlides, ...surveySlides].sort((a, b) => (a._ts_epoch || 0) - (b._ts_epoch || 0));
       // Jump params: i (index), ts (timestamp substring match)
       const url = new URL(window.location.href);
