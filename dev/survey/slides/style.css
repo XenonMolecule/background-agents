@@ -1,0 +1,151 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+body {
+  background: #0e0f12;
+  color: #111;
+  font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+}
+.viewport {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+.slide-wrap {
+  position: relative;
+  width: 100vw;
+  height: calc(100vh - 80px);
+  overflow: hidden;
+}
+.slide {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1920px;
+  height: 1080px;
+  background: #ffffff;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.35);
+  border-radius: 12px;
+  overflow: hidden;
+  transform-origin: center center;
+}
+.slide.survey { background: #fffdf5; }
+.timestamp {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  background: rgba(0,0,0,0.75);
+  color: #fff;
+  font-size: 18px;
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+.badge {
+  position: absolute;
+  top: 20px;
+  left: 24px;
+  background: #111827;
+  color: #fff;
+  font-size: 14px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-weight: 700;
+}
+.columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 100%;
+}
+.left {
+  background: #0b0c10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.image-frame {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.image-frame img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+.slide.survey .left { background: #111218; }
+.right {
+  padding: 36px 44px;
+  overflow: hidden auto;
+}
+.section { margin-bottom: 22px; }
+.section-title {
+  font-weight: 700;
+  font-size: 26px;
+  color: #0f172a;
+  margin-bottom: 10px;
+}
+.kv {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 8px 14px;
+}
+.kv .k {
+  color: #374151;
+  font-weight: 600;
+}
+.kv .v {
+  color: #111827;
+}
+.pill-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.pill {
+  padding: 4px 10px;
+  font-size: 12px;
+  background: #eef2ff;
+  color: #3730a3;
+  border-radius: 999px;
+  border: 1px solid #c7d2fe;
+}
+.cards { display: flex; flex-direction: column; gap: 12px; }
+.card {
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 12px 14px;
+  background: #fafafa;
+}
+.card .title { font-weight: 600; color: #111827; margin-bottom: 6px; }
+.card .subtle { color: #6b7280; font-size: 12px; }
+.monospace { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace; }
+.muted { color: #6b7280; }
+.goal { border: 1px solid #e5e7eb; border-radius: 10px; padding: 12px; background: #fafafa; }
+.goal .goal-title { font-weight: 600; margin-bottom: 6px; color: #111827; }
+.metric-row { display: flex; align-items: center; gap: 10px; margin: 6px 0; }
+.metric-label { width: 120px; font-size: 13px; color: #374151; }
+.scale { display: flex; gap: 6px; }
+.dot {
+  width: 22px; height: 22px; border-radius: 50%; border: 2px solid #cbd5e1; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; color: #334155; background: #fff;
+}
+.dot.active { border-color: #16a34a; background: #16a34a; color: #fff; }
+.controls { display: flex; align-items: center; gap: 16px; }
+.controls button { background: #111827; color: #fff; border: none; border-radius: 8px; padding: 10px 16px; font-weight: 600; cursor: pointer; }
+.controls .counter { color: #e5e7eb; font-weight: 600; }
+.hidden { display: none !important; }
+
+/* Collapsible */
+.collapsible { border: 1px solid #e5e7eb; border-radius: 10px; overflow: hidden; background: #fff; }
+.collapsible .colla-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 12px; background: #f8fafc; cursor: pointer; }
+.collapsible .colla-head .h { font-weight: 700; color: #0f172a; }
+.collapsible .colla-body { max-height: 320px; overflow: auto; padding: 12px; }
+.collapsible .toggle { font-size: 12px; color: #2563eb; }
+
+/* Survey Q/A cards */
+.qa-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.qa { border: 1px solid #e5e7eb; border-radius: 10px; padding: 12px 14px; background: #ffffff; }
+.qa .q { font-weight: 600; color: #0f172a; margin-bottom: 6px; }
+.qa .a { color: #111827; white-space: pre-wrap; }
+

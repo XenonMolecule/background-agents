@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Survey + Context Slides</title>
+  <link rel="stylesheet" href="./style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="viewport">
+    <div id="slideWrap" class="slide-wrap">
+      <div id="slide" class="slide">
+        <div id="timestamp" class="timestamp"></div>
+        <div id="badge" class="badge"></div>
+        <div class="columns">
+          <div class="left">
+            <div class="image-frame">
+              <img id="shot" alt="screenshot" />
+            </div>
+          </div>
+          <div class="right">
+            <div id="panel"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <button id="prev">Prev</button>
+      <div id="counter" class="counter">0 / 0</div>
+      <button id="next">Next</button>
+      <div style="width:24px;"></div>
+      <button id="refresh" title="Force reload with cache-bust">Refresh</button>
+      <div style="width:8px;"></div>
+      <button id="exportPng">Export PNG (current)</button>
+      <button id="exportAllPng">Export PNG (all)</button>
+      <button id="exportPptx">Export PPTX (all)</button>
+    </div>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>
+

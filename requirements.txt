@@ -3,3 +3,4 @@ python-dotenv
 ics
 aiohttp
 dspy
+pynput
