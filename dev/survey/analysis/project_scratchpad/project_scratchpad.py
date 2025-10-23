@@ -3,6 +3,7 @@ import argparse
 import csv
 import json
 import difflib
+import re
 import os
 import shutil
 from typing import Literal, Optional, List
@@ -23,13 +24,11 @@ TRUE_PROJECTS = [
 ]
 
 SECTIONS = [
-    "Possible Ongoing Objectives",
-    "Likely Ongoing Objectives",
+    "Ongoing Objectives",
     "Completed Objectives",
-    "Anticipated Future Objectives",
-    "Possible Next Steps",
     "Suggestions",
-    "Notes",
+    "General Notes",
+    "Next Steps",
 ]
 
 class ProjectScratchpad():
@@ -40,43 +39,37 @@ class ProjectScratchpad():
     def __repr__(self):
         return f"""# {self.project_name}
 
-## Possible Ongoing Objectives
-{'\n'.join([f"[{idx}] {objective}" for idx, objective in enumerate(self.sections["Possible Ongoing Objectives"])]) or "None"}
-
-## Likely Ongoing Objectives
-{'\n'.join([f"[{idx}] {objective}" for idx, objective in enumerate(self.sections["Likely Ongoing Objectives"])]) or "None"}
+## Ongoing Objectives
+{'\n'.join([f"[{idx}] {objective[0]} (confidence: {objective[1]})" for idx, objective in enumerate(self.sections["Ongoing Objectives"])]) or "None"}
 
 ## Completed Objectives
-{'\n'.join([f"[{idx}] {objective}" for idx, objective in enumerate(self.sections["Completed Objectives"])]) or "None"}
-
-## Anticipated Future Objectives
-{'\n'.join([f"[{idx}] {objective}" for idx, objective in enumerate(self.sections["Anticipated Future Objectives"])]) or "None"}
-
-## Possible Next Steps
-{'\n'.join([f"[{idx}] {step}" for idx, step in enumerate(self.sections["Possible Next Steps"])]) or "None"}
+{'\n'.join([f"[{idx}] {objective[0]} (confidence: {objective[1]})" for idx, objective in enumerate(self.sections["Completed Objectives"])]) or "None"}
 
 ## Suggestions
-{'\n'.join([f"[{idx}] {suggestion}" for idx, suggestion in enumerate(self.sections["Suggestions"])]) or "None"}
+{'\n'.join([f"[{idx}] {suggestion[0]} (confidence: {suggestion[1]})" for idx, suggestion in enumerate(self.sections["Suggestions"])]) or "None"}
 
-## Notes
-{'\n'.join([f"[{idx}] {note}" for idx, note in enumerate(self.sections["Notes"])]) or "None"}"""
+## General Notes
+{'\n'.join([f"[{idx}] {note[0]} (confidence: {note[1]})" for idx, note in enumerate(self.sections["General Notes"])]) or "None"}
+
+## Next Steps
+{'\n'.join([f"[{idx}] {step[0]} (confidence: {step[1]})" for idx, step in enumerate(self.sections["Next Steps"])]) or "None"}"""
 
     def __str__(self):
         return self.__repr__()
 
-    def append_to_scratchpad(self, section: str, note: str):
-        self.sections[section].append(note)
-        return f"Added new note/observation to the project scratchpad: {note}"
+    def append_to_scratchpad(self, section: str, proposition_text: str, confidence: int = 0):
+        self.sections[section].append((proposition_text, confidence))
+        return f"Added new proposition to the project scratchpad: {proposition_text}\n\n== UPDATED SCRATCHPAD ==\n{self.__repr__()}"
 
     def remove_from_scratchpad(self, section: str, index: int):
-        old_note = self.sections[section][index]
+        old_note, _ = self.sections[section][index]
         self.sections[section].pop(index)
-        return f"Removed note from the project scratchpad: {old_note}"
+        return f"Removed proposition from the project scratchpad: {old_note}\n\n== UPDATED SCRATCHPAD ==\n{self.__repr__()}"
 
-    def edit_in_scratchpad(self, section: str, index: int, new_note: str):
-        old_note = self.sections[section][index]
-        self.sections[section][index] = new_note
-        return f"Edited note in the project scratchpad: {old_note} -> {new_note}"
+    def edit_in_scratchpad(self, section: str, index: int, new_proposition_text: str, new_confidence: int = 0):
+        old_proposition_text, _ = self.sections[section][index]
+        self.sections[section][index] = (new_proposition_text, new_confidence)
+        return f"Edited proposition in the project scratchpad: {old_proposition_text} -> {new_proposition_text}\n\n== UPDATED SCRATCHPAD ==\n{self.__repr__()}"
 
     def get_scratchpad(self):
         return self.__repr__()
@@ -90,48 +83,63 @@ def _tool_log_reset():
     global TOOL_CALL_LOG
     TOOL_CALL_LOG = []
 
-def append_to_scratchpad_logged(project_name: str, section: str, note: str):
-    try:
-        TOOL_CALL_LOG.append({"tool": "append_to_scratchpad", "project": project_name, "section": section, "note": note})
-    except Exception:
-        pass
-    return scratchpads[project_name].append_to_scratchpad(section, note)
+def append_to_scratchpad(project_name: str, section: str, proposal_text: str, confidence: Literal[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10] = 0):
+    """Add a brand new note/observation to the project scratchpad.  The project name should be the exact match for the project name.  The section should be one of `Ongoing Objectives`, `Completed Objectives`, `Suggestions`, `Notes`, or `Next Steps`.
+    
+    The confidence should be a number between 0 and 10, where 0 is the lowest confidence and 10 is the highest confidence in the proposition."""
+    # print(f"Appending to scratchpad: {project_name}, {section}, {note}")
 
-def remove_from_scratchpad_logged(project_name: str, section: str, index: int):
-    try:
-        TOOL_CALL_LOG.append({"tool": "remove_from_scratchpad", "project": project_name, "section": section, "index": index})
-    except Exception:
-        pass
-    return scratchpads[project_name].remove_from_scratchpad(section, index)
+    def _clean_proposition_text(text: str) -> str:
+        t = str(text or "").strip()
+        # Remove any trailing "(confidence: N)" segments, possibly repeated
+        while True:
+            new_t = re.sub(r"\s*\(confidence\s*:\s*\d+\)\s*$", "", t, flags=re.IGNORECASE)
+            if new_t == t:
+                break
+            t = new_t.strip()
+        # Remove leading enumerations like "1. ", "2) ", "- "
+        t = re.sub(r"^\s*(?:\d+[\.)]\s+|[-•]\s+)", "", t)
+        return t.strip()
 
-def edit_in_scratchpad_logged(project_name: str, section: str, index: int, new_note: str):
-    try:
-        TOOL_CALL_LOG.append({"tool": "edit_in_scratchpad", "project": project_name, "section": section, "index": index, "new_note": new_note})
-    except Exception:
-        pass
-    return scratchpads[project_name].edit_in_scratchpad(section, index, new_note)
+    proposal_text = _clean_proposition_text(proposal_text)
 
-def get_refreshed_scratchpad_logged(project_name: str):
-    try:
-        TOOL_CALL_LOG.append({"tool": "get_refreshed_scratchpad", "project": project_name})
-    except Exception:
-        pass
-    return scratchpads[project_name].get_scratchpad()
-
-def append_to_scratchpad(project_name: str, section: str, note: str):
-    """Add a brand new note/observation to the project scratchpad.  The project name should be the exact match for the project name.  The section should be one of `Possible Ongoing Objectives`, `Definite Ongoing Objectives`, `Completed Objectives`, `Anticipated Future Objectives`, `Possible Next Steps`, `Suggestions`, or `Notes`."""
-    print(f"Appending to scratchpad: {project_name}, {section}, {note}")
-    return scratchpads[project_name].append_to_scratchpad(section, note)
+    # If the model provided a numbered list, split into multiple propositions (robust regex)
+    # We split on occurrences of lines like "1. text"; keep non-empty cleaned items
+    items = re.split(r"(?:^|\n)\s*\d+[\.)]\s+", proposal_text)
+    items = [s for s in [
+        _clean_proposition_text(x) for x in items
+    ] if s]
+    if len(items) > 1:
+        for it in items:
+            scratchpads[project_name].append_to_scratchpad(section, it, confidence)
+        return f"Added {len(items)} propositions to the project scratchpad"
+    else:
+        cleaned = items[0] if items else proposal_text
+        return scratchpads[project_name].append_to_scratchpad(section, cleaned, confidence)
 
 def remove_from_scratchpad(project_name: str, section: str, index: int):
-    """Remove a note/observation from the project scratchpad.  The project name should be the exact match for the project name.  The section should be one of `Possible Ongoing Objectives`, `Likely Ongoing Objectives`, `Completed Objectives`, `Anticipated Future Objectives`, `Possible Next Steps`, `Suggestions`, or `Notes`."""
-    print(f"Removing from scratchpad: {project_name}, {section}, {index}")
+    """Remove a note/observation from the project scratchpad.  The project name should be the exact match for the project name.  The section should be one of `Ongoing Objectives`, `Completed Objectives`, `Suggestions`, `Notes`, or `Next Steps`."""
+    # print(f"Removing from scratchpad: {project_name}, {section}, {index}")
     return scratchpads[project_name].remove_from_scratchpad(section, index)
 
-def edit_in_scratchpad(project_name: str, section: str, index: int, new_note: str):
-    """Edit a note/observation in the project scratchpad.  The project name should be the exact match for the project name.  The section should be one of `Possible Ongoing Objectives`, `Likely Ongoing Objectives`, `Completed Objectives`, `Anticipated Future Objectives`, `Possible Next Steps`, `Suggestions`, or `Notes`."""
-    print(f"Editing in scratchpad: {project_name}, {section}, {index}, {new_note}")
-    return scratchpads[project_name].edit_in_scratchpad(section, index, new_note)
+def edit_in_scratchpad(project_name: str, section: str, index: int, new_proposition_text: str, new_confidence: Literal[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10] = 0):
+    """Edit a note/observation in the project scratchpad.  The project name should be the exact match for the project name.  The section should be one of `Ongoing Objectives`, `Completed Objectives`, `Suggestions`, `Notes`, or `Next Steps`.
+    
+    The confidence should be a number between 0 and 10, where 0 is the lowest confidence and 10 is the highest confidence in the proposition."""
+    # print(f"Editing in scratchpad: {project_name}, {section}, {index}, {new_note}")
+
+    def _clean_proposition_text(text: str) -> str:
+        t = str(text or "").strip()
+        while True:
+            new_t = re.sub(r"\s*\(confidence\s*:\s*\d+\)\s*$", "", t, flags=re.IGNORECASE)
+            if new_t == t:
+                break
+            t = new_t.strip()
+        t = re.sub(r"^\s*(?:\d+[\.)]\s+|[-•]\s+)", "", t)
+        return t.strip()
+
+    cleaned = _clean_proposition_text(new_proposition_text)
+    return scratchpads[project_name].edit_in_scratchpad(section, index, cleaned, new_confidence)
     
 def get_refreshed_scratchpad(project_name: str):
     """Get the refreshed project scratchpad.  The project name should be the exact match for the project name."""
@@ -141,24 +149,31 @@ class EditProjectScratchpadSignature(dspy.Signature):
     """Based on the new information, edit the project scratchpad.  The scratchpad should be an ongoing log of the user's work on the project.
 
     Guidance for how to update sections:
-    - If you are uncertain about an objective, add it to `Possible Ongoing Objectives`.
-    - If you are somewhat confident about an objective being actively pursued, add it to `Likely Ongoing Objectives`.
+    - If you believe an objective is currently being worked on, add it to `Ongoing Objectives`.
     - If you have some evidence that an objective is finished, move it to `Completed Objectives`.
-    - Derive 1–3 actionable `Possible Next Steps` from the current/former objectives whenever feasible (avoid trivial steps).
     - Add `Suggestions` when there are helpful ideas, tools, or process improvements to recommend.
-    - Use `Notes` for context, scope clarifications, constraints, or assumptions that aid understanding.
+    - Use `General Notes` for context, scope clarifications, constraints, or assumptions that aid understanding.
+    - Derive 1–3 actionable `Next Steps` from the current/former objectives whenever feasible (avoid trivial steps).
 
     Aim for diversity across sections when adding content (do not only update one section). Avoid duplicates and keep entries concise and useful. If there is no clear new information, it is reasonable to leave the scratchpad and maybe just make a note for the notes section.
 
-    It is important to add notes and suggestions and next steps!  ALSO it is a good idea to remove objectives that are no longer ongoing and move them to a completed objective.
+    It is important to add notes and suggestions and next steps!  ALSO it is a good idea to remove objectives that are no longer ongoing and move them to a completed objective.  If a "next step" grows out of date or is completed, you should remove it or move it to a completed objective.
+
+    Please try to add a confidence score to each objective, suggestion, note, and next step.  The confidence score should be a number between 0 and 10, where 0 is the lowest confidence and 10 is the highest confidence.  The confidence score should be based on the evidence you have for the proposition.
+
+    You may consider improving the confidence score of a previously added proposition if you get more evidence for it!
+    A good strategy is to start with a lower confidence score (2-3) and then increase it as you get more evidence (5-7) until you are very confident (9-10).
+
+    PLEASE ONLY ADD ONE PROPOSITION AT A TIME!!!  If you have multiple propositions to add/edit/remove, you should call the tools multiple times, once per proposition instead of trying to do a numbered list.
     """
 
     current_project_name: Literal[tuple(TRUE_PROJECTS)] = dspy.InputField(description="The name of the project that the user is most likely currently working on (may be inaccurate)")
     current_project_scratchpad: str = dspy.InputField(description="The current project scratchpad")
     speculated_current_objectives: list[str] = dspy.InputField(description="A list of objectives that we think the user might be working on (may be inaccurate)")
     speculated_former_objectives: list[str] = dspy.InputField(description="A list of objectives that we think the user might have been working on (may be inaccurate)")
-    calendar_events: list[str] = dspy.InputField(description="A list of upcoming calendar events that the user has scheduled (may or may not be relevant to the project)")
-    user_context: str = dspy.InputField(description="A short description of the user's current context")
+    calendar_events: list[str] = dspy.InputField(description="A list of upcoming calendar events that the user has scheduled (may or may not be relevant to this project, you should consider that they may be more about other projects)")
+    full_project_list: list[str] = dspy.InputField(description="A list of all the projects that the user has provided that they are working on at any point in time")
+    user_context: str = dspy.InputField(description="A short description of the user's current context, including what they are doing, what they are focused on, what they are thinking about, what they are working on, etc.")
     current_screenshot: dspy.Image = dspy.InputField(description="The screenshot of the user's current workspace")
     summary_of_edits: str = dspy.OutputField(description="A summary of the edits you made to the project scratchpad")
 
@@ -166,17 +181,18 @@ class EditProjectScratchpad(dspy.Module):
     def __init__(self):
         self.edit_project_scratchpad = dspy.ReAct(
             EditProjectScratchpadSignature,
-            tools=[append_to_scratchpad_logged, remove_from_scratchpad_logged, edit_in_scratchpad_logged, get_refreshed_scratchpad_logged],
+            tools=[append_to_scratchpad, remove_from_scratchpad, edit_in_scratchpad, get_refreshed_scratchpad],
             max_iters=20,
         )
     
-    def forward(self, current_project_name: str, current_project_scratchpad: str, speculated_current_objectives: list[str], speculated_former_objectives: list[str], calendar_events: list[str], user_context: str, current_screenshot: dspy.Image):
+    def forward(self, current_project_name: str, current_project_scratchpad: str, speculated_current_objectives: list[str], speculated_former_objectives: list[str], calendar_events: list[str], full_project_list: list[str], user_context: str, current_screenshot: dspy.Image):
         res = self.edit_project_scratchpad(
             current_project_name=current_project_name,
             current_project_scratchpad=current_project_scratchpad,
             speculated_current_objectives=speculated_current_objectives,
             speculated_former_objectives=speculated_former_objectives,
             calendar_events=calendar_events,
+            full_project_list=full_project_list,
             user_context=user_context,
             current_screenshot=current_screenshot,
         )
@@ -383,6 +399,7 @@ def run_sequential(
                 speculated_current_objectives=speculated_current_objectives,
                 speculated_former_objectives=speculated_former_objectives,
                 calendar_events=cal_list,
+                full_project_list=TRUE_PROJECTS,
                 user_context=row.get("context", ""),
                 current_screenshot=screenshot_img,
             )
