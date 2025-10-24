@@ -7,6 +7,8 @@
     || '../analysis/transition_classifier/results/transitions_latest.csv';
   const SCRATCHPAD_PATH = (new URL(window.location.href)).searchParams.get('spad')
     || '../analysis/project_scratchpad/results/project_scratchpad_latest.csv';
+  const FEAS_PATH = (new URL(window.location.href)).searchParams.get('feas')
+    || '../analysis/action_selection/results/feasibility_latest.csv';
   const REPO_ROOT_PREFIX = '/Users/michaelryan/Documents/School/Stanford/Research/background-agents';
 
   const shotEl = document.getElementById('shot');
@@ -251,6 +253,38 @@
       card.appendChild(title);
       sec.appendChild(card);
       panelEl.appendChild(sec);
+    }
+
+    // Feasibility list (for transition points only) in a collapsible
+    if (trFlag && Array.isArray(s._feas) && s._feas.length) {
+      const list = document.createElement('div');
+      list.className = 'cards';
+      s._feas.forEach((item, iRaw) => {
+        const actionText = (item.action || '').toString().trim();
+        if (!actionText || actionText.toLowerCase() === 'none') return;
+        const i = list.childElementCount + 1;
+        const card = document.createElement('div');
+        card.className = 'card';
+        const title = document.createElement('div');
+        title.className = 'title';
+        title.textContent = `${i}. ${actionText}`;
+        const meta = document.createElement('div');
+        meta.className = 'muted';
+        const feas = Number(item.feasibility || 0) || 0;
+        const conf = Number(item.confidence || 0) || 0;
+        meta.textContent = `Feasibility: ${feas}  •  Confidence: ${conf}`;
+        const miss = (item.missing_context ? ('Missing: ' + item.missing_context) : '').toString().trim();
+        card.appendChild(title);
+        card.appendChild(meta);
+        if (miss) {
+          const missEl = document.createElement('div');
+          missEl.className = 'monospace';
+          missEl.textContent = miss;
+          card.appendChild(missEl);
+        }
+        list.appendChild(card);
+      });
+      panelEl.appendChild(makeCollapsible('Feasible Next Actions', list));
     }
 
     // Scratchpad (collapsible, with project label if available)
@@ -577,12 +611,13 @@
 
   async function init() {
     try {
-      const [ctxRows, surveyRows, predsRows, scratchRows, transRows] = await Promise.all([
+      const [ctxRows, surveyRows, predsRows, scratchRows, transRows, feasRows] = await Promise.all([
         parseCsv(CONTEXT_PATH),
         parseCsv(SURVEY_PATH),
         parseCsv(PROJ_PRED_PATH).catch(() => []),
         parseCsv(SCRATCHPAD_PATH).catch(() => []),
-        parseCsv(TRANSITIONS_PATH).catch(() => [])
+        parseCsv(TRANSITIONS_PATH).catch(() => []),
+        parseCsv(FEAS_PATH).catch(() => [])
       ]);
       const ctxSlides = ctxRows.map(normalizeContextRow);
       const surveySlides = surveyRows.map(normalizeSurveyRow);
@@ -602,6 +637,14 @@
         };
         transMap.set(norm.timestamp, norm);
       });
+      const feasMap = new Map();
+      (feasRows || []).forEach(r => {
+        if (!r || !r.timestamp) return;
+        let items = [];
+        const raw = r.feasibility_list || '';
+        try { items = JSON.parse(raw || '[]'); } catch { items = []; }
+        feasMap.set(String(r.timestamp), Array.isArray(items) ? items : []);
+      });
       const scratchMap = new Map();
       (scratchRows || []).forEach(r => {
         if (r && r.timestamp) {
@@ -617,6 +660,7 @@
         const key = s._ts_display || '';
         if (predsMap.has(key)) s.predicted_project = predsMap.get(key);
         if (transMap.has(key)) s._transition = transMap.get(key);
+        if (feasMap.has(key)) s._feas = feasMap.get(key);
         if (scratchMap.has(key)) {
           const sp = scratchMap.get(key);
           s.scratchpad_text = sp.scratchpad || '';
