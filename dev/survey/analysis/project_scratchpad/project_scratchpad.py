@@ -7,6 +7,7 @@ import re
 import os
 import shutil
 from typing import Literal, Optional, List
+import pydantic
 
 from dotenv import load_dotenv
 from PIL import Image as PILImage
@@ -27,7 +28,8 @@ SECTIONS = [
     "Ongoing Objectives",
     "Completed Objectives",
     "Suggestions",
-    "General Notes",
+    "Notes",
+    "Files, Repos, Folders, Collaborators, and Other Relevant Resources",
     "Next Steps",
 ]
 
@@ -48,8 +50,11 @@ class ProjectScratchpad():
 ## Suggestions
 {'\n'.join([f"[{idx}] {suggestion[0]} (confidence: {suggestion[1]})" for idx, suggestion in enumerate(self.sections["Suggestions"])]) or "None"}
 
-## General Notes
-{'\n'.join([f"[{idx}] {note[0]} (confidence: {note[1]})" for idx, note in enumerate(self.sections["General Notes"])]) or "None"}
+## Notes
+{'\n'.join([f"[{idx}] {note[0]} (confidence: {note[1]})" for idx, note in enumerate(self.sections["Notes"])]) or "None"}
+
+## Files, Repos, Folders, Collaborators, and Other Relevant Resources
+{'\n'.join([f"[{idx}] {resource[0]} (confidence: {resource[1]})" for idx, resource in enumerate(self.sections["Files, Repos, Folders, Collaborators, and Other Relevant Resources"])]) or "None"}
 
 ## Next Steps
 {'\n'.join([f"[{idx}] {step[0]} (confidence: {step[1]})" for idx, step in enumerate(self.sections["Next Steps"])]) or "None"}"""
@@ -84,10 +89,14 @@ def _tool_log_reset():
     TOOL_CALL_LOG = []
 
 def append_to_scratchpad(project_name: str, section: str, proposal_text: str, confidence: Literal[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10] = 0):
-    """Add a brand new note/observation to the project scratchpad.  The project name should be the exact match for the project name.  The section should be one of `Ongoing Objectives`, `Completed Objectives`, `Suggestions`, `Notes`, or `Next Steps`.
+    """Add a brand new note/observation to the project scratchpad.  The project name should be the exact match for the project name.  The section should be one of `Ongoing Objectives`, `Completed Objectives`, `Suggestions`, `Notes`, `Files, Repos, Folders, Collaborators, and Other Relevant Resources`, or `Next Steps`.
     
     The confidence should be a number between 0 and 10, where 0 is the lowest confidence and 10 is the highest confidence in the proposition."""
     # print(f"Appending to scratchpad: {project_name}, {section}, {note}")
+
+    # If the section is one of the subsets of "Files, Repos, Folders, Collaborators, and Other Relevant Resources" then we should add it to the "Files, Repos, Folders, Collaborators, and Other Relevant Resources" section
+    if "file" in section.lower() or "repo" in section.lower() or "folder" in section.lower() or "collaborator" in section.lower() or "relevant resource" in section.lower():
+        section = "Files, Repos, Folders, Collaborators, and Other Relevant Resources"
 
     def _clean_proposition_text(text: str) -> str:
         t = str(text or "").strip()
@@ -104,29 +113,68 @@ def append_to_scratchpad(project_name: str, section: str, proposal_text: str, co
     proposal_text = _clean_proposition_text(proposal_text)
 
     # If the model provided a numbered list, split into multiple propositions (robust regex)
-    # We split on occurrences of lines like "1. text"; keep non-empty cleaned items
-    items = re.split(r"(?:^|\n)\s*\d+[\.)]\s+", proposal_text)
-    items = [s for s in [
-        _clean_proposition_text(x) for x in items
-    ] if s]
-    if len(items) > 1:
-        for it in items:
-            scratchpads[project_name].append_to_scratchpad(section, it, confidence)
-        return f"Added {len(items)} propositions to the project scratchpad"
+    # Split anywhere a whitespace + number + '.' or ')' + whitespace appears (e.g., " 2. ", " 3) ")
+    parts = re.split(r"\s+\d+[\.)]\s+", proposal_text)
+    parts = [p.strip() for p in parts if p and p.strip()]
+
+    # If no numbered items found, try splitting by newline-based resource titles like "Title: ..."
+    if len(parts) <= 1:
+        lines = [ln.strip() for ln in proposal_text.splitlines() if ln.strip()]
+        # Identify lines that look like Title: description (starts with Capital and contains colon)
+        title_colon = re.compile(r"^[A-Z][A-Za-z0-9 .,'/()&_-]*:\s+")
+        if sum(1 for ln in lines if title_colon.match(ln)) >= 2:
+            parts = lines
+    # If still single, split bullet lines that start with '-' or '•'
+    if len(parts) <= 1:
+        lines = [ln.strip() for ln in proposal_text.splitlines() if ln.strip()]
+        bullet_re = re.compile(r"^[\-•]\s+")
+        if any(bullet_re.match(ln) for ln in lines):
+            parts = []
+            if lines and not bullet_re.match(lines[0]):
+                parts.append(lines[0])
+            parts.extend([bullet_re.sub("", ln, count=1).strip() for ln in lines if bullet_re.match(ln)])
+    # If still single, split on semicolons that separate multiple items
+    if len(parts) <= 1 and " ; " in proposal_text:
+        parts = [p.strip() for p in proposal_text.split(" ; ") if p and p.strip()]
+
+    # De-dup exact matches within section
+    existing = set(x for (x, _) in scratchpads[project_name].sections.get(section, []))
+
+    added = 0
+    if len(parts) > 1:
+        for it in parts:
+            it_clean = _clean_proposition_text(it)
+            if not it_clean or it_clean in existing:
+                continue
+            scratchpads[project_name].append_to_scratchpad(section, it_clean, confidence)
+            existing.add(it_clean)
+            added += 1
+        return f"Added {added} propositions to the project scratchpad" if added else "No new propositions added (all duplicates)" + f"\n\n== UPDATED SCRATCHPAD ==\n{scratchpads[project_name].get_scratchpad()}"
     else:
-        cleaned = items[0] if items else proposal_text
+        cleaned = _clean_proposition_text(parts[0] if parts else proposal_text)
+        if not cleaned or cleaned in existing:
+            return "No new propositions added (duplicate or empty)" + f"\n\n== UPDATED SCRATCHPAD ==\n{scratchpads[project_name].get_scratchpad()}"
         return scratchpads[project_name].append_to_scratchpad(section, cleaned, confidence)
 
 def remove_from_scratchpad(project_name: str, section: str, index: int):
-    """Remove a note/observation from the project scratchpad.  The project name should be the exact match for the project name.  The section should be one of `Ongoing Objectives`, `Completed Objectives`, `Suggestions`, `Notes`, or `Next Steps`."""
+    """Remove a note/observation from the project scratchpad.  The project name should be the exact match for the project name.  The section should be one of `Ongoing Objectives`, `Completed Objectives`, `Suggestions`, `Notes`, `Files, Repos, Folders, Collaborators, and Other Relevant Resources`, or `Next Steps`."""
     # print(f"Removing from scratchpad: {project_name}, {section}, {index}")
+
+    # If the section is one of the subsets of "Files, Repos, Folders, Collaborators, and Other Relevant Resources" then we should add it to the "Files, Repos, Folders, Collaborators, and Other Relevant Resources" section
+    if "file" in section.lower() or "repo" in section.lower() or "folder" in section.lower() or "collaborator" in section.lower() or "relevant resource" in section.lower():
+        section = "Files, Repos, Folders, Collaborators, and Other Relevant Resources"
+
     return scratchpads[project_name].remove_from_scratchpad(section, index)
 
 def edit_in_scratchpad(project_name: str, section: str, index: int, new_proposition_text: str, new_confidence: Literal[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10] = 0):
-    """Edit a note/observation in the project scratchpad.  The project name should be the exact match for the project name.  The section should be one of `Ongoing Objectives`, `Completed Objectives`, `Suggestions`, `Notes`, or `Next Steps`.
+    """Edit a note/observation in the project scratchpad.  The project name should be the exact match for the project name.  The section should be one of `Ongoing Objectives`, `Completed Objectives`, `Suggestions`, `Notes`, `Files, Repos, Folders, Collaborators, and Other Relevant Resources`, or `Next Steps`.
     
     The confidence should be a number between 0 and 10, where 0 is the lowest confidence and 10 is the highest confidence in the proposition."""
     # print(f"Editing in scratchpad: {project_name}, {section}, {index}, {new_note}")
+
+    # If the section is one of the subsets of "Files, Repos, Folders, Collaborators, and Other Relevant Resources" then we should add it to the "Files, Repos, Folders, Collaborators, and Other Relevant Resources" section
+    if "file" in section.lower() or "repo" in section.lower() or "folder" in section.lower() or "collaborator" in section.lower() or "relevant resource" in section.lower():
+        section = "Files, Repos, Folders, Collaborators, and Other Relevant Resources"
 
     def _clean_proposition_text(text: str) -> str:
         t = str(text or "").strip()
@@ -139,11 +187,109 @@ def edit_in_scratchpad(project_name: str, section: str, index: int, new_proposit
         return t.strip()
 
     cleaned = _clean_proposition_text(new_proposition_text)
-    return scratchpads[project_name].edit_in_scratchpad(section, index, cleaned, new_confidence)
+    sect = scratchpads[project_name].sections.get(section, [])
+    existing_other = set(txt for i, (txt, _) in enumerate(sect) if i != index)
+
+    # Try multi-item splitting (numbered, title: lines, bullets)
+    parts = re.split(r"\s+\d+[\.)]\s+", cleaned)
+    parts = [p.strip() for p in parts if p and p.strip()]
+    if len(parts) <= 1:
+        lines = [ln.strip() for ln in cleaned.splitlines() if ln.strip()]
+        title_colon = re.compile(r"^[A-Z][A-Za-z0-9 .,'/()&_-]*:\s+")
+        if sum(1 for ln in lines if title_colon.match(ln)) >= 2:
+            parts = lines
+    if len(parts) <= 1:
+        lines = [ln.strip() for ln in cleaned.splitlines() if ln.strip()]
+        bullet_re = re.compile(r"^[\-•]\s+")
+        if any(bullet_re.match(ln) for ln in lines):
+            parts = []
+            if lines and not bullet_re.match(lines[0]):
+                parts.append(lines[0])
+            parts.extend([bullet_re.sub("", ln, count=1).strip() for ln in lines if bullet_re.match(ln)])
+    # If still single, split on semicolons that separate multiple items
+    if len(parts) <= 1 and " ; " in cleaned:
+        parts = [p.strip() for p in cleaned.split(" ; ") if p and p.strip()]
+
+    if len(parts) <= 1:
+        # Single item edit with dedup guard
+        if cleaned in existing_other:
+            return "No edit performed (duplicate of another entry)" + f"\n\n== UPDATED SCRATCHPAD ==\n{scratchpads[project_name].get_scratchpad()}"
+        return scratchpads[project_name].edit_in_scratchpad(section, index, cleaned, new_confidence)
+
+    # Multi-item: update current index with first unique, append the rest unique
+    updated = False
+    added = 0
+    chosen = None
+    for it in parts:
+        it_clean = _clean_proposition_text(it)
+        if not it_clean:
+            continue
+        if not updated and it_clean not in existing_other:
+            scratchpads[project_name].edit_in_scratchpad(section, index, it_clean, new_confidence)
+            existing_other.add(it_clean)
+            updated = True
+            chosen = it_clean
+        elif it_clean not in existing_other:
+            scratchpads[project_name].append_to_scratchpad(section, it_clean, new_confidence)
+            existing_other.add(it_clean)
+            added += 1
+
+    if not updated:
+        return "No edit performed (all items duplicate of existing entries)" + f"\n\n== UPDATED SCRATCHPAD ==\n{scratchpads[project_name].get_scratchpad()}"
+
+    return f"Edited current item to '{chosen}' and added {added} more" + f"\n\n== UPDATED SCRATCHPAD ==\n{scratchpads[project_name].get_scratchpad()}"
     
 def get_refreshed_scratchpad(project_name: str):
     """Get the refreshed project scratchpad.  The project name should be the exact match for the project name."""
     return scratchpads[project_name].get_scratchpad()
+
+class ProjectResource(pydantic.BaseModel):
+    name: str
+    description: Optional[str] = None
+    uri: Optional[str] = None
+
+class ExtractProjectResourcesSignature(dspy.Signature):
+    """Extract the **project resources** visible in the user’s current context and screenshot.
+
+Your goal is to identify **files, folders, repositories, documents, or collaborators** that are *actually present* in the view. Each resource should include a short description and a **resource identifier** (e.g., a URL, file path, folder path, repository path, or collaborator email).
+
+Do **not** invent or speculate about unseen resources. If no relevant resources are visible, return `NULL` or indicate that no resources were found.
+
+Focus on **the most important resources** — high-level entities like repository names, shared document links, or project folders take priority over low-level details like individual code lines or small temporary files.
+
+Think hierarchically about context:
+- In a code editor, the repository or project folder is usually the most important resource.  
+- Individual files belong to that repository; include the repository name as part of the identifier.  
+- In collaborative tools, collaborator names or emails are key resources.  
+
+When deciding what to extract, ask:
+- What would another person need to locate or reference this project later?
+- What entities define *where* and *with whom* the work is happening?
+
+If the user appears to be in a **code editor**, the first step should always be to deduce the **repository or top-level project folder name**, and ensure it has been recorded before extracting lower-level resources.  This is often shown at the top of the code editor and is CRITICAL!!!"""
+    current_project_name: Literal[tuple(TRUE_PROJECTS)] = dspy.InputField(description="The name of the project that the user is most likely currently working on (may be inaccurate)")
+    current_project_scratchpad: str = dspy.InputField(description="The current project scratchpad")
+    user_context: str = dspy.InputField(description="A short description of the user's current context, including what they are doing, what they are focused on, what they are thinking about, what they are working on, etc.")
+    current_screenshot: dspy.Image = dspy.InputField(description="The screenshot of the user's current workspace")
+    project_resources: list[ProjectResource] = dspy.OutputField(description="A list of up to 10 project resources that you observe in the context or screenshot that MAY be relevant to the project which aren't already in the project scratchpad")
+
+class ExtractProjectResources(dspy.Module):
+    def __init__(self):
+        self.extract_project_resources = dspy.ChainOfThought(
+            ExtractProjectResourcesSignature,
+        )
+    
+    def forward(self, current_project_name: str, current_project_scratchpad: str, user_context: str, current_screenshot: dspy.Image) -> list[ProjectResource]:
+        
+        res = self.extract_project_resources(
+            current_project_name=current_project_name,
+            current_project_scratchpad=current_project_scratchpad,
+            user_context=user_context,
+            current_screenshot=current_screenshot,
+        )
+
+        # Convert to string
+        return "\n".join([f"- {resource.name}: {resource.description} (uri: {resource.uri})" for resource in res.project_resources])
 
 class EditProjectScratchpadSignature(dspy.Signature):
     """Based on the new information, edit the project scratchpad.  The scratchpad should be an ongoing log of the user's work on the project.
@@ -152,7 +298,8 @@ class EditProjectScratchpadSignature(dspy.Signature):
     - If you believe an objective is currently being worked on, add it to `Ongoing Objectives`.
     - If you have some evidence that an objective is finished, move it to `Completed Objectives`.
     - Add `Suggestions` when there are helpful ideas, tools, or process improvements to recommend.
-    - Use `General Notes` for context, scope clarifications, constraints, or assumptions that aid understanding.
+    - Use `Notes` for context, scope clarifications, constraints, or assumptions that aid understanding.
+    - Use `Files, Repos, Folders, Collaborators, and Other Relevant Resources` for files, repos, folders, collaborators, or other resources that are relevant to the project. This section is SUPER IMPORTANT!  Please try to add as much detail here as possible (links if you are confident, file paths as best you can figure out, etc.)
     - Derive 1–3 actionable `Next Steps` from the current/former objectives whenever feasible (avoid trivial steps).
 
     Aim for diversity across sections when adding content (do not only update one section). Avoid duplicates and keep entries concise and useful. If there is no clear new information, it is reasonable to leave the scratchpad and maybe just make a note for the notes section.
@@ -165,6 +312,9 @@ class EditProjectScratchpadSignature(dspy.Signature):
     A good strategy is to start with a lower confidence score (2-3) and then increase it as you get more evidence (5-7) until you are very confident (9-10).
 
     PLEASE ONLY ADD ONE PROPOSITION AT A TIME!!!  If you have multiple propositions to add/edit/remove, you should call the tools multiple times, once per proposition instead of trying to do a numbered list.
+
+    When adding project resources, try to add a uri if you have one!  This can be a link to the resource, a file path, a folder path, a collaborator's email, etc.  Do not make up a uri if you do not have one and note that the provided uri is a guess and should be treated as such. 
+    Project repo names/folders are often THE MOST IMPORTANT resources to add to the scratchpad, so make sure to ALWAYS include a repo name/folder name if you can!  Tracking this is CRITICAL!
     """
 
     current_project_name: Literal[tuple(TRUE_PROJECTS)] = dspy.InputField(description="The name of the project that the user is most likely currently working on (may be inaccurate)")
@@ -174,6 +324,7 @@ class EditProjectScratchpadSignature(dspy.Signature):
     calendar_events: list[str] = dspy.InputField(description="A list of upcoming calendar events that the user has scheduled (may or may not be relevant to this project, you should consider that they may be more about other projects)")
     full_project_list: list[str] = dspy.InputField(description="A list of all the projects that the user has provided that they are working on at any point in time")
     user_context: str = dspy.InputField(description="A short description of the user's current context, including what they are doing, what they are focused on, what they are thinking about, what they are working on, etc.")
+    potential_resources: str = dspy.InputField(description="A list of potential project resources that we think the user might be working on (may be inaccurate or related to other projects besides this one)")
     current_screenshot: dspy.Image = dspy.InputField(description="The screenshot of the user's current workspace")
     summary_of_edits: str = dspy.OutputField(description="A summary of the edits you made to the project scratchpad")
 
@@ -185,7 +336,7 @@ class EditProjectScratchpad(dspy.Module):
             max_iters=20,
         )
     
-    def forward(self, current_project_name: str, current_project_scratchpad: str, speculated_current_objectives: list[str], speculated_former_objectives: list[str], calendar_events: list[str], full_project_list: list[str], user_context: str, current_screenshot: dspy.Image):
+    def forward(self, current_project_name: str, current_project_scratchpad: str, speculated_current_objectives: list[str], speculated_former_objectives: list[str], calendar_events: list[str], full_project_list: list[str], user_context: str, potential_resources: str, current_screenshot: dspy.Image):
         res = self.edit_project_scratchpad(
             current_project_name=current_project_name,
             current_project_scratchpad=current_project_scratchpad,
@@ -194,6 +345,7 @@ class EditProjectScratchpad(dspy.Module):
             calendar_events=calendar_events,
             full_project_list=full_project_list,
             user_context=user_context,
+            potential_resources=potential_resources,
             current_screenshot=current_screenshot,
         )
         return res.summary_of_edits, scratchpads[current_project_name].get_scratchpad()
@@ -327,6 +479,7 @@ def run_sequential(
             pass
 
     module = EditProjectScratchpad()
+    extract_project_resources = ExtractProjectResources()
 
     # Ensure output dir
     try:
@@ -393,6 +546,15 @@ def run_sequential(
 
             # Run edit step
             _tool_log_reset()
+            potential_resources = extract_project_resources(
+                current_project_name=project,
+                current_project_scratchpad=current_pad,
+                user_context=row.get("context", ""),
+                current_screenshot=screenshot_img,
+            )
+
+            # print(f"[scratchpad] potential_resources: {potential_resources}")
+
             summary, updated_pad = module(
                 current_project_name=project,
                 current_project_scratchpad=current_pad,
@@ -401,6 +563,7 @@ def run_sequential(
                 calendar_events=cal_list,
                 full_project_list=TRUE_PROJECTS,
                 user_context=row.get("context", ""),
+                potential_resources=potential_resources,
                 current_screenshot=screenshot_img,
             )
 
