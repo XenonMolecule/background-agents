@@ -255,8 +255,8 @@
       panelEl.appendChild(sec);
     }
 
-    // Feasibility list (for transition points only) in a collapsible
-    if (trFlag && Array.isArray(s._feas) && s._feas.length) {
+    // Feasibility list (show whenever available) in a collapsible
+    if (Array.isArray(s._feas) && s._feas.length) {
       const list = document.createElement('div');
       list.className = 'cards';
       s._feas.forEach((item, iRaw) => {

@@ -74,6 +74,10 @@ def write_feasibility_csv(
   temperature: float | None = None,
   batch_size: int = 10,
   limit: int | None = None,
+  threads: int | None = None,
+  max_errors: int | None = None,
+  disable_progress_bar: bool = False,
+  examples_per_batch: int | None = None,
 ) -> None:
   # Load env and configure DSPy
   load_dotenv()
@@ -122,19 +126,32 @@ def write_feasibility_csv(
   # Sort transitions by epoch for stability
   tr_rows.sort(key=lambda r: _parse_epoch(str(r.get("timestamp", ""))))
 
-  # Build a global batch of examples across all transition rows
-  dataset: List[dspy.Example] = []
-  dataset_owner: List[str] = []  # map each example to its timestamp
-  ts_to_parsed: Dict[str, List[Tuple[str, int, str]]] = {}
+  # Determine which timestamps to process: transition rows and the row right before each transition
+  ts_interest: List[str] = []
+  seen: set[str] = set()
   processed_tr: int = 0
-
-  for r in tr_rows:
-    ts = str(r.get("timestamp", ""))
+  for i, r in enumerate(tr_rows):
     is_tr = str(r.get("is_transition", "")).strip().upper() == "TRUE"
     if not is_tr:
       continue
     if limit is not None and processed_tr >= limit:
       continue
+    cur_ts = str(r.get("timestamp", ""))
+    if cur_ts and cur_ts not in seen:
+      ts_interest.append(cur_ts); seen.add(cur_ts)
+    # also add previous row timestamp if available
+    if i > 0:
+      prev_ts = str(tr_rows[i - 1].get("timestamp", ""))
+      if prev_ts and prev_ts not in seen:
+        ts_interest.append(prev_ts); seen.add(prev_ts)
+    processed_tr += 1
+
+  # Build a global batch with one example per selected timestamp
+  dataset: List[dspy.Example] = []
+  dataset_owner: List[str] = []  # map each example to its timestamp
+  ts_to_parsed: Dict[str, List[Tuple[str, int, str]]] = {}
+
+  for ts in ts_interest:
     sp = ts_to_scratch.get(ts)
     if not sp or not sp.get("scratchpad"):
       continue
@@ -143,19 +160,36 @@ def write_feasibility_csv(
     ts_to_parsed[ts] = parsed_actions
     if not parsed_actions:
       continue
-    processed_tr += 1
     actions_only = [txt for (txt, _conf, _src) in parsed_actions]
     ex = dspy.Example(project_scratchpad=scratchpad_text, next_steps=actions_only).with_inputs("project_scratchpad", "next_steps")
     dataset.append(ex)
     dataset_owner.append(ts)
 
-  # Run one batched inference for all examples
-  outputs = estimator.estimator.batch(dataset) if dataset else []
+  # Run batched inference (optionally in smaller chunks to avoid thread hangs)
+  outputs = []
+  if dataset:
+    total = len(dataset)
+    chunk_size = max(1, int(examples_per_batch) if examples_per_batch else total)
+    bar = tqdm(total=total, desc="Processed examples")
+    for i in range(0, total, chunk_size):
+      chunk = dataset[i:i + chunk_size]
+      chunk_out = estimator.estimator.batch(
+        chunk,
+        num_threads=threads,
+        max_errors=max_errors,
+        disable_progress_bar=disable_progress_bar,
+      )
+      # materialize and extend
+      chunk_list = list(chunk_out)
+      outputs.extend(chunk_list)
+      bar.update(len(chunk))
+    bar.close()
+    assert len(outputs) == len(dataset), f"Expected {len(dataset)} outputs, got {len(outputs)}"
 
   # Aggregate feasibility items per timestamp
   ts_to_feas: Dict[str, List[object]] = {}
   for owner_ts, out in zip(dataset_owner, outputs):
-    ts_to_feas[owner_ts] = list(out.feasibility)
+    ts_to_feas[owner_ts] = list(out.feasibility or [])
 
   # Write results
   with open(output_csv, "w", newline="", encoding="utf-8") as f:
@@ -173,7 +207,8 @@ def write_feasibility_csv(
         "feasibility_list": "",
       }
 
-      if not is_tr:
+      # We write feasibility if this ts is in our interest set (transition or pre-transition)
+      if ts not in seen:
         w.writerow(out_row)
         continue
 
@@ -261,6 +296,10 @@ def cli() -> None:
   parser.add_argument("--temperature", type=float, default=None)
   parser.add_argument("--batch-size", type=int, default=10)
   parser.add_argument("--limit", type=int, default=None, help="Limit number of transition points processed")
+  parser.add_argument("--threads", type=int, default=None, help="Number of parallel threads for DSPy batch")
+  parser.add_argument("--max-errors", type=int, default=None, help="Max errors tolerated in DSPy batch")
+  parser.add_argument("--no-batch-progress", action="store_true", help="Disable DSPy batch progress bar")
+  parser.add_argument("--examples-per-batch", type=int, default=None, help="Chunk size for DSPy batch calls (prevents thread hangs)")
   args = parser.parse_args()
 
   write_feasibility_csv(
@@ -272,6 +311,10 @@ def cli() -> None:
     temperature=args.temperature,
     batch_size=args.batch_size,
     limit=args.limit,
+    threads=args.threads,
+    max_errors=args.max_errors,
+    disable_progress_bar=bool(args.no_batch_progress),
+    examples_per_batch=args.examples_per_batch,
   )
 
 
