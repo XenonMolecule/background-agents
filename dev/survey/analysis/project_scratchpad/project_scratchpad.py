@@ -459,6 +459,7 @@ def run_sequential(
     former_max_total: int = 10,
     limit: Optional[int] = None,
     debug_history: bool = False,
+    save_interval: Optional[int] = None,
 ) -> None:
     # Load .env
     try:
@@ -640,6 +641,22 @@ def run_sequential(
             )
             processed += 1
 
+            # Periodic checkpoint save (flush and fsync)
+            if save_interval and processed % max(1, save_interval) == 0:
+                try:
+                    f_out.flush()
+                    os.fsync(f_out.fileno())
+                    # Update latest alias as well
+                    try:
+                        out_dir = os.path.dirname(output_csv)
+                        latest_path = os.path.join(out_dir, "project_scratchpad_latest.csv")
+                        shutil.copyfile(output_csv, latest_path)
+                    except Exception:
+                        pass
+                    print(f"[scratchpad] Checkpoint saved at {processed} rows → {output_csv}")
+                except Exception:
+                    pass
+
     # Also write/update a stable alias for the viewer
     try:
         out_dir = os.path.dirname(output_csv)
@@ -676,6 +693,7 @@ def parse_args():
     parser.add_argument("--former-top-per-row", type=int, default=1, help="Top-k objectives to extract per past row")
     parser.add_argument("--former-max-total", type=int, default=10, help="Maximum number of former objectives to include")
     parser.add_argument("--debug-history", action="store_true", help="Print DSPy ReAct history for each row")
+    parser.add_argument("--save-interval", type=int, default=None, help="Write CSV checkpoint every N rows")
     args = parser.parse_args()
 
     # Derive default output path with model name if not provided
@@ -701,6 +719,7 @@ def main():
         former_max_total=args.former_max_total,
         limit=args.limit,
         debug_history=args.debug_history,
+        save_interval=args.save_interval,
     )
 
 if __name__ == "__main__":

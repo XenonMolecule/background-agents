@@ -55,6 +55,19 @@ body {
   border-radius: 8px;
   font-weight: 700;
 }
+.transition-tag {
+  position: absolute;
+  top: 62px;
+  left: 24px;
+  background: #eef2ff;
+  color: #1f2937;
+  font-size: 13px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid #c7d2fe;
+  font-weight: 600;
+  z-index: 5;
+}
 .columns {
   display: grid;
   grid-template-columns: 1fr 1fr;

@@ -3,6 +3,8 @@
   const SURVEY_PATH = '../survey_responses.csv';
   const PROJ_PRED_PATH = (new URL(window.location.href)).searchParams.get('pred')
     || '../analysis/project_classification/results/context_project_predictions_latest.csv';
+  const TRANSITIONS_PATH = (new URL(window.location.href)).searchParams.get('trans')
+    || '../analysis/transition_classifier/results/transitions_latest.csv';
   const SCRATCHPAD_PATH = (new URL(window.location.href)).searchParams.get('spad')
     || '../analysis/project_scratchpad/results/project_scratchpad_latest.csv';
   const REPO_ROOT_PREFIX = '/Users/michaelryan/Documents/School/Stanford/Research/background-agents';
@@ -10,6 +12,7 @@
   const shotEl = document.getElementById('shot');
   const timestampEl = document.getElementById('timestamp');
   const badgeEl = document.getElementById('badge');
+  const transitionTagEl = document.getElementById('transitionTag');
   const panelEl = document.getElementById('panel');
   const counterEl = document.getElementById('counter');
   const btnPrev = document.getElementById('prev');
@@ -201,6 +204,19 @@
     }
 
     panelEl.innerHTML = '';
+
+    // Transition indicator (robust handling)
+    const tr = s._transition;
+    const trFlag = tr && String(tr.is_transition || '').trim().toUpperCase() === 'TRUE';
+    if (trFlag) {
+      const fromP = (tr.from_project || '').trim();
+      const toP = (tr.to_project || '').trim();
+      transitionTagEl.textContent = (fromP && toP) ? `Transition: ${fromP} → ${toP}` : 'Transition';
+      transitionTagEl.classList.remove('hidden');
+    } else {
+      transitionTagEl.textContent = '';
+      transitionTagEl.classList.add('hidden');
+    }
 
     // Goals (top, compact + collapsible detailed)
     if (Array.isArray(s.goals) && s.goals.length) {
@@ -561,17 +577,30 @@
 
   async function init() {
     try {
-      const [ctxRows, surveyRows, predsRows, scratchRows] = await Promise.all([
+      const [ctxRows, surveyRows, predsRows, scratchRows, transRows] = await Promise.all([
         parseCsv(CONTEXT_PATH),
         parseCsv(SURVEY_PATH),
         parseCsv(PROJ_PRED_PATH).catch(() => []),
-        parseCsv(SCRATCHPAD_PATH).catch(() => [])
+        parseCsv(SCRATCHPAD_PATH).catch(() => []),
+        parseCsv(TRANSITIONS_PATH).catch(() => [])
       ]);
       const ctxSlides = ctxRows.map(normalizeContextRow);
       const surveySlides = surveyRows.map(normalizeSurveyRow);
       const predsMap = new Map();
       (predsRows || []).forEach(r => {
         if (r && r.timestamp) predsMap.set(String(r.timestamp), r.predicted_project);
+      });
+      const transMap = new Map();
+      (transRows || []).forEach(r => {
+        if (!r || !r.timestamp) return;
+        const norm = {
+          timestamp: String(r.timestamp),
+          is_transition: String(r.is_transition || '').trim().toUpperCase(),
+          from_project: r.from_project || '',
+          to_project: r.to_project || '',
+          smoothed_project: r.smoothed_project || ''
+        };
+        transMap.set(norm.timestamp, norm);
       });
       const scratchMap = new Map();
       (scratchRows || []).forEach(r => {
@@ -587,6 +616,7 @@
       ctxSlides.forEach(s => {
         const key = s._ts_display || '';
         if (predsMap.has(key)) s.predicted_project = predsMap.get(key);
+        if (transMap.has(key)) s._transition = transMap.get(key);
         if (scratchMap.has(key)) {
           const sp = scratchMap.get(key);
           s.scratchpad_text = sp.scratchpad || '';
