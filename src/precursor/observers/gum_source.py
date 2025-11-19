@@ -9,7 +9,11 @@ from typing import Any, Awaitable, Callable, Optional
 
 from dotenv import load_dotenv
 from gum import gum
-from gum.observers import Calendar
+# Guard Calendar import to handle environments where gum.observers.Calendar is unavailable
+try:
+    from gum.observers import Calendar
+except ImportError:
+    Calendar = None
 from gum.observers import Screen
 
 from precursor.context.events import ContextEvent
@@ -18,6 +22,12 @@ from precursor.config.loader import get_user_name, get_user_description, get_use
 
 logger = logging.getLogger(__name__)
 load_dotenv()
+
+
+def _is_calendar_disabled() -> bool:
+    """Check if Calendar observer should be disabled via feature flag."""
+    flag_value = os.getenv("PRECURSOR_DISABLE_CALENDAR", "").lower()
+    return flag_value in ("1", "true")
 
 
 class GumSource:
@@ -94,15 +104,30 @@ class GumSource:
         effective_handler = handler or self.on_event
         if effective_handler is None:
             raise ValueError("GumSource.run requires a handler (or provide on_event in __init__).")
-        cal = Calendar()
+        
+        # Initialize Calendar observer if available and not disabled
+        cal = None
+        if Calendar is not None and not _is_calendar_disabled():
+            cal = Calendar()
+            logger.info("Calendar observer enabled")
+        else:
+            if Calendar is None:
+                logger.info("Calendar observer unavailable (gum.observers.Calendar import failed)")
+            else:
+                logger.info("Calendar observer disabled via PRECURSOR_DISABLE_CALENDAR flag")
+        
         screen = Screen(self.model)
         logger.info("Starting GumSource for user=%s, model=%s", self.user_name, self.model)
 
+        # Build observers list, only including calendar if available
+        observers = [screen]
+        if cal is not None:
+            observers.append(cal)
+        
         async with gum(
             self.user_name,
             self.model,
-            screen,
-            cal,
+            *observers,
             max_batch_size=self.max_batch_size,
         ) as gum_instance:
 
@@ -116,10 +141,15 @@ class GumSource:
                 context_update = update.content
                 recent_list = await gum_instance.recent()
                 recent_propositions = self._serialize_recent_propositions(recent_list)
-                calendar_events = cal.query_str(
-                    start_delta=timedelta(days=0),
-                    end_delta=timedelta(days=self.poll_calendar_days),
-                )
+                
+                # Query calendar events only if calendar is available
+                calendar_events = ""
+                if cal is not None:
+                    calendar_events = cal.query_str(
+                        start_delta=timedelta(days=0),
+                        end_delta=timedelta(days=self.poll_calendar_days),
+                    )
+                
                 screenshot = grab_screen_dspy_image() if self.capture_screenshot else None
 
                 # === Package event ===
