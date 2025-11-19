@@ -26,6 +26,19 @@ from precursor.managers.base import Manager
 
 logger = logging.getLogger(__name__)
 
+# Import sinks for optional injection
+try:
+    from precursor.testing.sinks import TelemetrySink
+except ImportError:
+    # Define minimal interface if testing module not available
+    from abc import ABC, abstractmethod
+    from typing import Dict, Any
+    
+    class TelemetrySink(ABC):
+        @abstractmethod
+        def emit(self, event_name: str, payload: Dict[str, Any]) -> None:
+            pass
+
 
 class ProjectActivityObserver:
     """
@@ -46,6 +59,7 @@ class ProjectActivityObserver:
         min_entries_previous_segment: int = 3,
         time_threshold: timedelta = timedelta(minutes=10),
         on_trigger: Optional[Callable[[str, dict], None]] = None,
+        telemetry_sink: Optional[TelemetrySink] = None,
     ) -> None:
         if mode not in ("departure", "arrival"):
             raise ValueError("mode must be 'departure' or 'arrival'")
@@ -57,6 +71,7 @@ class ProjectActivityObserver:
         self.min_entries_previous_segment = min_entries_previous_segment
         self.time_threshold = time_threshold
         self.on_trigger = on_trigger
+        self.telemetry_sink = telemetry_sink
         self._last_triggered_key: Optional[str] = None
 
     def handle_processed(self) -> None:
@@ -99,6 +114,14 @@ class ProjectActivityObserver:
                 prev_count,
                 gap,
             )
+            
+            # Emit telemetry event for project transition
+            if self.telemetry_sink:
+                self.telemetry_sink.emit("project_transition_detected", {
+                    "from": prev_project,
+                    "to": cur_project
+                })
+            
             result = self.agent_manager.run_for_project(prev_project)
             if self.on_trigger is not None:
                 self.on_trigger(prev_project, result)

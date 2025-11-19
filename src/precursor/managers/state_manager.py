@@ -25,6 +25,18 @@ from precursor.managers.utils import (
 
 logger = logging.getLogger(__name__)
 
+# Import sinks for optional injection
+try:
+    from precursor.testing.sinks import TelemetrySink
+except ImportError:
+    # Define minimal interface if testing module not available
+    from abc import ABC, abstractmethod
+    
+    class TelemetrySink(ABC):
+        @abstractmethod
+        def emit(self, event_name: str, payload: Dict[str, Any]) -> None:
+            pass
+
 
 class StateManager:
     """
@@ -47,6 +59,7 @@ class StateManager:
         objectives_inducer: Optional[ObjectivesInducer] = None,
         project_classifier: Optional[CurrentProjectClassifier] = None,
         scratchpad_updater: Optional[ScratchpadUpdater] = None,
+        telemetry_sink: Optional[TelemetrySink] = None,
     ) -> None:
         self.history = history or ProjectHistory()
         self.objectives_inducer = objectives_inducer or ObjectivesInducer()
@@ -55,6 +68,7 @@ class StateManager:
             max_scratchpad_chars=1200,
         )
         self.scratchpad_updater = scratchpad_updater or ScratchpadUpdater()
+        self.telemetry_sink = telemetry_sink
 
     # ------------------------------------------------------------------
     # public API
@@ -65,6 +79,15 @@ class StateManager:
         with the useful outputs for whoever called us (observer, UI, etc.).
         """
         logger.info("processing context event at %s", event.timestamp.isoformat())
+
+        # Emit telemetry for observation queued (we don't have a real queue, but this represents processing)
+        if self.telemetry_sink:
+            # Get current queue size from history length as a proxy
+            queue_size = len(self.history.recent(100))  # Use recent entries as proxy for queue size
+            self.telemetry_sink.emit("observation_queued", {
+                "project": "unknown",  # We don't know project yet
+                "queue_size": queue_size
+            })
 
         try:
             # 1) induce objectives from the rich context

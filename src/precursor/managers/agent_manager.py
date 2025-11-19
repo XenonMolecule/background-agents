@@ -15,6 +15,18 @@ from precursor.components.task_proposer.task_scorer import TaskAssessment
 
 logger = logging.getLogger(__name__)
 
+# Import sinks for optional injection
+try:
+    from precursor.testing.sinks import TelemetrySink
+except ImportError:
+    # Define minimal interface if testing module not available
+    from abc import ABC, abstractmethod
+    
+    class TelemetrySink(ABC):
+        @abstractmethod
+        def emit(self, event_name: str, payload: Dict[str, Any]) -> None:
+            pass
+
 
 class AgentManager:
     """
@@ -32,6 +44,7 @@ class AgentManager:
         *,
         task_pipeline: Optional[TaskProposerPipeline] = None,
         deploy_enabled: bool = False,
+        telemetry_sink: Optional[TelemetrySink] = None,
     ) -> None:
         # dspy.Module – creates goals, milestones, tasks, and assessments
         self.task_pipeline = task_pipeline or TaskProposerPipeline()
@@ -49,6 +62,8 @@ class AgentManager:
         self.max_deployed_tasks: int = int(settings.get("max_deployed_tasks", 3))
         # runtime toggle: actually dispatch MCP agents for selected candidates
         self.deploy_enabled: bool = deploy_enabled
+        # optional telemetry sink for testing
+        self.telemetry_sink = telemetry_sink
 
     def _refresh_settings(self) -> None:
         """
@@ -189,7 +204,15 @@ class AgentManager:
                 a.user_preference_alignment_score,
             )
 
-        # 5) future: actually dispatch here
+        # 5) emit telemetry events
+        if self.telemetry_sink:
+            self.telemetry_sink.emit("batch_processed", {
+                "count": len(assessments),
+                "project": project_name,
+                "candidates_selected": len(candidates)
+            })
+
+        # 6) future: actually dispatch here
         # Optionally spawn separate MCP agent processes for each candidate.
         if self.deploy_enabled and candidates:
             self._deploy_candidates(project_name, candidates)

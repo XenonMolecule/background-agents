@@ -10,6 +10,27 @@ from precursor.scratchpad import store
 
 logger = logging.getLogger(__name__)
 
+# Import sinks for optional injection
+try:
+    from precursor.testing.sinks import TelemetrySink, NotificationSink
+except ImportError:
+    # Define minimal interfaces if testing module not available
+    from abc import ABC, abstractmethod
+    
+    class TelemetrySink(ABC):
+        @abstractmethod
+        def emit(self, event_name: str, payload: Dict[str, Any]) -> None:
+            pass
+    
+    class NotificationSink(ABC):
+        @abstractmethod
+        def send_notification(self, project: str, notification_type: str, message: str) -> None:
+            pass
+        
+        @abstractmethod
+        def skip_notification(self, project: str, reason: str) -> None:
+            pass
+
 
 class UIManager:
     """
@@ -33,6 +54,22 @@ class UIManager:
         • Replace this entire launcher with `open -a PrecursorApp ...`
         • Use Apple Event bridging to focus + reopen windows
     """
+
+    def __init__(
+        self,
+        *,
+        telemetry_sink: Optional[TelemetrySink] = None,
+        notification_sink: Optional[NotificationSink] = None,
+    ) -> None:
+        """
+        Initialize UIManager with optional sinks for testing.
+        
+        Args:
+            telemetry_sink: Optional sink for telemetry events (for testing)
+            notification_sink: Optional sink for notifications (for testing)
+        """
+        self.telemetry_sink = telemetry_sink
+        self.notification_sink = notification_sink
 
     def _resolve_precursor_swift_root(self) -> Path:
         """
@@ -125,6 +162,19 @@ class UIManager:
         if self._has_pending_agent_tasks(project_name):
             try:
                 self._notify_precursor_for_project(project_name)
+                # Emit telemetry event
+                if self.telemetry_sink:
+                    self.telemetry_sink.emit("notification_sent", {
+                        "project": project_name,
+                        "reason": "pending_agent_tasks"
+                    })
+                # Send notification event
+                if self.notification_sink:
+                    self.notification_sink.send_notification(
+                        project_name,
+                        "project_return_if_pending",
+                        f"Welcome back to {project_name}."
+                    )
             except Exception:
                 logger.exception("ui_manager: failed to send macOS notification")
         else:
@@ -132,6 +182,15 @@ class UIManager:
                 "ui_manager: skipping notification for %s (no pending agent-completed tasks)",
                 project_name,
             )
+            # Emit telemetry event for skipped notification
+            if self.telemetry_sink:
+                self.telemetry_sink.emit("notification_skipped", {
+                    "project": project_name,
+                    "reason": "no_pending_agent_tasks"
+                })
+            # Send notification skip event
+            if self.notification_sink:
+                self.notification_sink.skip_notification(project_name, "no_pending_agent_tasks")
 
         return {
             "project": project_name,

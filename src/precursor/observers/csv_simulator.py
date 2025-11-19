@@ -25,6 +25,7 @@ class CSVSimulatorConfig:
     # how to pace replay:
     # - "interval": sleep interval_seconds between rows
     # - "asap": no sleep, emit as fast as possible
+    # - "step": deterministic step mode for testing (no sleeps, synchronous)
     mode: str = "interval"
     interval_seconds: float = 180.0  # 3 minutes
     # optional description to attach (e.g. from user.yaml)
@@ -33,6 +34,8 @@ class CSVSimulatorConfig:
     user_name: Optional[str] = None
     # optional agent-goals to attach (e.g. from user.yaml)
     user_agent_goals: Optional[str] = None
+    # for step mode: maximum number of rows to process (None = all)
+    max_rows: Optional[int] = None
 
 
 class CSVSimulatorObserver:
@@ -56,6 +59,11 @@ class CSVSimulatorObserver:
         Main entrypoint: iterate rows and call `handler(event)` for each.
         """
         rows = self._load_rows(self.config.csv_path)
+        
+        # Apply max_rows limit if specified
+        if self.config.max_rows is not None:
+            rows = rows[:self.config.max_rows]
+            
         logger.info(
             "csv simulator starting with %d rows from %s",
             len(rows),
@@ -76,6 +84,9 @@ class CSVSimulatorObserver:
                 await asyncio.sleep(self.config.interval_seconds)
             elif self.config.mode == "asap":
                 # no sleep
+                pass
+            elif self.config.mode == "step":
+                # deterministic step mode - no sleeps, fully synchronous
                 pass
             else:
                 # unknown mode -> treat like interval
