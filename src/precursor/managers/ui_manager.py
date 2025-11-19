@@ -7,6 +7,7 @@ from typing import Dict, Any, Optional
 
 import precursor
 from precursor.scratchpad import store
+from precursor.testing.telemetry import emit_telemetry, send_notification
 
 logger = logging.getLogger(__name__)
 
@@ -125,6 +126,17 @@ class UIManager:
         if self._has_pending_agent_tasks(project_name):
             try:
                 self._notify_precursor_for_project(project_name)
+                # Emit telemetry for successful notification
+                emit_telemetry("notification_sent", {
+                    "project": project_name,
+                    "reason": "pending_agent_tasks"
+                })
+                # Also send via notification sink if available
+                send_notification(
+                    project=project_name,
+                    message=f"Welcome back to {project_name}.",
+                    reason="pending_agent_tasks"
+                )
             except Exception:
                 logger.exception("ui_manager: failed to send macOS notification")
         else:
@@ -132,6 +144,11 @@ class UIManager:
                 "ui_manager: skipping notification for %s (no pending agent-completed tasks)",
                 project_name,
             )
+            # Emit telemetry for skipped notification
+            emit_telemetry("notification_skipped", {
+                "project": project_name,
+                "reason": "no_pending_agent_tasks"
+            })
 
         return {
             "project": project_name,

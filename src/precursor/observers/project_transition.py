@@ -23,6 +23,7 @@ import logging
 
 from precursor.context.project_history import ProjectHistory, ProjectReading
 from precursor.managers.base import Manager
+from precursor.testing.telemetry import emit_telemetry
 
 logger = logging.getLogger(__name__)
 
@@ -99,6 +100,13 @@ class ProjectActivityObserver:
                 prev_count,
                 gap,
             )
+            # Emit telemetry for project transition
+            emit_telemetry("project_transition_detected", {
+                "from": prev_project,
+                "to": cur_project,
+                "duration_seconds": gap.total_seconds(),
+                "entries": prev_count
+            })
             result = self.agent_manager.run_for_project(prev_project)
             if self.on_trigger is not None:
                 self.on_trigger(prev_project, result)

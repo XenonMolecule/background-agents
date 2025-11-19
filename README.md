@@ -166,3 +166,42 @@ Other useful flags:
 - `--no-deploy` — score/log tasks without executing next steps
 - `--max-steps N` — stop after N events
 - `--force-reset` — delete the scratchpad DB on startup
+
+### Testing
+
+The project includes comprehensive integration tests for project transition detection and notification handling.
+
+#### Running Integration Tests
+
+Run all integration tests:
+```bash
+pytest tests/observers/test_project_transition_integration.py
+```
+
+Run specific test scenarios:
+```bash
+# Test project transition detection
+pytest -k test_project_transition_detected
+
+# Test notification skipping behavior
+pytest -k test_notification_skipped
+
+# Test CSV simulator integration
+pytest -k test_csv_simulator
+```
+
+Run with verbose output to see telemetry events:
+```bash
+pytest -v -s tests/observers/test_project_transition_integration.py
+```
+
+#### Test Coverage
+
+The integration tests cover:
+1. **Project transition detection** - Verifies that switching between projects triggers the correct transition events
+2. **Batch processing metrics** - Tests queue growth tracking and batch processing telemetry
+3. **Notification skipping** - Reproduces the "no pending agent-completed tasks" scenario
+4. **Notification sending** - Tests notifications when pending tasks exist
+5. **CSV simulator integration** - Demonstrates deterministic testing using CSV replay
+
+All tests use deterministic scenarios with mock telemetry and notification sinks for reliable, fast testing.

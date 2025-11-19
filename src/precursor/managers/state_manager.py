@@ -22,6 +22,7 @@ from precursor.managers.utils import (
     goals_to_objective_strings,
     ensure_screenshot_image,
 )
+from precursor.testing.telemetry import emit_telemetry
 
 logger = logging.getLogger(__name__)
 
@@ -65,6 +66,13 @@ class StateManager:
         with the useful outputs for whoever called us (observer, UI, etc.).
         """
         logger.info("processing context event at %s", event.timestamp.isoformat())
+        
+        # Emit telemetry for observation queued (we don't have queue size here, but we can track processing)
+        emit_telemetry("observation_processed", {
+            "timestamp": event.timestamp.isoformat(),
+            "has_screenshot": event.screenshot is not None,
+            "context_length": len(event.context_update) if event.context_update else 0
+        })
 
         try:
             # 1) induce objectives from the rich context
