@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Project Description Timeline</title>
+  <link rel="stylesheet" href="./style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="viewport">
+    <div class="toolbar">
+      <div class="row">
+        <div class="group">
+          <label>Project</label>
+          <select id="projectSelect"></select>
+        </div>
+        <div class="group">
+          <label>Step</label>
+          <select id="stepSelect"></select>
+        </div>
+        <div class="spacer"></div>
+        <button id="prev">Prev</button>
+        <div id="counter" class="counter">0 / 0</div>
+        <button id="next">Next</button>
+        <div class="spacer"></div>
+        <button id="refresh" title="Force reload with cache-bust">Refresh</button>
+      </div>
+      <div class="row narrow">
+        <div class="group grow">
+          <label>Descriptions CSV</label>
+          <input id="descPath" type="text" />
+        </div>
+        <div class="group grow">
+          <label>Log CSV</label>
+          <input id="logPath" type="text" />
+        </div>
+        <div class="group grow">
+          <label>Pipeline Run CSV</label>
+          <input id="prPath" type="text" />
+        </div>
+      </div>
+    </div>
+
+    <div id="slideWrap" class="slide-wrap">
+      <div id="slide" class="slide">
+        <div id="timestamp" class="timestamp"></div>
+        <div class="columns">
+          <div class="left">
+            <div class="image-frame">
+              <img id="shot" alt="screenshot" />
+            </div>
+          </div>
+          <div class="right">
+            <div id="panel"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="./app.js"></script>
+  </body>
+</html>
+
+
+
+
+
+

@@ -1,0 +1,779 @@
+project,timestamp,step_index,screenshot_path,updated_project_description
+Cotomata,2025-11-18T20:29:01.399452+00:00,1,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251118_202901_Cotomata.png,"High-level goals and objectives:
+
+- Finalize and standardize feature specification documents for the dataset tasks so specs are unambiguous and consistent across tasks.
+- Define and enforce runtime semantics and interfaces (e.g., logging behavior and instruction post-processing guarantees) to ensure deterministic behavior of feature implementations.
+- Harden the development and test environment (setup scripts, virtualenv/Python selection, patch application) for reproducible local runs and CI testing.
+- Resolve repository/branch integration issues and maintain a clean version-control history so changes can be merged and tracked reliably.
+- Deliver a validated, documented dataset and feature spec bundle ready for benchmarking, evaluation, and downstream consumption."
+Cotomata,2025-11-18T20:33:00.944660+00:00,2,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251118_203300_Cotomata.png,"High-level goals and objectives:
+
+- Finalize and standardize unambiguous feature and dataset specification documents suitable for benchmarking and reuse.
+- Define and enforce stable runtime semantics and interfaces so feature implementations behave deterministically and are interoperable.
+- Ensure reproducible development and CI environments (robust setup scripts, consistent Python/runtime selection, reliable test application).
+- Resolve repository and branch integration problems and maintain a clean, traceable version-control history for reliable collaboration and releases.
+- Publish polished, user-facing documentation and a website to host specs, usage guides, and benchmarks for adopters.
+- Deliver a validated, documented dataset and feature-spec bundle ready for benchmarking, evaluation, and downstream use, with processes for ongoing maintenance and community support."
+Cotomata,2025-11-18T20:34:55.340022+00:00,3,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251118_203455_Cotomata.png,"High-level goals and objectives:
+
+- Establish clear, unambiguous, and versioned feature and dataset specifications that serve as canonical references for benchmarking, implementation, and reuse.
+- Define and enforce stable runtime semantics, interfaces, and post-processing conventions so feature implementations are deterministic and interoperable across environments.
+- Create reproducible development and continuous-integration environments (automated setup, consistent runtime selection, and reliable tests) to reduce onboarding friction and build/regression risk.
+- Improve repository structure and collaboration workflows (branching, merging, patch application, and release practices) to maintain a clean, traceable history and enable safe parallel development.
+- Automate validation and testing of features and dataset bundles so released artifacts are verified, documented, and ready for benchmarking and evaluation.
+- Publish polished user-facing documentation and a website to host specs, usage guides, benchmarks, and contributor guidelines for adopters and maintainers.
+- Establish maintenance and community support processes (issue triage, contributor guidance, and update/compatibility policies) to ensure long-term sustainability."
+Cotomata,2025-11-18T20:37:55.917467+00:00,4,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251118_203755_Cotomata.png,"High-level goals and objectives:
+
+- Define and maintain canonical, versioned specifications for features and datasets to serve as authoritative references for benchmarking and reuse.
+- Ensure stable, deterministic runtime semantics and interoperable interfaces so implementations behave consistently across environments.
+- Provide reproducible development and CI environments to minimize onboarding friction and reduce regression risk.
+- Organize repository structure and collaboration workflows to support safe parallel development, traceability, and reliable releases.
+- Automate validation, testing, and verification of feature and dataset bundles so released artifacts are auditable and benchmark-ready.
+- Publish clear user-facing documentation and a centralized website for specs, examples, and benchmarking results.
+- Establish sustainable maintenance and community processes (triage, contribution guidance, and compatibility policies) to support long-term adoption."
+Cotomata,2025-11-18T20:41:58.036510+00:00,5,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251118_204158_Cotomata.png,"High-level goals and objectives for Cotomata:
+
+- Define, version, and maintain canonical specifications for features, datasets, and benchmarks so artifacts are authoritative and reusable.
+- Ensure deterministic, well-specified runtime semantics and interoperable interfaces so implementations behave consistently across environments.
+- Provide reproducible developer and CI environments to speed onboarding, prevent regressions, and enable trustworthy results.
+- Automate validation, testing, and release processes so dataset/feature bundles are auditable, benchmark-ready, and reproducible.
+- Organize repository structure and collaboration workflows to support safe parallel development, traceability, and reliable releases.
+- Publish clear, user-facing documentation and a central website for specs, examples, and benchmarking results.
+- Establish sustainable maintenance and community processes (triage, contribution guidance, compatibility policies) to support long-term adoption and growth."
+Cotomata,2025-11-18T22:16:42.422972+00:00,6,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251118_221642_Cotomata.png,"High-level goals and objectives for Cotomata:
+
+- Define and maintain canonical, versioned specifications for features, datasets, and benchmarks so artifacts are authoritative and reusable.
+- Build and operate robust benchmarking infrastructure and evaluation frameworks for comparing features, agents, and implementations.
+- Ensure deterministic, well-specified runtime semantics and interoperable interfaces so implementations behave consistently across environments.
+- Provide reproducible developer and CI environments to speed onboarding, prevent regressions, and enable trustworthy results.
+- Automate validation, testing, and release processes so dataset/feature bundles and benchmarks are auditable and reproducible.
+- Provide tooling and UIs for collaborative analysis, trajectory comparison, and human-in-the-loop evaluation of patches and agent behavior.
+- Publish clear user-facing documentation, benchmark results, and examples on a central website to enable adoption and transparency.
+- Establish sustainable community and maintenance processes (triage, contribution guidance, compatibility policies) to support long-term growth."
+Cotomata,2025-11-18T22:30:55.118137+00:00,7,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251118_223055_Cotomata.png,"High-level goals and objectives for Cotomata:
+
+- Define and maintain canonical, versioned specifications for features, datasets, and benchmarks so artifacts are authoritative, discoverable, and reusable.
+- Build an end-to-end benchmarking platform for comparing models, agents, and implementations on code-edit/conflict tasks, with standardized metrics, experiment tracking, and dashboards for cross-run comparison.
+- Provide reproducible developer and CI environments, releaseable dataset/feature bundles, and experiment artifacts to ensure results are reproducible and auditable.
+- Ensure deterministic, well-specified runtime semantics and interoperable APIs so implementations behave consistently across environments and toolchains.
+- Deliver human-in-the-loop tooling for annotation, patch review, trajectory/plan vs. execution comparison, and structured error/failure analysis to drive iterative improvement.
+- Automate validation, testing, and audit trails for datasets, benchmark runs, and releases to enable trustworthy results and simplify regression detection.
+- Publish clear, user-facing documentation, reproducible benchmark results, and example workflows to promote adoption and transparency.
+- Establish sustainable community and maintenance processes (triage, contribution guidelines, assignment/training workflows, and compatibility policies) to support long-term growth and collaboration."
+Cotomata,2025-11-19T07:27:28.764467+00:00,8,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_072728_Cotomata.png,"High-level goals and objectives for Cotomata:
+
+- Define and maintain canonical, versioned specifications for features, datasets, and benchmarks so artifacts are authoritative and reusable.
+- Build an end-to-end benchmarking platform to compare models, agents, and implementations on code-edit/conflict tasks with standardized metrics and cross-run comparison.
+- Ensure reproducibility and auditability by providing reproducible developer/CI environments and releaseable experiment artifacts.
+- Specify deterministic runtime semantics and interoperable APIs so implementations behave consistently across environments and toolchains.
+- Provide human-in-the-loop tooling for annotation, patch review, and structured error/failure analysis to drive iterative improvement.
+- Automate validation, testing, and audit trails for datasets, benchmark runs, and releases to enable trustworthy results and regression detection.
+- Publish clear user-facing documentation, reproducible benchmark results, and example workflows to promote adoption and transparency.
+- Establish sustainable community and maintenance processes (triage, contribution guidelines, release/compatibility policies, and onboarding workflows) to support long-term growth and collaboration."
+AutoMetrics Release,2025-11-18T22:07:40.053946+00:00,1,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_004302_AutoMetrics_Release.png,"High-level goals and objectives for AutoMetrics Release:
+- Determine and finalize which feature implementations to include in the release through rigorous comparison and evaluation.
+- Produce a release candidate that has passed required validation and quality checks (functional, performance, and failure-analysis validation).
+- Prepare release artifacts and communications: changelog, user-facing documentation, and developer notes for the chosen changes.
+- Deploy the release to the target environment and coordinate stakeholder/consumer notifications.
+- Establish post-release monitoring and feedback collection to measure impact and inform follow-up fixes or improvements."
+AutoMetrics Release,2025-11-18T22:10:27.066864+00:00,2,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_004302_AutoMetrics_Release.png,"High-level goals and objectives for AutoMetrics Release:
+- Decide which feature implementations will be included in the release through rigorous comparative evaluation.
+- Produce a validated release candidate that meets functional and performance quality standards and resolves known failure modes.
+- Provide reproducible evaluation artifacts and benchmarks so results can be independently verified.
+- Prepare and publish release artifacts and documentation: changelog, user-facing notes, developer/upgrade guidance, and test/benchmark instructions.
+- Deploy the release to the target environment(s) and coordinate rollout with stakeholders.
+- Establish post-release monitoring, feedback collection, and a plan for prioritized follow-up fixes or improvements.
+- Ensure maintainability and collaboration readiness (clear repo organization, CI/tests, and handoff notes for contributors and maintainers)."
+AutoMetrics Release,2025-11-18T22:10:27.069300+00:00,3,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_004302_AutoMetrics_Release.png,"High-level goals and objectives for AutoMetrics Release:
+
+- Complete a rigorous comparative evaluation of competing feature implementations and decide which changes to include in the release.
+- Produce a validated release candidate that meets functional, quality, and performance requirements, and that resolves known failure modes impacting reliability.
+- Ensure validation is reproducible: implement and run unit/integration tests, CI workflows, and benchmarks that verify behavior across edge cases and configurations.
+- Prepare and publish release artifacts and documentation, including changelog, user-facing notes, developer upgrade guidance, and test/benchmark instructions.
+- Coordinate and execute deployment/rollout to the target environment(s) with stakeholder communication and rollback/mitigation plans.
+- Establish post-release monitoring and feedback collection, plus a prioritized plan for follow-up fixes and improvements.
+- Maintain repository health and collaboration readiness through clear organization, CI/test coverage, and handoff notes for contributors and maintainers."
+AutoMetrics Release,2025-11-18T22:19:42.180323+00:00,4,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_004302_AutoMetrics_Release.png,"High-level goals and objectives for AutoMetrics Release:
+
+- Decide which competing feature implementations to accept for the release and resolve any merge conflicts or coordination issues between them.
+- Produce a validated release candidate that meets functional, reliability, and performance targets.
+- Ensure validation is reproducible by implementing and running automated unit/integration tests and CI workflows that cover key edge cases and configurations.
+- Prepare and publish release artifacts and documentation (changelog, user/developer upgrade guidance, and test/benchmark instructions).
+- Coordinate and execute deployment/rollout to target environments with stakeholder communication and rollback/mitigation plans.
+- Establish post-release monitoring and feedback channels and a prioritized plan for follow-up fixes and improvements.
+- Maintain repository health and collaboration readiness through clear organization, CI coverage, and handoff notes for contributors and maintainers."
+AutoMetrics Release,2025-11-18T22:19:42.182349+00:00,5,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_004302_AutoMetrics_Release.png,"High-level goals and objectives for AutoMetrics Release:
+
+- Select and finalize which competing feature implementations to accept for the release, resolving merge conflicts and coordination issues.
+- Produce a validated release candidate that meets functional, reliability, and performance targets.
+- Ensure validation is reproducible by implementing and running automated unit/integration tests and CI workflows that cover critical edge cases and configurations.
+- Create and publish release artifacts and documentation (changelog, upgrade guidance, release notes, and test/benchmark instructions).
+- Coordinate deployment and rollout with stakeholders, including communication, rollback plans, and mitigation procedures.
+- Establish post-release monitoring, feedback channels, and a prioritized plan for follow-up fixes and improvements.
+- Maintain repository health and collaboration readiness via clear organization, CI coverage, and handoff notes for contributors and maintainers."
+AutoMetrics Release,2025-11-18T22:27:49.678955+00:00,6,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_004302_AutoMetrics_Release.png,"High-level goals and objectives for AutoMetrics Release:
+
+- Decide which competing feature implementations will be accepted and resolve any merge/coordination conflicts for the release.
+- Produce a validated release candidate that meets the project’s functional, reliability, and performance targets.
+- Ensure validation is reproducible by implementing and running automated unit/integration tests and CI workflows that cover critical edge cases.
+- Prepare and publish release artifacts and documentation (changelog, upgrade guidance, release notes, and test/benchmark instructions).
+- Coordinate deployment and rollout with stakeholders, including communication, rollback plans, and mitigation procedures.
+- Establish post-release monitoring and feedback channels and a prioritized plan for follow-up fixes and improvements.
+- Maintain repository health and collaboration readiness through clear organization, CI coverage, and handoff documentation for contributors and maintainers."
+AutoMetrics Release,2025-11-18T22:34:05.280884+00:00,7,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_004302_AutoMetrics_Release.png,"High-level goals and objectives for AutoMetrics Release:
+
+- Select which competing feature implementations will be accepted for the release and resolve merge/coordination conflicts between alternatives.
+- Produce a validated release candidate that meets functional, reliability, and performance targets for core streaming and metric behaviors.
+- Ensure validation is reproducible by implementing and running automated unit and integration tests and CI workflows that cover critical edge cases (including streaming boundaries and buffer behavior).
+- Prepare and publish release artifacts and documentation: changelog, upgrade guidance, release notes, and reproducible test/benchmark instructions.
+- Coordinate release rollout with stakeholders: announce changes, define rollback and mitigation plans, and align on responsibilities.
+- Establish post-release monitoring and feedback channels and a prioritized plan for follow-up fixes and improvements based on observed issues and user feedback.
+- Maintain repository health and contributor readiness through clear organization, CI coverage, and handoff documentation to support future maintenance and contributions."
+AutoMetrics Release,2025-11-18T22:36:30.477731+00:00,8,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_004302_AutoMetrics_Release.png,"High-level goals and objectives for AutoMetrics Release:
+
+- Select the preferred competing feature implementations for the release based on validated evaluations and resolve any merge/coordination conflicts.
+- Produce a validated release candidate that meets functional, reliability, and performance targets for core streaming and metric behaviors.
+- Complete the evaluation process and decision record for feature tradeoffs (plans, execution quality, failure analyses) so selections are auditable and repeatable.
+- Ensure validation and evaluation are reproducible: implement and run automated unit/integration tests and CI workflows covering critical edge cases, and archive test results and evaluation artifacts.
+- Prepare and publish release artifacts and documentation: changelog, upgrade guidance, release notes, reproducible benchmark/test instructions, and contributor handoff docs.
+- Coordinate the release rollout with stakeholders: announce changes, define rollback and mitigation plans, and align roles and responsibilities.
+- Establish post-release monitoring, feedback channels, and a prioritized plan for follow-up fixes and improvements based on observed issues and user feedback.
+- Maintain repository health and contributor readiness through clear organization, CI coverage, and documented procedures to support future maintenance."
+AutoMetrics Release,2025-11-18T22:36:30.500641+00:00,9,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_004302_AutoMetrics_Release.png,"High-level goals and objectives for AutoMetrics Release:
+
+- Select and finalize the preferred competing feature implementations for the release based on validated evaluations and clear decision records.
+- Produce a validated release candidate that meets the project’s functional, reliability, and performance targets (with particular emphasis on core streaming and metrics behaviors).
+- Complete an auditable evaluation and decision record documenting plan vs. execution tradeoffs and failure analyses for chosen features.
+- Ensure validation and evaluation are reproducible and automated through tests and CI so results can be rerun and verified.
+- Prepare and publish release artifacts and user-facing documentation (changelog, upgrade guidance, release notes, and reproducible benchmark/test instructions).
+- Coordinate the release rollout with stakeholders, including communication, role alignment, and rollback/mitigation plans.
+- Establish post-release monitoring and feedback channels and a prioritized plan for follow-up fixes and improvements.
+- Maintain repository and contributor readiness by keeping CI coverage, contributor guidance, and release procedures current."
+AutoMetrics Release,2025-11-18T22:36:30.573686+00:00,10,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_004302_AutoMetrics_Release.png,"High-level goals and objectives for AutoMetrics Release:
+
+- Select and finalize which competing feature implementations will be included in the release based on validated evaluations and clear decision records.
+- Produce a validated release candidate that meets the project’s functional, reliability, and performance targets, with particular emphasis on core streaming behavior and metrics correctness.
+- Create an auditable, reproducible evaluation record documenting plan vs. execution tradeoffs and failure analyses that justify feature decisions.
+- Ensure validation and evaluation are reproducible and automated via sufficient unit/integration tests and CI workflows so results can be rerun and verified.
+- Prepare and publish release artifacts and user-facing documentation (changelog, upgrade guidance, release notes, and reproducible benchmark/test instructions).
+- Coordinate release rollout logistics with stakeholders (communication, responsibilities, and rollback/mitigation plans).
+- Establish post-release monitoring, feedback channels, and a prioritized backlog for follow-up fixes and improvements.
+- Ensure evaluation and annotation artifacts (the data and outputs that informed decisions) are discoverable, preserved, and accessible to collaborators for audit and future work."
+AutoMetrics Release,2025-11-18T22:42:38.571096+00:00,11,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_004302_AutoMetrics_Release.png,"High-level goals and objectives for the AutoMetrics Release:
+
+- Decide which competing feature implementations will be included in the release, backed by validated evaluations and clear decision records.
+- Produce a validated release candidate that meets the project’s functional, reliability, and performance targets, with particular emphasis on core streaming behavior and metrics correctness.
+- Ensure evaluation and validation are reproducible and automated (unit/integration tests and CI) so results can be rerun and independently verified.
+- Create an auditable record of evaluations, plan-vs-execution tradeoffs, and failure analyses that justify feature decisions.
+- Prepare and publish release artifacts and user-facing documentation (changelog, upgrade guidance, release notes, and reproducible benchmark/test instructions).
+- Coordinate release rollout logistics with stakeholders, including responsibilities, communication, and rollback/mitigation plans.
+- Establish post-release monitoring and feedback channels and maintain a prioritized backlog for follow-up fixes and improvements.
+- Preserve and make accessible the evaluation and annotation artifacts that informed release decisions for audit and future work."
+AutoMetrics Release,2025-11-18T22:45:22.568428+00:00,12,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_004302_AutoMetrics_Release.png,"High-level goals and objectives for the AutoMetrics Release:
+
+- Select and finalize which competing feature implementations will ship in the release, supported by validated evaluations and clear decision rationale.
+- Produce a validated release candidate that meets the project’s functional, reliability, performance, and data-integrity targets (with special attention to streaming behavior and metrics correctness).
+- Ensure verification is reproducible and automated: comprehensive unit/integration tests and CI so results can be rerun and independently validated.
+- Create an auditable record of evaluations, plan-vs-execution tradeoffs, and failure analyses that justify release decisions.
+- Prepare and publish release artifacts and user-facing materials: changelog, upgrade guidance, release notes, and reproducible reproduction/benchmark instructions.
+- Coordinate rollout logistics with stakeholders: responsibilities, communication plan, and rollback/mitigation procedures.
+- Establish post-release monitoring, feedback channels, and a prioritized backlog for follow-up fixes and improvements.
+- Preserve and make accessible the evaluation, annotation, and test artifacts that informed release decisions for future audits and development."
+AutoMetrics Release,2025-11-18T22:47:44.856958+00:00,13,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_004302_AutoMetrics_Release.png,"High-level goals and objectives for the AutoMetrics Release:
+
+- Decide which competing feature implementations will be included in the release, supported by validated evaluations and a documented decision rationale.
+- Deliver a validated release candidate that meets functional, performance, reliability, and data-integrity expectations, with particular emphasis on robust streaming/parquet behavior and metric correctness.
+- Ensure verification is reproducible and automated: comprehensive unit and integration tests, CI pipelines, and reproducible benchmark runs so results can be independently re-run and audited.
+- Create and preserve an auditable record of evaluations, plan-vs-execution tradeoffs, and failure analyses that justify release decisions and can be referenced later.
+- Prepare and publish release artifacts and user-facing materials: changelog, upgrade guidance, release notes, and reproducible reproduction/benchmark instructions.
+- Coordinate release rollout with stakeholders: assign responsibilities, communicate timelines and risks, and define rollback/mitigation procedures.
+- Establish post-release monitoring and feedback channels and maintain a prioritized backlog for follow-up fixes and improvements."
+AutoMetrics Release,2025-11-18T22:49:26.911014+00:00,14,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_004302_AutoMetrics_Release.png,"High-level goals and objectives for the AutoMetrics Release:
+
+- Finalize which competing feature implementations are selected for the release, with clear, documented decision rationales supported by validated evaluations and failure analyses.
+- Produce a release candidate that is functionally correct, performant, and reliable—with particular emphasis on robust streaming and Parquet behavior and correct metric computations.
+- Ensure verification is reproducible and automated: comprehensive unit and integration tests, CI workflows, and repeatable benchmark runs that enable independent auditing of results.
+- Consolidate and preserve an auditable record of evaluations, plan-vs-execution tradeoffs, and concise failure analyses to justify release decisions and enable future review.
+- Ensure annotation and evaluation artifacts are discoverable and archived so collaborators can reproduce and inspect submitted evaluations.
+- Prepare and publish release artifacts and user-facing materials: changelog, upgrade guidance, release notes, and reproducible reproduction/benchmark instructions.
+- Coordinate the rollout with stakeholders: assign responsibilities, communicate timelines and risks, and define rollback/mitigation procedures.
+- Establish post-release monitoring, feedback channels, and a prioritized backlog for follow-up fixes and improvements."
+AutoMetrics Release,2025-11-18T22:49:26.912573+00:00,15,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_004302_AutoMetrics_Release.png,"High-level goals and objectives for the AutoMetrics Release:
+
+- Decide and document which competing feature implementation(s) will be included in the release, with concise, evidence-backed decision rationale and failure analyses.
+- Produce a release candidate that is functionally correct, performant, and reliable—especially for streaming and Parquet-related behavior and metric computation.
+- Ensure verification is reproducible and automated: comprehensive unit/integration tests, CI workflows, and repeatable benchmark runs that enable independent auditing of results.
+- Consolidate and preserve an auditable record of evaluations, plan-vs-execution tradeoffs, and concise failure analyses to justify release decisions and enable future review.
+- Ensure annotation and evaluation artifacts are discoverable and archived so collaborators can reproduce and inspect submitted evaluations.
+- Prepare and publish release artifacts and user-facing materials: changelog, upgrade guidance, release notes, and reproducible reproduction/benchmark instructions.
+- Coordinate the rollout with stakeholders: assign responsibilities, communicate timelines and risks, and define rollback/mitigation procedures.
+- Establish post-release monitoring, feedback channels, and a prioritized backlog for follow-up fixes and improvements."
+AutoMetrics Release,2025-11-18T22:49:26.913641+00:00,16,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_004302_AutoMetrics_Release.png,"High-level goals and objectives for the AutoMetrics Release:
+
+- Select and justify which competing feature implementation(s) will be included in the release, with concise, evidence-backed decision rationale and failure analyses.
+- Produce a release candidate that is functionally correct, reliable, and performant—with particular attention to streaming and Parquet-related behavior.
+- Ensure verification is reproducible and automated: comprehensive unit/integration tests, CI workflows, and repeatable benchmark runs that enable independent auditing of results.
+- Consolidate and preserve an auditable record of evaluations, plan-vs-execution tradeoffs, and concise failure analyses to justify release decisions and support future review.
+- Make annotation and evaluation artifacts discoverable and archived so collaborators can reproduce and inspect submitted evaluations.
+- Prepare and publish release artifacts and user-facing materials: changelog, upgrade guidance, release notes, and reproducible reproduction/benchmark instructions.
+- Coordinate the rollout with stakeholders: assign responsibilities, communicate timelines and risks, and document rollback/mitigation procedures.
+- Establish post-release monitoring and feedback channels, and maintain a prioritized backlog for follow-up fixes and improvements."
+AutoMetrics Release,2025-11-18T22:49:26.914884+00:00,17,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_004302_AutoMetrics_Release.png,"High-level goals and objectives for the AutoMetrics Release:
+
+- Decide which competing feature implementation(s) to include in the release, with concise, evidence-backed rationale and failure analyses.
+- Produce a release candidate that is functionally correct, reliable, and performant—prioritizing robustness of streaming and Parquet-related behavior.
+- Ensure verification is reproducible and automated: comprehensive unit/integration tests, CI workflows, and repeatable benchmark runs that enable independent auditing.
+- Consolidate and preserve an auditable record of evaluations and plan-vs-execution tradeoffs so release decisions are transparent and reviewable.
+- Make annotation and evaluation artifacts discoverable and archived so collaborators can reproduce and inspect submitted evaluations.
+- Prepare and publish release artifacts and user-facing materials: changelog, upgrade guidance, release notes, and reproducible reproduction/benchmark instructions.
+- Coordinate the rollout with stakeholders: assign responsibilities, communicate timelines and risks, and document rollback/mitigation procedures.
+- Establish post-release monitoring and feedback channels and maintain a prioritized backlog for follow-up fixes and improvements."
+AutoMetrics Release,2025-11-19T00:24:02.140863+00:00,18,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_004302_AutoMetrics_Release.png,"High-level goals and objectives for the AutoMetrics Release:
+
+- Finalize the feature selection for the release by completing the feature comparison, authorizing one implementation for merge, and documenting the rationale and concise failure analyses for transparency.
+- Produce a release candidate that is functionally correct, robust, and performant—with particular emphasis on reliable streaming and Parquet-related behavior under real-world conditions.
+- Ensure verification is reproducible and automated: comprehensive unit/integration tests, CI workflows, and benchmark procedures that allow independent validation of correctness and performance.
+- Preserve an auditable record of evaluations, test results, and plan-vs-execution tradeoffs so release decisions are transparent and reviewable by collaborators and stakeholders.
+- Make annotation and evaluation artifacts discoverable and archived so collaborators can reproduce and inspect submitted evaluations and associated logs.
+- Prepare and publish release artifacts and user-facing materials: changelog, upgrade guidance, release notes, and reproducible reproduction/benchmark instructions.
+- Coordinate release rollout with stakeholders: assign responsibilities, communicate timelines and risks, and document rollback and mitigation procedures.
+- Establish post-release monitoring and feedback channels and maintain a prioritized backlog for post-release fixes and improvements."
+AutoMetrics Release,2025-11-19T00:29:13.402929+00:00,19,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_004302_AutoMetrics_Release.png,"High-level goals and objectives for the AutoMetrics Release:
+
+- Decide on and finalize the feature implementation to include in the release, documenting the rationale for the choice and concise failure analyses to justify the decision.
+- Produce a stable release candidate that is functionally correct, performant, and robust—with special emphasis on reliable streaming and Parquet-related behavior in real-world scenarios.
+- Ensure the release is verifiable and reproducible through automated unit/integration tests, CI workflows, and benchmark procedures that allow independent validation of correctness and performance.
+- Maintain an auditable, discoverable record of evaluations, test results, and plan-vs-execution tradeoffs so release decisions and quality assessments are transparent and reviewable.
+- Archive and publish evaluation and annotation artifacts, logs, and reproduction instructions so collaborators can reproduce and inspect submitted evaluations.
+- Prepare and publish release artifacts and user-facing materials (changelog, upgrade guidance, release notes, and reproducible reproduction/benchmark instructions).
+- Coordinate release rollout with stakeholders: assign responsibilities, communicate timelines and risks, and document rollback and mitigation procedures.
+- Establish post-release monitoring, feedback channels, and a prioritized backlog for fixes and follow-up improvements."
+AutoMetrics Release,2025-11-19T00:32:56.263960+00:00,20,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_004302_AutoMetrics_Release.png,"High-level goals and objectives for the AutoMetrics Release:
+
+- Select and finalize the feature set to ship, documenting the rationale and high-level failure analyses that justify the decision.
+- Produce a stable release candidate that is functionally correct, performant, and robust, with particular attention to reliable streaming behavior and Parquet-related workflows in real-world use.
+- Ensure the release is verifiable and reproducible by maintaining automated unit/integration tests, CI validation, and benchmark procedures that enable independent validation of correctness and performance.
+- Preserve an auditable, discoverable record of evaluations, test results, plan-vs-execution tradeoffs, and decision rationale so release choices are transparent and reviewable.
+- Archive and publish evaluation artifacts, logs, and reproducible reproduction instructions so collaborators can reproduce and inspect submitted evaluations and benchmarks.
+- Prepare and publish release artifacts and user-facing materials (changelog, upgrade guidance, release notes, and reproducible benchmark instructions).
+- Coordinate the release rollout with stakeholders: assign responsibilities, communicate timelines and risks, and document rollback and mitigation procedures.
+- Establish post-release monitoring and feedback channels plus a prioritized backlog for fixes and follow-up improvements."
+AutoMetrics Release,2025-11-19T00:36:00.566431+00:00,21,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_004302_AutoMetrics_Release.png,"High-level goals and objectives for the AutoMetrics Release:
+
+- Decide and document the final feature set to ship, including a concise, defensible rationale for the choice and the major tradeoffs considered.
+- Produce a stable release candidate that is functionally correct and robust in critical workflows (notably streaming and Parquet-related use cases).
+- Validate the release through reproducible verification: automated unit/integration tests, CI validation, and benchmark procedures that enable independent replication of results.
+- Preserve an auditable record of evaluations and decisions: store evaluation data, test results, failure analyses, and reproduction instructions so reviewers can inspect and reproduce findings.
+- Package and publish release artifacts and user-facing materials (changelog, release notes, upgrade guidance, and reproducible benchmark instructions).
+- Coordinate the rollout with stakeholders: assign responsibilities, communicate timelines and risks, and document rollback and mitigation procedures.
+- Establish post-release monitoring, feedback channels, and a prioritized backlog for fixes and follow-up improvements."
+AutoMetrics Release,2025-11-19T00:39:56.143703+00:00,22,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_004302_AutoMetrics_Release.png,"High-level goals and objectives for the AutoMetrics Release:
+
+- Decide, justify, and lock the final feature set to ship (choose between candidate implementations and document the rationale and major tradeoffs).
+- Build a stable release candidate that is functionally correct and robust for key workflows, with particular emphasis on streaming and Parquet-related paths.
+- Validate the release with reproducible verification: run and pass automated unit/integration tests, CI jobs, and benchmark procedures that others can replicate.
+- Preserve an auditable record of evaluation artifacts and decisions (evaluation results, failure analyses, logs, and repro instructions) so reviewers can inspect and reproduce findings.
+- Prepare and publish release artifacts and user-facing materials (changelog, release notes, upgrade guidance, and reproducible benchmark instructions).
+- Coordinate the release with stakeholders: assign owners, communicate timelines and risks, and document rollback and mitigation plans.
+- Establish post-release monitoring and feedback channels and maintain a prioritized backlog for fixes and follow-up improvements."
+AutoMetrics Release,2025-11-19T00:43:02.585553+00:00,23,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_004302_AutoMetrics_Release.png,"High-level goals and objectives for the AutoMetrics Release:
+
+- Decide and lock the final set of features to ship, with clear rationale and tradeoffs documented.
+- Produce a stable release candidate that is functionally correct and robust for core workflows (with special emphasis on streaming/parquet-related behavior).
+- Validate the release with reproducible verification: passing unit/integration tests, CI workflows, and benchmark procedures that others can run and reproduce.
+- Preserve an auditable record of evaluations and decisions (failure analyses, logs, test artifacts, and repro instructions) so reviewers can inspect and reproduce findings.
+- Prepare and publish release artifacts and user-facing materials: changelog, release notes, upgrade guidance, and reproducible benchmark instructions.
+- Coordinate the release with stakeholders: assign owners, communicate timelines and risks, and document rollback and mitigation plans.
+- Establish post-release monitoring and feedback channels and maintain a prioritized backlog for fixes and follow-ups."
+AutoMetrics Release,2025-11-19T00:43:02.589957+00:00,24,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_004302_AutoMetrics_Release.png,"High-level goals and objectives for the AutoMetrics Release:
+
+- Finalize the release scope: decide and lock the final set of features to ship, with documented rationale and tradeoffs.
+- Produce a stable release candidate that is functionally correct and robust for core workflows (with emphasis on streaming/parquet and other critical paths).
+- Validate the release through reproducible verification: passing unit/integration tests, CI workflows, and benchmark procedures that others can run and reproduce.
+- Preserve an auditable record of evaluations and decisions (failure analyses, logs, test artifacts, and repro instructions) to support review and reproducibility.
+- Prepare and publish release artifacts and end-user materials: changelog, release notes, upgrade guidance, and reproducible benchmark/run instructions.
+- Coordinate release execution with stakeholders: designate owners, communicate timelines and risks, and document rollout and rollback/mitigation plans.
+- Establish post-release monitoring, feedback channels, and a prioritized backlog for fixes and follow-ups."
+AutoMetrics Release,2025-11-19T00:43:02.594035+00:00,25,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_004302_AutoMetrics_Release.png,"High-level goals and objectives for the AutoMetrics Release:
+
+- Finalize release scope and ship decision: determine and lock the set of features to include, with documented rationale and tradeoffs.
+- Produce a stable, production-ready release candidate that is functionally correct and reliable for core workflows (priority on streaming/parquet and other critical data paths).
+- Validate the release through reproducible verification: passing unit/integration tests, CI, and benchmark procedures that others can run to reproduce results.
+- Preserve an auditable record of evaluations and decisions: save failure analyses, logs, test artifacts, and reproducible repro instructions for reviewer traceability.
+- Prepare and publish release artifacts and end-user materials: changelog, release notes, upgrade guidance, and reproducible run/benchmark instructions.
+- Coordinate execution with stakeholders: assign owners, confirm timelines, communicate risks, and document rollout and rollback/mitigation plans.
+- Establish post-release monitoring and feedback channels, and maintain a prioritized backlog for fixes and follow-ups driven by release telemetry and user feedback."
+AutoMetrics Release,2025-11-19T07:18:41.061509+00:00,26,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_004302_AutoMetrics_Release.png,"High-level goals and objectives for the AutoMetrics Release:
+
+- Finalize release scope and ship decision: choose and lock which features and fixes are included, with clear rationale and risk tradeoffs.
+- Produce a stable, production-ready release candidate that reliably supports core workflows and critical data paths.
+- Verify release correctness and quality through reproducible validation: comprehensive unit/integration tests, CI checks, and benchmark procedures others can run.
+- Preserve an auditable record of evaluations and decisions: capture failure analyses, logs, test artifacts, and reproducible repro instructions for reviewers and future audits.
+- Prepare and publish release artifacts and user-facing materials: changelog, release notes, upgrade guidance, and reproducible run/benchmark instructions.
+- Coordinate execution and ownership with stakeholders: assign owners, confirm timelines, communicate risks, and document rollout/rollback plans.
+- Establish post-release monitoring and feedback channels and maintain a prioritized backlog for fixes and follow-ups informed by telemetry and user feedback."
+AutoMetrics Release,2025-11-19T07:24:50.373962+00:00,27,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_004302_AutoMetrics_Release.png,"High-level goals and objectives for the AutoMetrics Release:
+
+- Decide and lock the release scope: select which feature(s)/fixes to include, document rationale and key risks, and finalize a ship/no-ship decision.
+- Produce a stable release candidate suitable for production: ensure core workflows and critical data paths are robust and backward-compatible.
+- Validate release correctness and reproducibility: provide comprehensive, runnable validation (unit/integration tests and CI checks) and clearly documented repro steps so others can reproduce results.
+- Ensure auditable evaluation and decision traces: capture failure analyses, evaluation JSONs/logs, test artifacts, and reproducible repro instructions for reviewers and future audits.
+- Prepare and publish consumer-facing release artifacts: changelog, release notes, upgrade guidance, and reproducible run/benchmark instructions.
+- Prepare a clean, reviewable PR and merge plan: produce a merge-ready diff, risk summary, recommended rollout (including feature flags/rollback guidance if needed), and required CI gating.
+- Coordinate owners, timeline, and communications: assign clear owners for shipping tasks, set milestones, and notify stakeholders of risks/timeline.
+- Establish post-release monitoring and backlog: define monitoring/feedback channels, triage process, and a prioritized backlog for fixes and follow-ups informed by telemetry and user feedback."
+AutoMetrics Release,2025-11-19T07:27:28.766015+00:00,28,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_004302_AutoMetrics_Release.png,"High-level goals and objectives for the AutoMetrics Release:
+
+- Decide and lock the release scope and risks: finalize which features and fixes will ship, document rationale, and confirm go/no-go decisions.
+- Produce a stable release candidate ready for production: ensure core workflows, APIs, and data paths are robust, backward-compatible, and safe to deploy.
+- Validate correctness and reproducibility: provide comprehensive, runnable validation (unit/integration tests and CI gating) and clear repro instructions so results can be independently reproduced.
+- Ensure auditable evaluation and data integrity: capture and preserve evaluation artifacts, logs, and exported annotation/evaluation data so reviewers can trace decisions and outcomes.
+- Prepare consumer-facing release artifacts: write changelog, release notes, upgrade guidance, and reproducible benchmark/run instructions.
+- Deliver a clean merge and rollout plan: produce a reviewable PR, risk summary, recommended rollout (feature flags/rollback guidance where appropriate), and required CI checks.
+- Coordinate owners, timeline, and communications: assign owners for release tasks, set milestones, and notify stakeholders of status and risks.
+- Establish post-release monitoring and backlog: define monitoring/feedback channels, rollout validation metrics, and a prioritized backlog for follow-ups and urgent fixes."
+Personalization Dataset Collection,2025-11-19T00:43:02.592281+00:00,1,,"High-level goals
+- Translate the ""Less is More: Improving LLM Alignment via Preference Data Selection"" paper into a reproducible, experiment-ready implementation that applies dual‑margin/data‑selection to Direct Preference Optimization (DPO).
+- Build a repeatable dataset‑collection and preprocessing pipeline for preference data tailored to personalization experiments, including clear selection rules and quality checks.
+- Design and run a prioritized set of experiments to evaluate how data selection affects alignment and personalization metrics, and compare against baseline training strategies.
+- Produce concise, meeting‑ready artifacts: a 1–2 paragraph technical summary of the paper, algorithm/pseudocode for the selection method, an actionable implementation checklist, recommended hyperparameters/training settings, and evaluation criteria/results reporting templates.
+- Integrate findings with the team's existing Trajectory Comparison / feature evaluation workflow (planning, execution, merge/test outputs) so results inform feature design and code changes.
+
+Key objectives / deliverables
+- Technical summary: 1–2 paragraph distillation of the paper’s core idea, intuition, and expected impact on alignment/personalization.
+- Reproducible method spec: clear algorithmic description (pseudocode) of dual‑margin/data‑selection for DPO and how to apply it to preference datasets.
+- Dataset pipeline: specifications for required datasets, collection protocols, filtering/selection rules, preprocessing steps, and data quality checks.
+- Training recipe: recommended hyperparameters, optimizer/training settings, and compute/data requirements for running DPO experiments with selected data.
+- Evaluation plan: metrics (alignment, preference accuracy, personalization measures, failure analysis), experiment variants, and a prioritized roadmap for runs to present at the upcoming meeting.
+- Code and artifacts: scripts/notebooks to generate selected datasets, train models, and produce standard evaluation reports; concise instructions to reproduce key experiments.
+
+Success criteria
+- A reproducible experiment demonstrating measurable improvement (or clear diagnostic results) when using the paper’s data‑selection approach versus baseline sampling.
+- Ready‑to‑present materials (summary + checklist + prioritized experiment plan) that the team can use to implement, test, and decide next steps in feature development and integration."
+Personalization Dataset Collection,2025-11-19T05:29:48.174245+00:00,2,,"High-level goals
+- Implement and evaluate the paper ""Less is More: Improving LLM Alignment via Preference Data Selection"" in the team's DPO (Direct Preference Optimization) workflow to test whether targeted preference-data selection improves alignment and personalization.
+- Create a repeatable dataset‑collection and preprocessing pipeline for preference data tailored to personalization research, with explicit selection rules and quality checks.
+- Design and run a prioritized experimental plan that measures the effect of data‑selection on alignment, preference accuracy, and personalization metrics versus baseline sampling strategies.
+- Produce concise, meeting‑ready artifacts that enable rapid team decisions: a short technical summary of the paper, a clear method specification (algorithm/pseudocode), an actionable implementation checklist, recommended training settings, and standardized evaluation/reporting templates.
+- Integrate results and artifacts into the team's Trajectory Comparison / feature evaluation workflow so experimental findings directly inform feature design and code changes.
+
+Key deliverables
+- Short (1–2 paragraph) technical summary of the paper and expected impact.
+- Reproducible method specification for the paper’s data‑selection approach applied to DPO (algorithmic description/pseudocode).
+- Dataset pipeline specification: required data sources, selection/filtering criteria, preprocessing and quality checks.
+- Prioritized experiment plan and training recipe (high‑level hyperparameters, compute/data scale guidance).
+- Standardized evaluation metrics and reporting templates for alignment and personalization analyses.
+- Code artifacts and instructions sufficient for reproducing core experiments.
+
+Success criteria
+- Reproducible experiments that demonstrate improved alignment or provide clear diagnostic evidence about the effect of data selection compared to baseline sampling.
+- Ready‑to‑present materials and code enabling the team to implement, reproduce, and act on the findings in follow‑up feature work."
+Personalization Dataset Collection,2025-11-19T05:32:52.912925+00:00,3,,"High-level goals and objectives
+
+- Implement and evaluate the ""Less is More: Improving LLM Alignment via Preference Data Selection"" approach within the team's DPO (Direct Preference Optimization) workflow to determine if targeted preference‑data selection improves alignment and personalization.
+
+- Build a repeatable dataset collection and ingestion pipeline for personalization experiments: acquire arena‑specific CodeClash trajectories from collaborators (AWS/S3), standardize into the AutoMetrics/JSONL schema, and run initial sanity/baseline scoring to verify pipeline compatibility.
+
+- Translate the paper's method into an actionable implementation spec for DPO (algorithm/pseudocode) and provide a short, meeting‑ready technical summary that enables rapid team decisions.
+
+- Design and prioritize a compact experimental plan that measures the effect of data‑selection vs. baseline sampling on alignment, preference accuracy, and personalization metrics; include evaluation criteria and minimal training/compute guidance to run reproducible comparisons.
+
+- Integrate the dataset pipeline and experimental outputs into the team's Trajectory Comparison / feature evaluation workflow so results directly inform downstream feature design and code changes.
+
+- Produce shareable artifacts (implementation spec, dataset schema, experiment plan, and evaluation templates) sufficient for the team to reproduce core experiments and decide on follow‑up work."
+Personalization Dataset Collection,2025-11-19T05:32:52.915516+00:00,4,,"High-level goals and objectives
+
+- Acquire and stage arena‑specific CodeClash trajectory data made available by collaborators (AWS/S3 subset) and confirm access, provenance, and storage requirements for reproducible experiments.
+
+- Build a repeatable ingestion pipeline that standardizes raw trajectories into the team's evaluation schema (AutoMetrics/JSONL or equivalent) and produces labeled inputs/targets (e.g., trajectory → winner/outcome) for downstream modeling and analysis.
+
+- Implement and validate the ""Less is More"" preference data‑selection approach within the team's DPO workflow: translate the paper's dual‑margin/data‑selection idea into an implementation spec and integrate it with training code.
+
+- Produce a concise, meeting‑ready technical summary (1–2 paragraphs) of the paper plus an actionable implementation checklist (algorithm/pseudocode, required data/preprocessing, recommended hyperparameters, and minimal compute guidance) to enable rapid team decisions.
+
+- Design and prioritize a compact experiment plan that compares data‑selection vs. baseline sampling for alignment and personalization: define evaluation metrics (preference accuracy, alignment proxies, personalization signals), success criteria, and an ordered set of reproducible experiments with minimal viable compute.
+
+- Run initial sanity/baseline analyses (predictive signals from trajectories to winner) to surface candidate features and signals that may inform data‑selection and personalization choices.
+
+- Integrate results, artifacts, and metrics into the Trajectory Comparison / feature evaluation workflow so findings directly inform downstream feature design and code changes.
+
+- Deliver shareable, reproducible artifacts (implementation spec, dataset schema and ingestion code, experiment plan, evaluation templates, and summary of initial results) sufficient for the team to reproduce core experiments and decide on follow‑up work."
+Background Agents (Precursor),2025-11-19T00:58:47.305296+00:00,1,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_005847_Background_Agents_Precursor.png,"High-level goals and objectives:
+
+- Unblock and restore the precursor Background Agents (GUM) developer experience by resolving the ImportError/regression that prevents GUM from running without a Calendar setup.
+- Provide a minimal, safe fix (short-lived guard/feature-flag) to allow local development and testing while a full upstream resolution is implemented.
+- Merge or reconcile upstream changes (including any pending PRs) to ensure observers and APIs are consistent and compatible.
+- Harden the repository for contributors: add reproducible setup instructions, a simple test/CI guard for the Calendar observer, and developer documentation to prevent similar breakages.
+- Deliver a stable precursor prototype that collaborators can run and iterate on (suitable for testing, demos, and further development)."
+Background Agents (Precursor),2025-11-19T05:22:10.385323+00:00,2,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_052210_Background_Agents_Precursor.png,"High-level goals and objectives:
+
+- Restore a working developer experience for the precursor Background Agents (GUM) so collaborators can run and iterate on the code locally.
+- Provide a minimal, safe short-term fix to unblock local development while a permanent upstream resolution is pursued.
+- Reconcile and merge upstream changes so observers and APIs are consistent and stable across versions.
+- Improve contributor reliability and onboarding by adding clear setup instructions, tests/CI safeguards, and documentation.
+- Deliver a stable precursor prototype that collaborators can use for testing, demos, and further feature development."
+Background Agents (Precursor),2025-11-19T05:26:37.388162+00:00,3,,"High-level goals and objectives:
+
+- Unblock local development quickly so contributors can run the precursor Background Agents (GUM) codebase without requiring a calendar setup.
+- Apply a minimal, safe short-term safeguard (non-invasive change) that preserves current behavior for users with calendars while enabling others to work.
+- Reconcile and merge upstream changes so observers and public APIs are consistent and stable across versions.
+- Improve developer onboarding and contributor reliability through clear setup docs, environment guidance, and versioning or dependency guidance.
+- Add tests and CI safeguards to catch regressions related to observer imports and runtime dependencies before they reach contributors.
+- Deliver a stable precursor prototype that collaborators can use for testing, demos, and further feature development.
+- Maintain clear communication and coordination with upstream maintainers and core collaborators to transition the short-term fix into a permanent solution."
+Background Agents (Precursor),2025-11-19T05:42:54.163015+00:00,4,,"High-level goals and objectives:
+
+- Immediate unblock: implement a minimal, safe safeguard so contributors can run the precursor Background Agents (GUM) locally without a calendar setup (e.g., guarded import / try/except / feature flag) and land a small, easily reviewable PR to restore developer productivity.
+
+- Short-term reconciliation: identify and merge or adapt upstream changes (the unmerged PRs affecting gum.observers) so observer imports and public APIs are consistent across versions and no longer cause runtime ImportErrors.
+
+- Stability and correctness: add targeted tests and CI checks to catch observer/import regressions and dependency mismatches before they reach contributors.
+
+- Developer onboarding and reproducibility: improve setup docs, environment/versioning guidance, and local verification steps so new contributors can get productive quickly and reproduce known-good runs.
+
+- Release and compatibility management: define clear versioning or dependency constraints and a small release/process to ensure downstream users get a stable, compatible precursor build.
+
+- Collaboration and coordination: maintain close communication with core collaborators and upstream maintainers (PR reviews, testing, and merge coordination), and ensure required data/cloud access is arranged for integration tests and demos.
+
+- Deliverable: a stable precursor prototype (with the short-term guard integrated and follow-up reconciliations underway) that teammates can run for testing, demos, and further feature development."
+Background Agents (Precursor),2025-11-19T06:13:54.500707+00:00,5,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_061354_Background_Agents_Precursor.png,"High-level goals and objectives:
+
+- Unblock developer productivity so contributors can run the precursor Background Agents (GUM) locally and continue development and testing.
+
+- Reconcile and stabilize upstream observer APIs and repository changes to prevent runtime incompatibilities across versions.
+
+- Improve reliability and correctness through targeted testing and continuous-integration checks that catch observer/import and dependency regressions early.
+
+- Enhance developer onboarding and reproducibility by clarifying setup, environment/version guidance, and verification steps.
+
+- Define and enforce release and dependency compatibility practices so downstream users receive stable, predictable builds.
+
+- Maintain active collaboration and coordination with core contributors and upstream maintainers to drive PR review, merges, and integration testing.
+
+- Deliver a stable precursor prototype that teammates can run for integration testing, demos, and further feature development."
+Background Agents (Precursor),2025-11-19T06:36:51.169249+00:00,6,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_063651_Background_Agents_Precursor.png,"High-level goals and objectives:
+
+- Unblock developer productivity by ensuring the precursor Background Agents (GUM/Precursor) can run locally for contributors even when optional upstream observers are missing or changed.
+
+- Stabilize and reconcile observer APIs and upstream repository changes to prevent runtime incompatibilities across versions.
+
+- Improve runtime reliability and scalability by moving heavy observation/screenshot processing off the critical event path and adding robust backpressure/coalescing strategies to avoid overload.
+
+- Establish targeted test coverage and CI checks that catch observer/import and dependency regressions early.
+
+- Improve developer onboarding and reproducibility with clear setup, environment/version guidance, and simple verification steps.
+
+- Define and enforce release and dependency compatibility practices so downstream users receive stable, predictable builds.
+
+- Maintain active collaboration with core contributors and upstream maintainers to drive timely PR review, merges, and integration testing.
+
+- Deliver a stable precursor prototype suitable for integration testing, demos, and further feature development."
+Background Agents (Precursor),2025-11-19T06:39:55.016577+00:00,7,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_063955_Background_Agents_Precursor.png,"High-level goals and objectives:
+
+- Ensure contributors can run the Background Agents (Precursor/GUM) locally and reliably, even when optional upstream observers or versions differ.
+
+- Stabilize observer APIs and dependency compatibility to prevent runtime import failures and cross-version regressions.
+
+- Improve runtime reliability and scalability by decoupling heavy observation work from the critical event path and introducing backpressure/coalescing strategies.
+
+- Establish test coverage and CI checks that detect observer/import and dependency regressions early.
+
+- Improve developer onboarding and reproducibility with clear setup guidance, versioning recommendations, and simple verification steps.
+
+- Maintain active coordination with upstream maintainers and core contributors to accelerate PR review, integration, and compatibility fixes.
+
+- Deliver a stable precursor prototype suitable for integration testing, demos, and further feature development."
+Background Agents (Precursor),2025-11-19T06:42:57.005085+00:00,8,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_064257_Background_Agents_Precursor.png,"High-level goals and objectives:
+
+- Ensure contributors can run the Background Agents (Precursor/GUM) locally and reliably regardless of optional upstream observers or version differences.
+
+- Stabilize observer APIs and dependency compatibility to prevent runtime import failures and cross-version regressions.
+
+- Improve runtime reliability and scalability by decoupling heavy observation work from critical event paths and adding robust backpressure/handling strategies.
+
+- Establish automated test coverage and CI checks that surface observer/import and dependency regressions early.
+
+- Improve developer onboarding and reproducibility with clear setup guidance, versioning recommendations, and simple verification steps.
+
+- Maintain active coordination with upstream maintainers and core contributors to accelerate PR review, integration, and compatibility fixes.
+
+- Deliver a stable precursor prototype suitable for integration testing, demos, and further feature development."
+Background Agents (Precursor),2025-11-19T06:45:08.747136+00:00,9,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_064508_Background_Agents_Precursor.png,"High-level goals and objectives:
+
+- Ensure the Background Agents (Precursor/GUM) codebase can be run and developed reliably in local environments regardless of optional upstream observers or version differences.
+
+- Stabilize observer APIs and dependency compatibility to prevent runtime import failures and cross-version regressions.
+
+- Improve runtime reliability and scalability by decoupling heavy observation work from critical event paths and implementing robust backpressure/coalescing strategies.
+
+- Establish automated test coverage and CI checks that detect observer/import and dependency regressions early.
+
+- Improve developer onboarding and reproducibility through clear setup guidance, versioning recommendations, and simple verification steps.
+
+- Maintain active coordination with upstream maintainers and core contributors to accelerate PR review, integration, and compatibility fixes.
+
+- Deliver a stable precursor prototype suitable for integration testing, demos, and further feature development."
+Background Agents (Precursor),2025-11-19T06:45:08.750470+00:00,10,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_064508_Background_Agents_Precursor.png,"High-level goals and objectives:
+
+- Ensure the precursor Background Agents codebase is runnable and maintainable in local development environments without requiring optional upstream services or observers.
+
+- Stabilize observer APIs and dependency compatibility to prevent import/runtime failures and cross-version regressions.
+
+- Improve runtime reliability and scalability by decoupling costly observation work from critical event paths and adopting robust backpressure/coalescing patterns.
+
+- Provide strong automated test coverage and CI checks that detect observer/import and performance regressions early.
+
+- Improve developer onboarding and reproducibility through clear setup guidance, versioning recommendations, and simple verification steps.
+
+- Add observability and lightweight metrics (latency, queue/backlog, dropped events) to support debugging and performance tuning.
+
+- Maintain active coordination with upstream maintainers and core contributors to accelerate PR review, integration, and compatibility fixes.
+
+- Deliver a stable precursor prototype suitable for integration testing, demos, and further feature development."
+Background Agents (Precursor),2025-11-19T06:59:31.720074+00:00,11,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_065931_Background_Agents_Precursor.png,"High-level goals and objectives:
+
+- Ensure the Background Agents (Precursor) codebase can be run reliably in local development and CI environments without requiring optional upstream services or observers.
+
+- Support configurable/optional components so the system can start and operate even when certain external observers or integrations are unavailable.
+
+- Stabilize observer APIs and dependency compatibility to prevent import/runtime failures and cross-version regressions.
+
+- Improve runtime reliability and scalability by decoupling expensive observation work from critical event paths and adopting robust backpressure/coalescing patterns.
+
+- Add observability and lightweight metrics (e.g., latency, queue/backlog, dropped events) to enable faster debugging and performance tuning.
+
+- Provide strong automated test coverage and CI checks that catch observer/import and performance regressions early.
+
+- Improve developer onboarding and reproducibility through clear setup guidance, versioning recommendations, and simple verification steps.
+
+- Maintain active coordination with upstream maintainers and core contributors to accelerate reviews and compatibility fixes.
+
+- Deliver a stable precursor prototype suitable for integration testing, demos, and further feature development."
+Background Agents (Precursor),2025-11-19T07:15:02.654590+00:00,12,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_071502_Background_Agents_Precursor.png,"High-level goals and objectives:
+
+- Ensure the Background Agents (Precursor) system can start and run reliably in local development and CI without requiring optional upstream services or observers.
+
+- Make optional integrations and observers (e.g., GUM Calendar) configurable or opt-in so the system degrades gracefully when external components are unavailable.
+
+- Improve runtime reliability and scalability by decoupling expensive observation processing from critical event paths and adopting backpressure/coalescing patterns to avoid processing spikes and API overload.
+
+- Add lightweight observability and metrics (queue/backlog sizes, processing latency, dropped events, error rates) to make performance regressions and operational issues diagnosable quickly.
+
+- Strengthen automated test coverage and CI checks to catch observer/import regressions and performance-related failures early.
+
+- Improve developer onboarding and reproducibility with clear setup guidance, environment flags for disabling optional features, and simple verification steps for common workflows.
+
+- Coordinate with upstream maintainers and core contributors to resolve dependency/observer API changes and to accelerate necessary compatibility fixes.
+
+- Deliver a stable precursor prototype suitable for integration testing, demos, and iterative feature development."
+Background Agents (Precursor),2025-11-19T07:35:57.268714+00:00,13,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_073557_Background_Agents_Precursor.png,"High-level goals and objectives:
+
+- Ensure the Background Agents (Precursor) system starts and runs reliably in local development and CI environments without depending on optional upstream services or observers.
+
+- Make optional integrations and observers configurable or opt-in so the system degrades gracefully when external components are missing or incompatible.
+
+- Improve runtime scalability and resilience by decoupling expensive observation processing from critical event paths and adopting backpressure/coalescing patterns to prevent processing spikes and downstream API overload.
+
+- Provide lightweight observability (queue/backlog sizes, processing latency, dropped events, error rates) so operational problems and regressions can be diagnosed quickly.
+
+- Strengthen automated test coverage and CI checks to catch import/observer regressions and performance-related failures early.
+
+- Improve developer onboarding and reproducibility with clear environment flags, setup guidance, and simple verification steps for common workflows.
+
+- Coordinate with upstream maintainers and core contributors to resolve dependency and observer API changes and maintain compatibility.
+
+- Deliver a stable precursor prototype suitable for integration testing, demos, and iterative feature development."
+Background Agents (Precursor),2025-11-19T07:35:57.270261+00:00,14,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_073557_Background_Agents_Precursor.png,"High-level goals and objectives:
+
+- Ensure the Background Agents (Precursor) system starts and runs reliably in local development and CI environments even when optional upstream services or observers (e.g., calendar integrations) are missing or incompatible.
+
+- Make external integrations and observers configurable and opt-in so the system degrades gracefully and remains operable without optional components.
+
+- Improve runtime resilience and scalability by decoupling expensive observation work from critical event paths and adopting backpressure/coalescing patterns to prevent processing spikes and downstream API overload.
+
+- Provide lightweight observability (queue/backlog sizes, processing latency, dropped events, error rates) to diagnose operational issues and regressions quickly.
+
+- Strengthen automated test coverage and CI checks to detect import/observer regressions and performance-related failures early.
+
+- Improve developer experience and reproducibility with clear environment configuration, feature flags, and simple verification steps for common local workflows.
+
+- Coordinate with upstream maintainers and core contributors to resolve dependency and observer API changes and maintain compatibility.
+
+- Deliver a stable precursor prototype suitable for integration testing, demos, and iterative feature development."
+Background Agents (Precursor),2025-11-19T07:49:27.803381+00:00,15,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_074927_Background_Agents_Precursor.png,"High-level goals and objectives:
+
+- Ensure the Background Agents (Precursor) system starts and runs reliably in local development and CI environments even when optional upstream services or observers (e.g., calendar integrations) are absent or incompatible.
+
+- Make external integrations and observers configurable and opt-in so the system degrades gracefully and remains operable without optional components.
+
+- Improve runtime resilience and scalability by decoupling expensive observation work from critical event paths and adopting backpressure/coalescing patterns to prevent processing spikes and downstream API overload.
+
+- Provide lightweight observability (queue/backlog sizes, processing latency, dropped events, error rates) to diagnose operational issues and regressions quickly.
+
+- Strengthen automated test coverage and CI checks to detect import/observer regressions and performance-related failures early.
+
+- Improve developer experience and reproducibility with clear environment configuration, feature flags, and simple verification steps for common local workflows.
+
+- Coordinate with upstream maintainers and core contributors to resolve dependency and observer API changes and maintain compatibility.
+
+- Deliver a stable precursor prototype suitable for integration testing, demos, and iterative feature development."
+Background Agents (Precursor),2025-11-19T08:02:05.161903+00:00,16,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_080205_Background_Agents_Precursor.png,"High-level goals and objectives:
+
+- Ensure the precursor Background Agents system starts and runs reliably in local development and CI, even when optional upstream services or observers are missing or incompatible.
+
+- Make external integrations and observers configurable and opt-in so the system degrades gracefully without optional components.
+
+- Increase runtime resilience and scalability by decoupling expensive observation work from critical event paths and adopting backpressure/coalescing patterns to prevent processing spikes and downstream overload.
+
+- Provide lightweight observability (e.g., backlog/latency/error metrics) to diagnose operational issues and regressions quickly.
+
+- Strengthen automated test coverage and CI checks to detect import/observer regressions and performance-related failures early.
+
+- Improve developer experience and reproducibility with clear environment configuration and simple verification steps for common local workflows.
+
+- Coordinate with upstream maintainers and core contributors to maintain compatibility with dependent observer APIs.
+
+- Deliver a stable precursor prototype suitable for integration testing, demos, and iterative feature development."
+Background Agents (Precursor),2025-11-19T09:26:32.425264+00:00,17,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_092632_Background_Agents_Precursor.png,"High-level goals and objectives:
+
+- Ensure the precursor Background Agents system reliably starts and operates in local development and CI even when optional upstream services or observers are unavailable or incompatible.
+
+- Make external integrations and observers configurable and opt-in so the system degrades gracefully without optional components.
+
+- Improve runtime resilience and scalability by decoupling expensive observation/processing work from critical event paths and adopting backpressure/coalescing patterns to avoid spikes and downstream overload.
+
+- Provide lightweight observability (backlog, latency, error metrics and logs) to detect, triage, and regress operational issues quickly.
+
+- Strengthen automated test coverage and CI checks to catch import/observer regressions and performance-related failures early.
+
+- Improve developer experience and reproducibility through clear environment configuration, simple local verification steps, and documentation for common workflows.
+
+- Coordinate with upstream maintainers and core contributors to maintain compatibility and manage breaking changes in dependent observer APIs.
+
+- Deliver a stable precursor prototype suitable for integration testing, demos, and iterative feature development."
+Misc,2025-11-19T05:32:52.914516+00:00,1,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_053252_Misc.png,"High-level goals and objectives:
+- Curate, synthesize, and publish a polished reference of ""good science"" / exemplar CS/ML papers with concise summaries and actionable takeaways for team use.
+- Obtain, manage, and analyze the CodeClash tournament dataset to develop robust metrics and models that reveal which signals predict match outcomes.
+- Stabilize and document the data-processing and analysis tooling (including sharing/permissions workflows) to enable reproducible pipelines and smooth collaboration across the team.
+- Produce shareable outputs (internal report, presentations, or prototypes) that communicate findings and support follow-up experiments or publications."
+Misc,2025-11-19T06:54:48.332543+00:00,2,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_065448_Misc.png,"High-level goals and objectives:
+- Curate and publish a polished ""Good Science"" reference (document and slide deck) with concise summaries, actionable takeaways, and a reviewable presentation for the team.
+- Obtain, organize, and manage the CodeClash tournament dataset and related logs, ensuring proper access/sharing, to enable analysis at scale.
+- Develop robust metrics and predictive models that identify signals predictive of match outcomes and inform follow-up experiments.
+- Stabilize, test, and document the data-processing and analysis tooling and CI/test runner to ensure reproducible pipelines and smooth collaboration.
+- Produce shareable outputs (internal reports, presentations, code/prototypes, and potential publication drafts) that clearly communicate findings and support next steps."
+Misc,2025-11-19T06:59:31.689341+00:00,3,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_065931_Misc.png,"High-level goals and objectives:
+- Finalize and publish the ""Good Science"" reference materials (document + slide deck) with concise summaries and actionable takeaways for the team.
+- Obtain, curate, and manage the CodeClash tournament dataset and related logs, ensuring secure access and organization for large-scale analysis.
+- Develop and validate metrics and predictive models to identify signals predictive of match outcomes and inform follow-up experiments.
+- Stabilize and maintain reproducible data-processing pipelines and CI/test infrastructure to ensure reliable testing and collaboration.
+- Produce shareable deliverables (internal reports, reproducible code/prototypes, presentations, and publication-ready drafts) that communicate findings and next steps."
+Misc,2025-11-19T06:59:31.692886+00:00,4,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_065931_Misc.png,"High-level goals and objectives:
+- Finalize, polish, and publish the ""Good Science"" reference materials (document and slide deck) so the team has concise paper summaries and actionable takeaways.
+- Acquire, secure, and organize the CodeClash tournament dataset and associated logs for large-scale analysis and reproducible access.
+- Develop, evaluate, and validate metrics and predictive models to identify signals predictive of match outcomes and to guide follow-up experiments.
+- Stabilize and maintain reproducible data-processing pipelines and continuous-integration/test infrastructure to ensure reliable development and collaboration.
+- Produce shareable deliverables — including internal reports, reproducible code/prototypes, presentations, and publication-ready drafts — that communicate findings and next steps."
+Misc,2025-11-19T06:59:31.739995+00:00,5,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_065931_Misc.png,"High-level goals and objectives:
+- Finalize and publish the ""Good Science"" reference materials (document and slide deck) to provide concise paper summaries and actionable takeaways for the team.
+- Acquire, secure, and organize the CodeClash/CodeConflict dataset and associated logs to enable large-scale, reproducible analysis.
+- Develop, evaluate, and validate metrics and predictive models to identify signals predictive of match outcomes and to guide follow-up experiments.
+- Stabilize and maintain reproducible data-processing pipelines and continuous-integration / test infrastructure to ensure reliable development and collaboration.
+- Produce shareable, polished deliverables — including reproducible code/prototypes, internal reports, presentation materials, and publication-ready drafts — that clearly communicate findings and next steps."
+Misc,2025-11-19T07:18:41.013486+00:00,6,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_071841_Misc.png,"High-level goals and objectives:
+- Finalize and publish the ""Good Science"" reference materials (document and slide deck) to provide concise paper summaries, actionable takeaways, and a maintainable reference for the team.
+- Acquire, secure, and organize the CodeClash/CodeConflict dataset and associated logs so large-scale, reproducible analyses and experiments can be run and shared.
+- Design, develop, and validate evaluation metrics and predictive models to surface signals predictive of match outcomes and to inform follow-up experiments.
+- Stabilize and maintain reproducible data-processing pipelines and continuous-integration/test infrastructure to ensure reliable development, evaluation, and collaboration.
+- Produce polished, shareable deliverables — reproducible code and prototypes, internal reports, presentations, and publication-ready drafts — that clearly communicate findings and next steps."
+Misc,2025-11-19T07:32:51.929427+00:00,7,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_052948_Misc.png,"High-level goals and objectives:
+- Finalize and publish the ""Good Science"" reference materials (document and slide deck) as a concise, maintainable resource of paper summaries and actionable takeaways.
+- Acquire, secure, and organize the CodeClash/CodeConflict datasets and logs to enable large-scale, reproducible experiments.
+- Design and validate evaluation metrics and predictive models to surface signals predictive of match outcomes and guide follow-up experiments.
+- Stabilize reproducible data-processing pipelines and continuous-integration / test infrastructure to ensure reliable development and evaluation.
+- Produce polished, shareable deliverables — reproducible code and prototypes, internal reports and presentations, and publication-ready drafts — that clearly communicate results and next steps."
+Misc,2025-11-19T07:35:57.259825+00:00,8,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_073557_Misc.png,"High-level goals and objectives:
+- Finalize and publish the ""Good Science"" reference materials (document and slide deck) as a concise, maintainable resource of paper summaries and actionable takeaways.
+- Obtain, secure, and organize the CodeClash / CodeConflict datasets and logs to enable large-scale, reproducible experiments.
+- Design, validate, and standardize evaluation metrics and predictive models to surface signals predictive of match outcomes and inform follow-up experiments.
+- Stabilize reproducible data-processing pipelines and continuous-integration / test infrastructure to ensure reliable development and evaluation.
+- Document and maintain reproducible installation and environment procedures so collaborators can reproduce experiments and runs across platforms.
+- Produce polished, shareable deliverables — reproducible code and prototypes, internal reports and presentations, and publication-ready drafts — that clearly communicate results and next steps."
+Misc,2025-11-19T07:35:57.263605+00:00,9,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_073557_Misc.png,"High-level goals and objectives:
+- Finalize and publish the ""Good Science"" reference materials (document and slide deck) as concise, maintainable resources of paper summaries and actionable takeaways.
+- Unblock and document a reproducible development environment and installation workflow so collaborators can run tests and experiments across platforms.
+- Stabilize the test runner, aggregation/evaluation pipelines, and CI processes to ensure reliable, repeatable experiment execution.
+- Obtain, organize, and secure the CodeClash / CodeConflict datasets and logs to support large-scale, reproducible analyses.
+- Define and validate robust evaluation metrics and predictive models to surface signals relevant to merge/conflict outcomes and inform future experiments.
+- Produce polished, shareable deliverables — reproducible code, internal reports and presentations, and publication-ready drafts — that clearly communicate results and next steps."
+Misc,2025-11-19T07:46:52.296519+00:00,10,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_074652_Misc.png,"High-level goals and objectives:
+- Finalize and publish the ""Good Science"" reference materials (concise document and slide deck) as maintainable, shareable resources summarizing relevant papers and actionable takeaways.
+- Ensure a reproducible, documented development environment and installation workflow so collaborators can run tests and experiments across platforms.
+- Stabilize test runners, aggregation/evaluation pipelines, and CI so experiment execution is reliable and repeatable.
+- Obtain, organize, and securely manage the CodeClash / CodeConflict datasets and associated access/permissions to enable large-scale, reproducible analyses.
+- Define and validate robust evaluation metrics and predictive models to surface signals relevant to merge/conflict outcomes and guide future experiments.
+- Produce polished, shareable deliverables — reproducible code, internal reports and presentations, and publication-ready drafts — that clearly communicate results and next steps."
+Misc,2025-11-19T07:49:27.775069+00:00,11,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_074927_Misc.png,"High-level goals and objectives:
+- Finalize and publish the ""Good Science"" reference materials (concise reference document, handout, and slide deck) as maintainable, reviewable resources for collaborators.
+- Establish a reproducible, cross-platform development and installation workflow so contributors can set up the environment and run experiments reliably.
+- Stabilize test runners, aggregation/evaluation pipelines, and continuous integration so experiments and analyses are repeatable and trustworthy.
+- Obtain, organize, and securely manage the CodeClash / CodeConflict datasets and any necessary access/permissions to enable large-scale, reproducible analyses.
+- Define, validate, and document robust evaluation metrics and predictive models for analyzing merge/conflict outcomes and guiding future experiments.
+- Produce polished, shareable deliverables (reproducible code, internal reports, presentations, and publication-ready drafts) that clearly communicate findings and next steps."
+Misc,2025-11-19T07:49:27.776798+00:00,12,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_074927_Misc.png,"High-level goals and objectives:
+- Finalize, review, and publish the ""Good Science"" reference materials (concise reference document, handout, and slide deck) as maintainable resources for collaborators.
+- Establish a reproducible, cross-platform development and installation workflow so contributors can reliably set up environments and run experiments.
+- Stabilize testing, aggregation/evaluation pipelines, and continuous integration to ensure experiments and analyses are repeatable and trustworthy.
+- Obtain, organize, and securely manage CodeClash / CodeConflict datasets and access permissions to enable large-scale, reproducible analyses.
+- Define, validate, and document robust evaluation metrics and predictive models for analyzing merge/conflict outcomes.
+- Produce polished, shareable deliverables (reproducible code releases, internal reports, presentations, and publication-ready drafts) that clearly communicate findings and next steps.
+- Coordinate collaboration and data-sharing workflows (permissions, documentation, and reproducible artifacts) to support external review and reuse."
+Misc,2025-11-19T07:51:58.402416+00:00,13,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_075158_Misc.png,"High-level goals and objectives:
+- Finalize, publish, and maintain the ""Good Science"" reference materials (concise reference document, handout, and slide deck) as shareable resources for collaborators.
+- Establish a reproducible, cross-platform development and installation workflow so contributors can reliably set up environments and run experiments.
+- Stabilize test suites, evaluation/aggregation pipelines, and continuous-integration processes to ensure experiments and analyses are repeatable and trustworthy.
+- Obtain, organize, and securely manage large CodeClash / CodeConflict datasets and access permissions to enable scalable, reproducible analyses.
+- Define, validate, and document robust evaluation metrics and predictive models for analyzing merge/conflict outcomes.
+- Produce polished, shareable deliverables (reproducible code releases, internal reports, presentations, and publication-ready drafts) that clearly communicate findings.
+- Formalize collaboration and data-sharing workflows (permissions, documentation, and reproducible artifacts) to support external review and reuse."
+Misc,2025-11-19T07:59:37.791160+00:00,14,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_075937_Misc.png,"High-level goals and objectives:
+- Finalize and publish the ""Good Science"" reference materials (concise reference document, one‑page handout, and slide deck) for collaborators and broader distribution.
+- Establish a reproducible, cross‑platform development and installation workflow and documentation so contributors can reliably set up environments and run experiments.
+- Stabilize and maintain test suites, evaluation/aggregation pipelines, and continuous‑integration processes to ensure experiments are repeatable and trustworthy.
+- Securely obtain, organize, and manage large CodeClash / CodeConflict datasets and their access permissions to enable scalable, reproducible analyses.
+- Define, validate, and document robust evaluation metrics and predictive-modeling approaches for analyzing merge/conflict outcomes.
+- Produce polished, shareable deliverables (reproducible code releases, internal reports, presentations, and publication‑ready drafts) that communicate findings clearly.
+- Formalize collaboration and data‑sharing workflows (permissions, versioned artifacts, and contributor guidance) to support review, reuse, and external collaboration."
+Misc,2025-11-19T08:02:05.158874+00:00,15,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_052948_Misc.png,"High-level goals and objectives:
+- Finalize and publish the ""Good Science"" reference materials (concise reference document, one‑page handout, and slide deck) and circulate them for collaborator review and broader distribution.
+- Create and maintain a reproducible, cross‑platform developer environment and installation workflow so contributors can reliably set up, run, and extend experiments.
+- Stabilize test suites, evaluation/aggregation pipelines, and CI processes to ensure experiments are repeatable, auditable, and robust to environment changes.
+- Define, validate, and document evaluation metrics and modeling approaches for analyzing code merge/conflict behavior and prediction tasks.
+- Securely obtain, organize, and govern access to large CodeClash/CodeConflict datasets—establishing permissions, storage, and versioned data management practices for scalable analyses.
+- Produce polished, shareable deliverables (reproducible code releases, internal reports, presentations, and publication‑ready drafts) that clearly communicate methods and findings.
+- Formalize collaboration and data‑sharing workflows (contributor guidance, PR/data review processes, and artifact versioning) to support reproducibility, reuse, and external collaboration."
+Misc,2025-11-19T08:02:05.165083+00:00,16,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_052948_Misc.png,"High-level goals and objectives:
+- Finalize, polish, and circulate the ""Good Science"" reference materials (concise reference document, one‑page handout, and slide deck) for collaborator review and use in upcoming meetings.
+- Create and maintain a reproducible, cross‑platform developer environment and installation workflow so contributors can reliably set up, run, and extend experiments.
+- Stabilize test suites, evaluation/aggregation pipelines, and continuous integration to ensure experiments are repeatable, auditable, and robust across environments.
+- Define, validate, and document evaluation metrics and modeling approaches for analyzing code merge/conflict behavior and related prediction tasks.
+- Securely obtain, organize, and govern access to large CodeClash/CodeConflict datasets—establishing permissions, storage, and versioned data management practices for scalable analyses.
+- Produce polished, shareable deliverables (reproducible code releases, internal reports, presentations, and publication‑ready drafts) that clearly communicate methods and findings.
+- Formalize collaboration and data‑sharing workflows (contributor guidance, PR/data review processes, and artifact versioning) to support reproducibility, reuse, and external collaboration."
+Misc,2025-11-19T08:02:05.166458+00:00,17,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_052948_Misc.png,"High-level goals and objectives:
+- Finalize and circulate the ""Good Science"" reference materials (reference doc, one‑page handout, and slide deck) for collaborator review and meeting use.
+- Establish and maintain a reproducible, cross‑platform development and installation workflow so contributors can reliably set up and run experiments.
+- Stabilize test suites, evaluation/aggregation pipelines, and continuous integration to ensure experiments are repeatable and auditable across environments.
+- Define, validate, and document evaluation metrics and modeling approaches for analyzing code merge/conflict behavior and related prediction tasks.
+- Securely obtain, organize, and version large CodeClash/CodeConflict datasets; define access controls and storage/ingestion practices for scalable analyses.
+- Produce polished, shareable deliverables (reproducible code releases, internal reports, presentations, and publication‑ready drafts) that clearly communicate methods and findings.
+- Formalize collaboration and data‑sharing workflows (contributor guidance, PR and data review processes, artifact versioning) to support reproducibility and external collaboration."
+Misc,2025-11-19T09:26:32.408205+00:00,18,/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20251119_092632_Misc.png,"High-level goals and objectives:
+- Finalize, polish, and circulate the ""Good Science"" reference materials (reference doc, one‑page handout, and slide deck) and obtain collaborator review/approval.
+- Establish and document a reproducible, cross‑platform development and installation workflow so contributors can reliably set up the environment and run experiments.
+- Stabilize and verify test suites, evaluation/aggregation pipelines, and CI so experiments are repeatable and auditable across environments.
+- Resolve platform/dependency build issues (including native extensions and architecture-specific constraints) as part of making installs and tests reliable.
+- Securely obtain, organize, and version large CodeClash/CodeConflict datasets and define access controls and scalable storage/ingestion practices.
+- Produce polished, shareable deliverables (reproducible code releases, internal reports, presentations, and publication‑ready drafts) that clearly communicate methods and findings.
+- Formalize collaboration and data‑sharing workflows (contributor guidance, PR/data review processes, artifact versioning) to support reproducibility and external collaboration."
