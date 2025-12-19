@@ -1,7 +1,5 @@
-# tests/scratchpad/conftest.py
 from __future__ import annotations
 
-import os
 from pathlib import Path
 
 import pytest
@@ -10,11 +8,14 @@ import pytest
 @pytest.fixture
 def scratchpad_test_env(tmp_path, monkeypatch):
     """
-    Per-test sandbox for scratchpad.
+    Per-test sandbox for scratchpad (and other DB-backed features).
 
     - sets PRECURSOR_PROJECTS_FILE to a temp projects.yaml
     - patches precursor.scratchpad.store._get_data_dir to a temp dir
-    so we never touch the real user's DB or real config.
+      so we never touch the real user's DB or real config.
+
+    This fixture intentionally lives at tests/ root so all test modules
+    (e.g. tests/messaging/*) can reuse it.
     """
     # temp dirs
     data_dir = tmp_path / "data"
@@ -52,3 +53,5 @@ def scratchpad_test_env(tmp_path, monkeypatch):
         "config_dir": config_dir,
         "projects_yaml": projects_yaml,
     }
+
+

@@ -21,10 +21,10 @@ Given some details about a project, the current work of the user on that project
 The project description should NOT list all of the small details and tasks that the user is working on, but rather the important long term goals and objectives for the project.
 
 Useful examples of high level goals and objectives are:
-- "Publish a polished research paper draft integrating recent results"
-- "Develop a prototype suitable for user testing and demo"
-- "Obtain IRB approval for a new study"
-- "Respond to reviewer comments on a paper"
+- "Advance the project toward a publishable scholarly contribution."
+- "Embed interdisciplinary perspectives to enrich the project's approach."
+- "Advance the project’s visibility within relevant communities."
+- "Optimize the project’s workflow, processes, and decision-making systems."
 
 The project descriptions should contain ALL high level goals for a project without getting too specific.
     """
@@ -42,10 +42,10 @@ Given some details about a project, the current work of the user on that project
 The project description should NOT list all of the small details and tasks that the user is working on, but rather the important long term goals and objectives for the project.
 
 Useful examples of high level goals and objectives are:
-- "Publish a polished research paper draft integrating recent results"
-- "Develop a prototype suitable for user testing and demo"
-- "Obtain IRB approval for a new study"
-- "Respond to reviewer comments on a paper"
+- "Advance the project toward a publishable scholarly contribution."
+- "Embed interdisciplinary perspectives to enrich the project's approach."
+- "Advance the project’s visibility within relevant communities."
+- "Optimize the project’s workflow, processes, and decision-making systems."
 
 The project descriptions should contain ALL high level goals for a project without getting too specific.
     """
@@ -275,7 +275,7 @@ def _derive_screenshot_convention_path(project: str, timestamp: str, repo_root: 
 def _default_output_dir() -> str:
     # Prefer the workspace-relative path if available
     # dev/survey/data_collection/12_3_experiments
-    return str((Path(__file__).resolve().parents[4] / "dev" / "survey" / "data_collection" / "12_3_experiments").resolve())
+    return str((Path(__file__).resolve().parents[4] / "dev" / "survey" / "data_collection" / "12_11_experiments").resolve())
 
 
 def run_cli(
@@ -403,7 +403,7 @@ def main() -> None:
     ap = argparse.ArgumentParser(description="Run ProjectDescriber over a context log, joining screenshots from pipeline_run.csv")
     ap.add_argument("--log-csv", required=True, help="Path to the primary log.csv (e.g., dev/survey/data_collection/11_20_experiments/no_user/log.csv)")
     ap.add_argument("--pipeline-run-csv", required=True, help="Path to pipeline_run.csv with correct screenshot paths")
-    ap.add_argument("--output-dir", default=_default_output_dir(), help="Output directory (default: dev/survey/data_collection/12_3_experiments)")
+    ap.add_argument("--output-dir", default=_default_output_dir(), help="Output directory (default: dev/survey/data_collection/12_11_experiments)")
     ap.add_argument("--projects", default="", help="Comma-separated list of projects to include (default: all)")
     ap.add_argument("--model", default="openai/gpt-5-mini", help="DSPy model id (default: openai/gpt-5-mini)")
     ap.add_argument("--api-key", default="", help="API key for the LM (default: env OPENAI_API_KEY/DSPY_API_KEY)")

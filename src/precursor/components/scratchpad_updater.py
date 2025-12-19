@@ -164,6 +164,16 @@ General Guidance
 - Move outdated or finished Ongoing Objectives to Completed Objectives as evidence builds.  
 - **Add only one proposition per edit call.** For multiple changes, call the tools separately.  
 
+
+========================
+Keeping it clean
+========================
+- The scratchpad can often grow a bit cluttered with all the contents over time.
+- It is useful to periodically clean up the scratchpad by removing outdated or finished objectives, suggestions, notes, and next steps.
+- Additionally if there are many files that seem to be irrelevant, you should remove them from the scratchpad.
+- Sometimes several files in the same folder are added to the scratchpad because they were individually relevant, but when considered together it makes more sense to consolidate to mention them as a single folder.
+- Focus on reducing clutter and redundancy in the scratchpad, and KEEPING it UP TO DATE!
+
 ========================
 When Adding Project Resources
 ========================
