@@ -183,8 +183,8 @@ class SummarizeTrajectory(dspy.Signature):
     task_context: str = dspy.InputField(description="The exact coding task that was requested.")
     project_context: str = dspy.InputField(description="Rendered scratchpad for the project (used as broader context).")
     trajectory_json: str = dspy.InputField(description="The raw JSON string contents of the OpenHands trajectory file.")
-    short_summary: str = dspy.OutputField(description="A single sentence in layman's terms describing what was achieved.")
     full_summary: str = dspy.OutputField(description="A detailed, step-by-step summary of what the agent accomplished.")
+    short_summary: str = dspy.OutputField(description="A single sentence in layman's terms describing what was achieved.  Should be only 1-2 sentences long.")
 
 
 class CodeAgent:

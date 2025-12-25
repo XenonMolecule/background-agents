@@ -52,7 +52,7 @@ def test_render_all_sections_present_even_if_empty(scratchpad_test_env):
     assert "## Suggestions" in text
     assert "## Notes" in text
     assert "## Project Resources" in text
-    assert "## Next Steps" in text
+    # Next Steps is being phased out; renderer may omit it.
 
 
 def test_render_ignores_metadata_content(scratchpad_test_env):

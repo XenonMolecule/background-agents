@@ -19,13 +19,16 @@ from __future__ import annotations
 
 import argparse
 import logging
+import random
 
 import dspy
 from dotenv import load_dotenv
 
 from precursor.agents.interviewer_agent import HumanInTheLoopInterviewerAgent
+from precursor.agents.utils.no_followup_ack import NO_FOLLOWUP_ACKS
 from precursor.messaging import render as convo_render
 from precursor.messaging import store as convo_store
+from precursor.messaging.time_utils import is_recent_sqlite_utc_timestamp
 
 
 load_dotenv()
@@ -87,6 +90,24 @@ def main() -> None:
             visible_to_user=True,
         )
         print(next_q)
+        return
+
+    # If the agent did not return a follow-up question, optionally send a short
+    # acknowledgement so the user isn't left wondering if the agent has enough context.
+    #
+    # Only send this if the most recent USER message is recent; otherwise this may be
+    # a background/system-triggered run where extra chatter isn't helpful.
+    last_user = convo_store.get_latest_message_by_role(args.project, "user", include_invisible=True)
+    if last_user and is_recent_sqlite_utc_timestamp(last_user.get("created_at"), window_minutes=15.0):
+        ack = random.choice(NO_FOLLOWUP_ACKS)
+        convo_store.add_message(
+            project_name=args.project,
+            role="agent",
+            message=ack,
+            seen_by_user=False,
+            visible_to_user=True,
+        )
+        print(ack)
 
 
 if __name__ == "__main__":

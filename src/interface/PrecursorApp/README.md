@@ -47,6 +47,28 @@ cd interface/PrecursorApp
 PRECURSOR_SCRATCHPAD_DB="/absolute/path/to/scratchpad.db" swift run PrecursorApp
 ```
 
+### Conversation + interviewer CLI integration
+
+When you send a message in the Conversation UI, the app will attempt to launch the interviewer CLI
+(`python -m precursor.cli.interviewer_agent_cli`) so the agent can respond asynchronously by writing
+back into `scratchpad.db`.
+
+Because GUI apps often do **not** inherit your shell’s conda activation, the app defaults to:
+
+- `conda run -n gum python -m precursor.cli.interviewer_agent_cli ...`
+
+You can override this with environment variables:
+
+- `PRECURSOR_CONDA_ENV`: conda environment name (default: `gum`)
+- `PRECURSOR_CONDA_BIN`: absolute path to `conda` (optional; helps when `conda` isn’t on PATH)
+- `PRECURSOR_PYTHON_BIN`: absolute path to a Python executable to use directly (highest priority)
+- `PRECURSOR_REPO_ROOT`: absolute path to the repo root (helps the CLI find `src/precursor` + config)
+
+You can also set the default env name in `settings.yaml` (editable from the app’s Settings → System tab):
+
+- `conda_env_name: "gum"`
+- `python_bin: ""` (optional; set to `./.venv/bin/python` to use the repo venv directly)
+
 ### Notes
 
 - Accept moves an item to `Accepted Agent Completed Tasks`.

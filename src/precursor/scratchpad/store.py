@@ -95,14 +95,111 @@ def init_db() -> None:
             subsection TEXT,
             message TEXT NOT NULL,
             confidence INTEGER DEFAULT 0,
+            -- Stable, user-controlled ordering within (project, section, subsection).
+            -- Used by the macOS UI for drag-reorder; older DBs may have this added via migration.
+            sort_order INTEGER,
+            -- Track the source of the last edit for post-hoc analysis.
+            -- Expected values: "system" (default) or "user" (manual UI edits).
+            last_edited_by TEXT DEFAULT 'system',
             status TEXT DEFAULT 'active',
             metadata_json TEXT,
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP
         )
         """
     )
+    # Lightweight migration: add sort_order for older DBs, and initialize it so ordering is stable.
+    _ensure_sort_order_column(conn)
+    _ensure_last_edited_by_column(conn)
     conn.commit()
     conn.close()
+
+def _column_exists(conn: sqlite3.Connection, table: str, column: str) -> bool:
+    rows = conn.execute(f"PRAGMA table_info({table})").fetchall()
+    for r in rows:
+        # PRAGMA table_info: cid, name, type, notnull, dflt_value, pk
+        if r[1] == column:
+            return True
+    return False
+
+
+def _ensure_sort_order_column(conn: sqlite3.Connection) -> None:
+    """
+    Ensure the scratchpad_entries.sort_order column exists and is initialized.
+
+    We initialize per (project_name, section, subsection) group based on (created_at, id)
+    so existing DBs preserve their original display order.
+    """
+    if not _column_exists(conn, "scratchpad_entries", "sort_order"):
+        conn.execute("ALTER TABLE scratchpad_entries ADD COLUMN sort_order INTEGER;")
+
+    # If sort_order is already populated, do nothing.
+    row = conn.execute(
+        """
+        SELECT 1
+        FROM scratchpad_entries
+        WHERE sort_order IS NOT NULL
+        LIMIT 1
+        """
+    ).fetchone()
+    if row is not None:
+        return
+
+    groups = conn.execute(
+        """
+        SELECT DISTINCT project_name, section, COALESCE(subsection, '') AS subsection_norm
+        FROM scratchpad_entries
+        WHERE status = 'active'
+        """
+    ).fetchall()
+
+    for project_name, section, subsection_norm in groups:
+        if subsection_norm == "":
+            ids = conn.execute(
+                """
+                SELECT id
+                FROM scratchpad_entries
+                WHERE project_name = ?
+                  AND section = ?
+                  AND subsection IS NULL
+                  AND status = 'active'
+                ORDER BY datetime(created_at) ASC, id ASC
+                """,
+                (project_name, section),
+            ).fetchall()
+        else:
+            ids = conn.execute(
+                """
+                SELECT id
+                FROM scratchpad_entries
+                WHERE project_name = ?
+                  AND section = ?
+                  AND COALESCE(subsection, '') = ?
+                  AND status = 'active'
+                ORDER BY datetime(created_at) ASC, id ASC
+                """,
+                (project_name, section, subsection_norm),
+            ).fetchall()
+
+        conn.executemany(
+            "UPDATE scratchpad_entries SET sort_order = ? WHERE id = ?",
+            [(idx, row[0]) for idx, row in enumerate(ids)],
+        )
+
+def _ensure_last_edited_by_column(conn: sqlite3.Connection) -> None:
+    """
+    Ensure the scratchpad_entries.last_edited_by column exists and is initialized.
+
+    We default to "system" for all existing rows.
+    """
+    if not _column_exists(conn, "scratchpad_entries", "last_edited_by"):
+        conn.execute("ALTER TABLE scratchpad_entries ADD COLUMN last_edited_by TEXT DEFAULT 'system';")
+    conn.execute(
+        """
+        UPDATE scratchpad_entries
+        SET last_edited_by = 'system'
+        WHERE last_edited_by IS NULL
+        """
+    )
 
 
 # ============================================================================
@@ -192,6 +289,7 @@ def add_entry(
     confidence: int = 0,
     subsection: Optional[str] = None,
     metadata: Optional[Dict[str, Any]] = None,
+    last_edited_by: str = "system",
 ) -> int:
     """
     Append a new line to a project's scratchpad.
@@ -223,10 +321,36 @@ def add_entry(
     section, subsection = _normalize_section_and_subsection(section, subsection)
 
     conn = get_conn()
+    # Assign a stable sort_order within this (project, section, subsection) bucket.
+    if section == "Project Resources":
+        # Project Resources always has a subsection (validated/normalized above).
+        next_sort = conn.execute(
+            """
+            SELECT COALESCE(MAX(sort_order), -1) + 1
+            FROM scratchpad_entries
+            WHERE project_name = ?
+              AND section = ?
+              AND COALESCE(subsection, '') = COALESCE(?, '')
+              AND status = 'active'
+            """,
+            (project_name, section, subsection),
+        ).fetchone()[0]
+    else:
+        next_sort = conn.execute(
+            """
+            SELECT COALESCE(MAX(sort_order), -1) + 1
+            FROM scratchpad_entries
+            WHERE project_name = ?
+              AND section = ?
+              AND status = 'active'
+            """,
+            (project_name, section),
+        ).fetchone()[0]
+
     cur = conn.execute(
         """
-        INSERT INTO scratchpad_entries (project_name, section, subsection, message, confidence, metadata_json)
-        VALUES (?, ?, ?, ?, ?, ?)
+        INSERT INTO scratchpad_entries (project_name, section, subsection, message, confidence, sort_order, last_edited_by, metadata_json)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         """,
         (
             project_name,
@@ -234,6 +358,8 @@ def add_entry(
             subsection,
             message,
             confidence,
+            int(next_sort) if next_sort is not None else 0,
+            (last_edited_by or "system"),
             json.dumps(metadata, ensure_ascii=False) if metadata is not None else None,
         ),
     )
@@ -258,7 +384,7 @@ def list_entries(
             """
             SELECT * FROM scratchpad_entries
             WHERE project_name = ? AND section = ? AND status = 'active'
-            ORDER BY created_at ASC
+            ORDER BY sort_order ASC, datetime(created_at) ASC, id ASC
             """,
             (project_name, section),
         ).fetchall()
@@ -267,7 +393,7 @@ def list_entries(
             """
             SELECT * FROM scratchpad_entries
             WHERE project_name = ? AND status = 'active'
-            ORDER BY created_at ASC
+            ORDER BY section ASC, sort_order ASC, datetime(created_at) ASC, id ASC
             """,
             (project_name,),
         ).fetchall()
@@ -289,6 +415,7 @@ def update_entry(
     new_message: str,
     new_confidence: Optional[int] = None,
     new_metadata: Optional[Dict[str, Any]] = None,
+    last_edited_by: str = "system",
 ) -> None:
     """
     Update an entry by its internal database id.
@@ -296,41 +423,48 @@ def update_entry(
     Use it for hidden details like long summaries, URIs, or task data.
     """
     conn = get_conn()
+    last_edited_by = (last_edited_by or "system").strip() or "system"
     if new_confidence is not None and new_metadata is not None:
         conn.execute(
             """
             UPDATE scratchpad_entries
-            SET message = ?, confidence = ?, metadata_json = ?
+            SET message = ?, confidence = ?, metadata_json = ?, last_edited_by = ?
             WHERE id = ?
             """,
-            (new_message, new_confidence, json.dumps(new_metadata, ensure_ascii=False), entry_id),
+            (
+                new_message,
+                new_confidence,
+                json.dumps(new_metadata, ensure_ascii=False),
+                last_edited_by,
+                entry_id,
+            ),
         )
     elif new_confidence is not None:
         conn.execute(
             """
             UPDATE scratchpad_entries
-            SET message = ?, confidence = ?
+            SET message = ?, confidence = ?, last_edited_by = ?
             WHERE id = ?
             """,
-            (new_message, new_confidence, entry_id),
+            (new_message, new_confidence, last_edited_by, entry_id),
         )
     elif new_metadata is not None:
         conn.execute(
             """
             UPDATE scratchpad_entries
-            SET message = ?, metadata_json = ?
+            SET message = ?, metadata_json = ?, last_edited_by = ?
             WHERE id = ?
             """,
-            (new_message, json.dumps(new_metadata, ensure_ascii=False), entry_id),
+            (new_message, json.dumps(new_metadata, ensure_ascii=False), last_edited_by, entry_id),
         )
     else:
         conn.execute(
             """
             UPDATE scratchpad_entries
-            SET message = ?
+            SET message = ?, last_edited_by = ?
             WHERE id = ?
             """,
-            (new_message, entry_id),
+            (new_message, last_edited_by, entry_id),
         )
     conn.commit()
     conn.close()
@@ -344,7 +478,7 @@ def delete_entry(entry_id: int) -> None:
     conn.execute(
         """
         UPDATE scratchpad_entries
-        SET status = 'deleted'
+        SET status = 'deleted', last_edited_by = 'system'
         WHERE id = ?
         """,
         (entry_id,),
@@ -380,7 +514,7 @@ def get_entry_by_display_index(
             WHERE project_name = ?
               AND section = 'Project Resources'
               AND status = 'active'
-            ORDER BY created_at ASC
+            ORDER BY sort_order ASC, datetime(created_at) ASC, id ASC
             """,
             (project_name,),
         ).fetchall()
@@ -399,7 +533,7 @@ def get_entry_by_display_index(
             WHERE project_name = ?
               AND section = ?
               AND status = 'active'
-            ORDER BY created_at ASC
+            ORDER BY sort_order ASC, datetime(created_at) ASC, id ASC
             """,
             (project_name, norm_section),
         ).fetchall()

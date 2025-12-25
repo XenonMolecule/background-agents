@@ -41,6 +41,9 @@ def init_db() -> None:
             -- System messages are often hidden from the user but still included
             -- in agent context rendering.
             visible_in_conversation INTEGER NOT NULL DEFAULT 1,
+            -- Soft-delete: retain messages for study/audit but hide from both
+            -- UI and agent rendering.
+            is_deleted INTEGER NOT NULL DEFAULT 0,
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP
         )
         """
@@ -52,6 +55,8 @@ def init_db() -> None:
         conn.execute(
             "ALTER TABLE conversation_messages ADD COLUMN visible_in_conversation INTEGER NOT NULL DEFAULT 1"
         )
+    if "is_deleted" not in cols:
+        conn.execute("ALTER TABLE conversation_messages ADD COLUMN is_deleted INTEGER NOT NULL DEFAULT 0")
     # Helpful index for UI badge queries + project-scoped fetches.
     conn.execute(
         """
@@ -169,7 +174,8 @@ def list_messages(
     conn = get_conn()
     params: List[object] = [project_name]
 
-    where = "WHERE project_name = ?"
+    # Always exclude soft-deleted rows for both UI + agent rendering.
+    where = "WHERE project_name = ? AND is_deleted = 0"
     if before_id is not None:
         where += " AND id < ?"
         params.append(int(before_id))
@@ -239,6 +245,7 @@ def get_latest_message(
             SELECT *
             FROM conversation_messages
             WHERE project_name = ?
+              AND is_deleted = 0
             ORDER BY id DESC
             LIMIT 1
             """,
@@ -251,10 +258,66 @@ def get_latest_message(
             FROM conversation_messages
             WHERE project_name = ?
               AND visible_in_conversation = 1
+              AND is_deleted = 0
             ORDER BY id DESC
             LIMIT 1
             """,
             (project_name,),
+        ).fetchone()
+    conn.close()
+    if not row:
+        return None
+    return {
+        "id": row["id"],
+        "project_name": row["project_name"],
+        "role": row["role"],
+        "message": row["message"],
+        "seen_by_user": bool(row["seen_by_user"]),
+        "visible_to_user": bool(row["visible_in_conversation"]),
+        "created_at": row["created_at"],
+    }
+
+
+def get_latest_message_by_role(
+    project_name: str,
+    role: Role,
+    *,
+    include_invisible: bool = True,
+) -> Optional[Dict[str, object]]:
+    """
+    Return the most recent message for a project with the given role, or None.
+    """
+    init_db()
+    if role not in ("user", "agent", "system"):
+        raise ValueError("role must be 'user', 'agent', or 'system'")
+
+    conn = get_conn()
+    if include_invisible:
+        row = conn.execute(
+            """
+            SELECT *
+            FROM conversation_messages
+            WHERE project_name = ?
+              AND role = ?
+              AND is_deleted = 0
+            ORDER BY id DESC
+            LIMIT 1
+            """,
+            (project_name, role),
+        ).fetchone()
+    else:
+        row = conn.execute(
+            """
+            SELECT *
+            FROM conversation_messages
+            WHERE project_name = ?
+              AND role = ?
+              AND visible_in_conversation = 1
+              AND is_deleted = 0
+            ORDER BY id DESC
+            LIMIT 1
+            """,
+            (project_name, role),
         ).fetchone()
     conn.close()
     if not row:
@@ -283,6 +346,7 @@ def count_unseen_by_user(project_name: str) -> int:
         WHERE project_name = ?
           AND role = 'agent'
           AND seen_by_user = 0
+          AND is_deleted = 0
         """,
         (project_name,),
     ).fetchone()
@@ -320,6 +384,7 @@ def mark_seen_by_user(
             WHERE project_name = ?
               AND role = 'agent'
               AND seen_by_user = 0
+              AND is_deleted = 0
               AND id <= ?
             """,
             (project_name, int(up_to_id)),
@@ -332,10 +397,43 @@ def mark_seen_by_user(
             WHERE project_name = ?
               AND role = 'agent'
               AND seen_by_user = 0
+              AND is_deleted = 0
             """,
             (project_name,),
         )
 
+    conn.commit()
+    updated = cur.rowcount if cur.rowcount is not None else 0
+    conn.close()
+    return int(updated)
+
+
+def trash_project_conversation(project_name: str) -> int:
+    """
+    Soft-delete all conversation messages for a project.
+
+    Messages remain in the DB for study/audit, but are hidden from:
+    - user UI
+    - agent context rendering
+    """
+    init_db()
+    if not is_valid_project(project_name):
+        raise ValueError(f"Unknown project: {project_name}")
+
+    conn = get_conn()
+    cur = conn.execute(
+        """
+        UPDATE conversation_messages
+        SET is_deleted = 1,
+            -- Ensure they don't contribute to unread badge counts.
+            seen_by_user = 1,
+            -- UI-specific visibility off for good measure.
+            visible_in_conversation = 0
+        WHERE project_name = ?
+          AND is_deleted = 0
+        """,
+        (project_name,),
+    )
     conn.commit()
     updated = cur.rowcount if cur.rowcount is not None else 0
     conn.close()
