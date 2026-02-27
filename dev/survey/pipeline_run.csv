@@ -70796,3 +70796,535 @@ Nice-to-have:
 Open a PR with a concise title and a reviewer-friendly description summarizing the deterministic harness and new scenarios. Include how to run the tests. Request relevant reviewers if known. [The agent added deterministic integration tests for project transitions and notifications, ensuring reliable and fast test execution.] (uri: https://github.com/XenonMolecule/background-agents/pull/new/fix/guard-calendar-import) (confidence: 10)
 [2] Draft a one‑page meeting brief (<=300 words) at dev/presentations/one_pager_Precursor_MEETING.md that synthesizes current status, the embedded CSV snippet, top 3 accomplishments, top 3 blockers/questions, and 3 proposed next actions using content from the project scratchpad and meeting notes. [One-page meeting brief with grounded status, accomplishments, blockers, next actions, and an embedded CSV snippet.] (uri: /Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/presentations/one_pager_Precursor_MEETING.md) (confidence: 10)
 "
+2026-01-20T17:51:44.547881+00:00,Background Agents (Precursor),"```markdown
+# BACKGROUND-AGENTS
+
+### Run the agent (GUM mode)
+```bash
+# background-agents
+### Run the agent (GUM mode)
+### Run all proposed tasks with scores (one row per proposed task; includes columns:
+# task_description, reasoning, scores, true_score, score_ratio, selected):
+python -m precursor.main --mode gum --agent-proposals-csv dev/survey/pipeline_run.proposals.csv
+```
+```bash
+# Goals for project, goal, milestone):
+python -m precursor.main --mode gum --agent-goals-milestones-csv dev/survey/pipeline_run.goals_milestones.csv
+```
+```bash
+# Save per-event screenshots (GUM mode) and include their paths in the CSV (‘screenshot_path’):
+python -m precursor.main --mode gum --screenshot-dir dev/survey/screenshots --output-csv dev/survey/pipeline_run.csv
+```
+- All logs + screenshots:
+
+```bash
+(gum) michaelryan@Michaels-MacBook-Air-76 background-agents % python -m precursor.main --mode gum --output-csv dev/survey/pipeline_run.csv --agent-output-csv dev/survey/pipeline_run_candidates.csv --agent-proposals-csv dev/survey/pipeline_run.proposals.csv --agent-goals-milestones-csv dev/survey/pipeline_run.goals_milestones.csv
+2026-01-20 09:50:58,287 INFO     __main__ : configured dspy L: openai/gpt-3.5-mini
+2026-01-20 09:50:58,287 INFO     __main__ : starting in GUM mode
+2026-01-20 09:50:58,449 INFO     precursor.observers.gum_source: Starting GumSource for user=Michael Ryan, model=gp
+2026-01-20 09:50:58,449 INFO     gum.batcher: Started batcher with 3 items in queue
+```
+
+# FINAL STRUCTURED MARKDOWN TRANSCRIPTION
+## BACKGROUND-AGENTS
+
+### Run the agent (GUM mode)
+```bash
+# background-agents
+### Run the agent (GUM mode)
+### Run all proposed tasks with scores (one row per proposed task; includes columns:
+# task_description, reasoning, scores, true_score, score_ratio, selected):
+python -m precursor.main --mode gum --agent-proposals-csv dev/survey/pipeline_run.proposals.csv
+```
+```bash
+# Goals for project, goal, milestone):
+python -m precursor.main --mode gum --agent-goals-milestones-csv dev/survey/pipeline_run.goals_milestones.csv
+```
+```bash
+# Save per-event screenshots (GUM mode) and include their paths in the CSV (‘screenshot_path’):
+python -m precursor.main --mode gum --screenshot-dir dev/survey/screenshots --output-csv dev/survey/pipeline_run.csv
+```
+- All logs + screenshots:
+
+```bash
+(gum) michaelryan@Michaels-MacBook-Air-76 background-agents % python -m precursor.main --mode gum --output-csv dev/survey/pipeline_run.csv --agent-output-csv dev/survey/pipeline_run_candidates.csv --agent-proposals-csv dev/survey/pipeline_run.proposals.csv --agent-goals-milestones-csv dev/survey/pipeline_run.goals_milestones.csv
+2026-01-20 09:50:58,287 INFO     __main__ : configured dspy L: openai/gpt-3.5-mini
+2026-01-20 09:50:58,287 INFO     __main__ : starting in GUM mode
+2026-01-20 09:50:58,449 INFO     precursor.observers.gum_source: Starting GumSource for user=Michael Ryan, model=gp
+2026-01-20 09:50:58,449 INFO     gum.batcher: Started batcher with 3 items in queue
+```The images show a programming and debugging environment focused on running a Python script within a project involving background agents. Here are the specific actions and observations:
+
+- **Environment Setup**: The terminal indicates that the user is working in a conda environment named ""gum"" (`(gum)` prefix), suggesting that the user likely manages Python dependencies through conda.
+
+- **Executing Scripts**: The user is running a Python script `precursor.main` in GUM mode with specific command line arguments, indicating interaction with a machine learning or AI component. Syntax suggests tasks are focused on gathering proposals and goals, including generating output CSV files for task proposals and milestones.
+
+- **CSV Output Configuration**: The user is specifying paths for output files, aiming to collect data likely for later analysis or reporting. There are mentions of ""agent-output"" for gathering results and ""screenshot-path"" for storing images during execution.
+
+- **Log Monitoring**: The terminal output includes log messages, indicating the program's internal processing. Notable log entries show the initialization of components, starting processes with item queues, and successful setup confirmation. This highlights the user's focus on ensuring that the program is running as expected.
+
+- **Interaction with README**: The README file is open and includes instructions on how to run various components of the system. The user is likely referencing this document for guidance on command syntax and expected outputs.
+
+- **IDE Usage**: The layout indicates that the user is utilizing an Integrated Development Environment (IDE), possibly Visual Studio Code, for debugging, executing commands, and accessing project files efficiently.
+
+Overall, the images depict a structured approach to running a Python application, with emphasis on output configuration and monitoring internal log messages for successful execution.",Michael Ryan,"I am a CS PhD student (NLP) at Stanford.  
+I work across several concurrent research projects.
+I am interested in building personalized LLM tooling.
+","I am interested in an agent that can help organize my work.
+I would especially like an agent that keeps track of progress and if I have a meeting coming up for a particular project it can compile my results into slides or a report.
+I also think an agent that finds related work and performs background literature review would be helpful.
+Feedback on my writing is another welcome form of assistance.
+I don't mind for the agent to be creative about other forms of assistance!!","Current Time: 2026-01-20 09:51 PST
+Calendar Events (5 found):
+  Title      : Michael <> Hallie
+  When       : 2026-01-20 09:30:00-08:00 → 2026-01-20 10:30:00-08:00
+  Location   : https://stanford.zoom.us/j/91903497489?pwd=LaCmCchXEcgiOpVbtqOxi7paaME9OG.1&from=addon
+  Starts In  : 0d 0h 21m ago
+  Description:
+    [https://st2.zoom.us/static/6.3.51122/image/new/ZoomLogo_110_25.png] <http://zoom.us>
+    Hi there,
+    Michael Ryan is inviting you to a scheduled Zoom meeting.
+    Join Zoom Meeting<https://stanford.zoom.us/j/91903497489?pwd=LaCmCchXEcgiOpVbtqOxi7paaME9OG.1&from=addon>
+    Password:       003931
+    Meeting URL:
+    https://stanford.zoom.us/j/91903497489?pwd=LaCmCchXEcgiOpVbtqOxi7paaME9OG.1&from=addon
+    iPhone one-tap (US Toll):
+    +18333021536,,91903497489# or +16507249799,,91903497489#
+    Or Telephone:
+    Dial:
+    +1 650 724 9799 (US, Canada, Caribbean Toll) or +1 833 302 1536 (US, Canada, Caribbean Toll Free)
+    Meeting ID:
+    919 0349 7489
+    Password:
+    003931
+    International numbers<https://stanford.zoom.us/u/aegEwQ1ruI>
+    Join from a SIP room system
+    SIP:
+    91903497489@zoomcrc.com
+    Meeting ID:
+    919 0349 7489
+    Password:
+    003931
+     30
+
+----------
+
+  Title      : Personalization Data Sync
+  When       : 2026-01-20 11:00:00-08:00 → 2026-01-20 11:45:00-08:00
+  Location   : https://stanford.zoom.us/j/96914506245?pwd=yKhyE1ejObPkQ2imqLQPg1m7Yo87Kz.1&from=addon
+  Starts In  : 0d 1h 8m
+  Description:
+    [https://st2.zoom.us/static/6.3.51122/image/new/ZoomLogo_110_25.png] <http://zoom.us>
+    Hi there,
+    Michael Ryan is inviting you to a scheduled Zoom meeting.
+    Join Zoom Meeting<https://stanford.zoom.us/j/96914506245?pwd=yKhyE1ejObPkQ2imqLQPg1m7Yo87Kz.1&from=addon>
+    Password:       705095
+    Meeting URL:
+    https://stanford.zoom.us/j/96914506245?pwd=yKhyE1ejObPkQ2imqLQPg1m7Yo87Kz.1&from=addon
+    iPhone one-tap (US Toll):
+    +18333021536,,96914506245# or +16507249799,,96914506245#
+    Or Telephone:
+    Dial:
+    +1 650 724 9799 (US, Canada, Caribbean Toll) or +1 833 302 1536 (US, Canada, Caribbean Toll Free)
+    Meeting ID:
+    969 1450 6245
+    Password:
+    705095
+    International numbers<https://stanford.zoom.us/u/aXkvycwBy>
+    Join from a SIP room system
+    SIP:
+    96914506245@zoomcrc.com
+    Meeting ID:
+    969 1450 6245
+    Password:
+    705095
+
+----------
+
+  Title      : Meeting with Diyi
+  When       : 2026-01-20 11:30:00-08:00 → 2026-01-20 12:00:00-08:00
+  Location   : <no location>
+  Starts In  : 0d 1h 38m
+
+----------
+
+  Title      : michael / yixin
+  When       : 2026-01-20 13:40:00-08:00 → 2026-01-20 14:30:00-08:00
+  Location   : <no location>
+  Starts In  : 0d 3h 48m
+  Description:
+    michael / yixin
+    You have been invited by Yixin Wang to attend an event named michael / yixin on Tuesday 2026-01-20 ⋅ 1:40pm – 2:30pm (Pacific Time - Los Angeles).
+    
+    When
+    Tuesday 2026-01-20 ⋅ 1:40pm – 2:30pm (Pacific Time - Los Angeles)
+    Guests
+    Yixin Wang<mailto:yixin.wang.sh@gmail.com> - organizer
+    mryan0@stanford.edu<mailto:mryan0@stanford.edu>
+    View all guest info<https://urldefense.com/v3/__https://calendar.google.com/calendar/event?action=VIEW&eid=MG1hYzQxa29lamttczZlaGJuczNkdmFnMTYgbXJ5YW4wQHN0YW5mb3JkLmVkdQ&tok=MjMjeWl4aW4ud2FuZy5zaEBnbWFpbC5jb201MDEzZWVmN2RhZDQ2YzkzYWFiYTM4MmY3N2IzZWNkNDUxMDgyYTYz&ctz=America*2FLos_Angeles&hl=en&es=0__;JQ!!G92We9drHetJ8EofZw!dhkRpL8MvGYcz1kCsc7J65HhP6I_D08XyILFccVn3duILkGNludFRrCTybCkJm-Im0OyNbB_QLxBLnjlqYdvyYA0zg$>
+    Reply for mryan0@stanford.edu<mailto:mryan0@stanford.edu>
+    <https://urldefense.com/v3/__https://calendar.google.com/calendar/event?action=RESPOND&eid=MG1hYzQxa29lamttczZlaGJuczNkdmFnMTYgbXJ5YW4wQHN0YW5mb3JkLmVkdQ&rst=1&tok=MjMjeWl4aW4ud2FuZy5zaEBnbWFpbC5jb201MDEzZWVmN2RhZDQ2YzkzYWFiYTM4MmY3N2IzZWNkNDUxMDgyYTYz&ctz=America*2FLos_Angeles&hl=en&es=0__;JQ!!G92We9drHetJ8EofZw!dhkRpL8MvGYcz1kCsc7J65HhP6I_D08XyILFccVn3duILkGNludFRrCTybCkJm-Im0OyNbB_QLxBLnjlqYenRuZpzQ$>
+    Yes
+    <https://urldefense.com/v3/__https://calendar.google.com/calendar/event?action=RESPOND&eid=MG1hYzQxa29lamttczZlaGJuczNkdmFnMTYgbXJ5YW4wQHN0YW5mb3JkLmVkdQ&rst=2&tok=MjMjeWl4aW4ud2FuZy5zaEBnbWFpbC5jb201MDEzZWVmN2RhZDQ2YzkzYWFiYTM4MmY3N2IzZWNkNDUxMDgyYTYz&ctz=America*2FLos_Angeles&hl=en&es=0__;JQ!!G92We9drHetJ8EofZw!dhkRpL8MvGYcz1kCsc7J65HhP6I_D08XyILFccVn3duILkGNludFRrCTybCkJm-Im0OyNbB_QLxBLnjlqYdfUuWOjg$>
+    No
+    <https://urldefense.com/v3/__https://calendar.google.com/calendar/event?action=RESPOND&eid=MG1hYzQxa29lamttczZlaGJuczNkdmFnMTYgbXJ5YW4wQHN0YW5mb3JkLmVkdQ&rst=3&tok=MjMjeWl4aW4ud2FuZy5zaEBnbWFpbC5jb201MDEzZWVmN2RhZDQ2YzkzYWFiYTM4MmY3N2IzZWNkNDUxMDgyYTYz&ctz=America*2FLos_Angeles&hl=en&es=0__;JQ!!G92We9drHetJ8EofZw!dhkRpL8MvGYcz1kCsc7J65HhP6I_D08XyILFccVn3duILkGNludFRrCTybCkJm-Im0OyNbB_QLxBLnjlqYcgscmUIA$>
+    Maybe
+    <https://urldefense.com/v3/__https://calendar.google.com/calendar/event?action=VIEW&eid=MG1hYzQxa29lamttczZlaGJuczNkdmFnMTYgbXJ5YW4wQHN0YW5mb3JkLmVkdQ&tok=MjMjeWl4aW4ud2FuZy5zaEBnbWFpbC5jb201MDEzZWVmN2RhZDQ2YzkzYWFiYTM4MmY3N2IzZWNkNDUxMDgyYTYz&ctz=America*2FLos_Angeles&hl=en&es=0__;JQ!!G92We9drHetJ8EofZw!dhkRpL8MvGYcz1kCsc7J65HhP6I_D08XyILFccVn3duILkGNludFRrCTybCkJm-Im0OyNbB_QLxBLnjlqYdvyYA0zg$>
+    More options
+    
+    Invitation from Google Calendar<https://urldefense.com/v3/__https://calendar.google.com/calendar/__;!!G92We9drHetJ8EofZw!dhkRpL8MvGYcz1kCsc7J65HhP6I_D08XyILFccVn3duILkGNludFRrCTybCkJm-Im0OyNbB_QLxBLnjlqYdkukspAQ$>
+    
+    You are receiving this email because you are an attendee on the event.
+    
+    Forwarding this invitation could allow any recipient to send a response to the organizer, be added to the guest list, invite others regardless of their own invitation status, or modify your RSVP. Learn more<https://urldefense.com/v3/__https://support.google.com/calendar/answer/37135*forwarding__;Iw!!G92We9drHetJ8EofZw!dhkRpL8MvGYcz1kCsc7J65HhP6I_D08XyILFccVn3duILkGNludFRrCTybCkJm-Im0OyNbB_QLxBLnjlqYfjqLHl0w$>
+
+----------
+
+  Title      : Swabha Talk
+  When       : 2026-01-22 11:00:00-08:00 → 2026-01-22 12:00:00-08:00
+  Location   : <no location>
+  Starts In  : 2d 1h 8m
+
+----------","[1] Michael Ryan develops and debugs Python code, specifically focusing on the `context_agent.py` file and utilizing the OpenAI GPT-5 Nano model for AI context building. — Michael's active coding sessions, evidenced by terminal logs and contributions to `context_agent.py`, demonstrate his technical expertise in configuring AI systems.
+[2] Michael Ryan is pursuing career advancement opportunities in multilingual Natural Language Processing (NLP), engaging actively in job discussions on Slack and planning to network at the NeurIPS 2025 conference. — His conversations about job postings and intent to share his CV with sponsors at NeurIPS illustrate his proactive approach to career development.
+[3] Michael Ryan collaborates on academic research projects, particularly in AI and context gathering, participating in discussions with peers such as Michelle Lam and engaging in feedback sessions on shared research documents. — Evidence from Slack interactions and shared documents like 'Research Ideas (Michael + Percy)' reflects his commitment to collaborative research efforts.
+[4] Michael Joseph Ryan prioritizes the organization and preparation of academic documents, favoring structured and informative discussions over casual social interactions. — His focused engagement on Slack regarding academic project preparation and sharing resources underlines his commitment to academic tasks.
+[5] Michael Ryan exhibits a preference for collaborative documentation tools, including Google Docs and Slack, emphasizing their usability in enhancing collective academic efforts. — His positive feedback on shared documents, like an interview preparation guide, showcases his dedication to improving collaboration through effective resource sharing.
+[6] Michael Ryan shows a sustained interest in networking and professional development within the AI sector, actively discussing opportunities and sharing insights with peers. — The conversations with contacts like Saurabh Shah about future job options and professional networking reflect his ongoing engagement with career development.
+[7] Michael Ryan effectively utilizes structured coding environments and demonstrates a methodical approach to scientific workflows, improving the functionality of coding projects. — Engagement with structured coding practices and the development of the `context_agent.py` suggest his technical depth and reliability in project execution.
+[8] Michael Ryan actively participates in sessions within the Human-Agent Collaboration Working Group, contributing to discussions on human-centered AI and organizing relevant research events. — His contributions to organizing papers and discussions in the working group highlight his involvement in advancing collaborative AI research.
+[9] Michael Ryan is utilizing Slack as a primary tool for communication and project management. — Ryan's engagement across multiple Slack threads, discussing recruitment and project feedback with both Will Held and Michelle Lam, indicates that he relies on Slack for efficient communication within his team. The detailed exchange about relevant papers and hiring practices, alongside initiatives such as Open Athena, emphasizes the platform's role in facilitating real-time discussions and decision-making in projects.
+[10] Michael Ryan shows enthusiasm for discovering new research and integrating it into his work. — In the Slack interaction, Ryan expresses excitement with phrases like ""Wow!"" when he realizes the automated tool has found relevant research papers. This illustrates not only a positive attitude toward research but also an eagerness to incorporate these findings into his and his teammates’ work, reflecting his proactive approach in seeking valuable insights that could enhance project outcomes.",/Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/survey/screenshots/20260120_175144_Background_Agents_Precursor.png,"# Background Agents (Precursor)
+
+Agents that observe the user's work and when the user is idle or working on a separate project, they will automatically perform background tasks to help the user.  The focus is on building agents that predict what your are GOING to work on next and see how they can help with that.  This is my current rotation project with Michael Bernstein and I am almost done prototyping it and moving more towards getting feedback, improving the system, and writing the paper.
+
+## Ongoing Objectives
+[0] Interviewer feature for scratchpad correction: build an in‑app conversational flow, patch ops (append/edit/remove) with per‑entry confidence and provenance, backend persistence + audit log, minimal eval (precision/recall of corrections vs ground truth and time‑to‑fix), unit/integration tests, and privacy/consent copy. (confidence: 9)
+[1] Ablation study to identify drivers of success: design experiments that ablate background observers, tool‑selection rules, and the scratchpad correction loop; define success metrics (precision/recall of corrections, time‑to‑fix, downstream task utility); implement toggles, run on recent pipelines/fixtures, and report results. (confidence: 8)
+[2] Paper introduction framing: tighten the problem framing for background agents that predict what the user will work on next; clarify contributions/scope/assumptions, align evaluation with claims, and draft Overleaf intro revisions that integrate the interviewer feature and ablation plan. (confidence: 8)
+
+## Completed Objectives
+[0] Guarded Calendar import and added feature flag: implemented try/except around importing Calendar in src/precursor/observers/gum_source.py, added runtime env var PRECURSOR_DISABLE_CALENDAR to disable the Calendar observer, gated registration/usage behind availability + flag, created branch fix/guard-calendar-import and opened PR ""Guard Calendar import and add feature flag"" (PR create page visible in browser; short commit SHA '1a2ae0e' and diff summary shows 1 changed file with 38 additions and 8 deletions). Test: PRECURSOR_DISABLE_CALENDAR=1 python -m precursor.main → no ImportError; unset flag (with gum.Calendar available) → Calendar observer loads. (confidence: 9)
+[1] Deterministic CSV simulator mode and deterministic integration tests added: implemented an injectable clock + step()/run_once() in src/precursor/observers/csv_simulator.py and added deterministic integration tests (tests/test_project_transition_observer.py) that use MockTelemetrySink and MockNotificationSink to assert project transitions, batch processing/coalescing, and notification-sent vs notification-skipped behaviors. PR drafted/ready for review (verify branch name before merging). How to run locally: pytest -k project_transition. (confidence: 8)
+[2] Drafted and saved one‑page meeting brief: dev/presentations/one_pager_Precursor_MEETING.md — <=300 words summarizing current status, recent agent observations (embedded CSV snippet), top 3 accomplishments, top 3 blockers/questions, and 3 proposed next actions. Marked READY_FOR_HANDOFF for the Michael | Michelle meeting. (confidence: 9)
+[3] Prepared meeting handoff artifacts and staged for review: exported Keynote to presentations/Precursor_MEETING.pdf (with speaker notes) and saved a .key backup at presentations/Precursor_MEETING.key; created a 2–3 slide quick deck at dev/presentations/quick_deck_Precursor_MEETING.key; cropped demo screenshots to dev/survey/screenshots/cropped_demo_1.png (and _2.png); and drafted the one‑page brief dev/presentations/one_pager_Precursor_MEETING.md. Marked READY_FOR_HANDOFF for the Michael | Michelle meeting. (confidence: 8)
+[4] Exported and staged meeting handoff artifacts for Michael | Michelle (READY_FOR_HANDOFF): exported Keynote → presentations/Precursor_MEETING.pdf (PDF with speaker notes) and backup → presentations/Precursor_MEETING.key; one‑page brief saved at dev/presentations/one_pager_Precursor_MEETING.md; quick 2–3 slide handoff deck saved at dev/presentations/quick_deck_Precursor_MEETING.key; cropped demo screenshots saved to dev/survey/screenshots/cropped_demo_1.png (and _2.png if present); CSV snippet of recent agent observations saved to dev/presentations/pipeline_snippet_Precursor_MEETING.csv; optionally included dev/survey/tool_selection_repro.log for diagnostics. Verification: confirm each file exists and sizes > 0 bytes; note any export errors to dev/presentations/export_errors.log. (confidence: 9)
+
+## Suggestions
+[0] PR-body & reviewer checklist template for deterministic-integration-tests PR: 
+- Title (one line): Add deterministic integration tests + telemetry mocks for project-transition and notifications
+- Short summary (1–2 sentences): Adds a deterministic test harness driven by csv_simulator, introduces a lightweight TelemetrySink and MockNotificationSink for reliable assertions, and adds four integration scenarios covering project transitions, batch processing, notification-skipping, and notification-sending. Enables injecting mocks into ui_manager/agent_manager for hermetic tests.
+- Motivation & impact: Makes project-transition and notification behavior testable and deterministic, reduces flakiness in CI, and provides observability hooks (telemetry) useful for future debugging and metrics.
+- Files / areas touched (high level): src/precursor/observers/csv_simulator.py (small deterministic-mode addition), src/precursor/ui_manager.py and src/precursor/managers/agent_manager.py (optional injection points), src/precursor/testing or tests/mocks (MockTelemetrySink / MockNotificationSink), tests/tests_project_transition_observer.py (new tests), README/test instructions.
+- How to run locally: pytest -k project_transition  OR pytest tests/test_project_transition_observer.py
+- Minimal checklist for reviewers:
+  - [ ] Tests added and deterministic (no sleeps/network)
+  - [ ] TelemetrySink + MockNotificationSink implemented and used in tests
+  - [ ] Injection points are backward-compatible (defaults preserve existing behavior)
+  - [ ] README/test instructions added or updated
+  - [ ] CI passes and no external dependencies introduced
+- Suggested reviewers: Michelle Lam (collaborator on repro), Michael Bernstein (project lead) — adjust based on team ownership. (confidence: 5)
+[1] Quick accessibility / legibility check for Keynote: verify Graphik font sizes (>=24–32pt for body / >=32pt for main bullets depending on room), ensure gradient fill provides sufficient contrast (use solid or higher-contrast overlay if needed), and crop/annotate large screenshots for readability. Add a short checklist and mark slides that need fixes before exporting the meeting-ready PDF. (confidence: 3)
+[2] Fix ModuleNotFoundError for 'dotenv' seen when running CodeConflictBenchmark/evaluate.py: either add 'python-dotenv' to the repo's requirements.txt (and CI/dev envs) or wrap the dotenv import in a try/except with a clear README note explaining the optional dependency and how to install it (e.g., pip install python-dotenv). Suggested steps: (1) add dependency to requirements.txt or pyproject, (2) run tests in that env to confirm, (3) optionally add a short note in CONTRIBUTING/README about setting up the env. (confidence: 5)
+[3] For deterministic tests and CI, disable the Calendar observer to avoid ImportError/flakiness: - Set PRECURSOR_DISABLE_CALENDAR=1 in test/CI environments (e.g., export in CI job, add to pytest.ini or tox env). - Add a small pytest fixture (e.g., conftest.py) that ensures os.environ['PRECURSOR_DISABLE_CALENDAR']='1' for tests interacting with observers/simulators. - Add a one-line note in the tests README explaining why the flag is required for hermetic runs. (confidence: 6)
+[4] Polish the 'Observers' slide visuals & animation sequencing: - Align the yellow 'Observation' callout and red arrows vertically with the central GUM/Observers boxes; use consistent arrow size and spacing so builds look smooth. - Set build order to: 1) show Observers row, 2) fade in Observation callout, 3) reveal arrows one-by-one (left → center → down), 4) reveal GUM box; use ease-in/out and ~300–400ms per arrow for clarity. - Increase foreground/background contrast (avoid dark-on-dark gradient for main text boxes); consider a solid or semi-opaque overlay behind white boxes to improve readability at 1024×768. - Use consistent corner radius, stroke weight, and the same blue for observer chips to match deck style. These small fixes will improve legibility and make the animation flow clear during a live talk. (confidence: 3)
+
+## Notes
+[0] Terminal logs (visible in screenshot/VS Code terminal) show ui_manager/agent_manager behavior: e.g., ""ui_manager: skipping notification for Background Agents (Precursor) (no pending agent-completed tasks)"", ""Completed processing batch of 5 observations"", and ""Added observation <id> to queue (size: 2)"". This is evidence of notification skipping and current queue/coalescing behavior to investigate. (observed in screenshot; treat as observed/uncertain). (confidence: 6)
+[1] Workspace screenshot and terminal logs show active, concurrent work on CodeConflictBenchmark: evaluate.py raised ModuleNotFoundError: No module named 'dotenv' (suggesting python-dotenv should be installed or added to requirements.txt) and a later TypeError during aggregation. This likely explains the user's context-switching between Background Agents and CodeConflictBenchmark and is relevant when prioritizing background tasks or interpreting logs. (observed in screenshot/terminal). (confidence: 6)
+[2] Terminal shows ModuleNotFoundError: No module named 'dotenv' when running CodeConflictBenchmark (evaluate.py imports from dotenv). Likely fix: install python-dotenv (pip install python-dotenv) or add it to the repo's requirements.txt/README; alternatively add a try/except around dotenv imports with a clear README note. This appears in the screenshot/terminal and may explain the user's context-switching to CodeConflictBenchmark. (confidence: 5)
+[3] Michelle Lam explicitly granted permission to include screenshots in slides (Slack DM visible in the screenshot; message around 11:43 PM: “oh yeah go for it!”). Treat this as collaborator consent for using captured assets in presentations. (confidence: 6)
+[4] Nov 22 session (Human-Agent Collaboration Working Group) is imminent — prioritize extracting session bullets, mini-hackathon steps, and a short demo plan into the one-slide executive summary and 3-slide brief. Useful actions: pick 1–2 screenshots for the demo, prepare 30–60s speaker notes per slide, and mark slides as DRAFT for quick feedback. (confidence: 5)
+[5] Active Keynote editing: the 'Observers' slide is open (window title 'Precursor — Edited') with build order and the Style/Animate inspector visible — user is adjusting shape styles, fills/borders, and animation timing. Confirms ongoing slide-polishing work and suggests prioritizing export + speaker notes for this slide before the Nov 22 meeting. (confidence: 8)
+[6] Keynote is currently open and actively being edited: window title 'Precursor — Edited' and the System Architecture slide (Observers → GUM → Project Classifier → Project Memory) is visible. Format inspector shows Gradient Fill (Angle: 270°). Prioritize exporting a meeting-ready PDF/Keynote and including speaker notes for the upcoming seminar/meeting. (confidence: 8)
+[7] Meeting (Michael | Michelle) is imminent — prioritize immediate export of the open Keynote and generation of the one‑page meeting brief and quick deck for handoff: export PDF with speaker notes, save a .key backup, crop 1–2 demo screenshots, attach dev/survey/pipeline_run.csv snippet, and mark assets READY_FOR_HANDOFF. If running tests during/after the meeting, use PRECURSOR_DISABLE_CALENDAR=1 for hermetic runs. (actionable checklist: Export PDF + .key, crop screenshots, save one-pager, verify files exist and sizes > 0 bytes). (confidence: 8)
+[8] Observed concrete syntax/logic issues in src/precursor/observers/gum_source.py (visible in editor screenshot):
+- Function signature appears malformed: `async def run()` is missing the parameter list/colon (should be e.g., `async def run(self):`).
+- Calendar query line appears malformed/incorrectly assigned: `calendar_events = self.cal.query_start_delta=timedelta(days=0), end_delta=timedelta(days=self.poll_calendar_days),` — looks like mistaken chaining/commas rather than a proper call/kw-args. 
+- `async with gum(... ) as gum_instance:` block and nested callback `_on_update` indentation/structure may be impacted by the above syntax errors, causing NameError / runtime issues.
+Recommended immediate action: open gum_source.py, fix the function signature and the calendar query call (call the calendar query method with proper keyword args or guard its usage), run a quick syntax check (python -m py_compile src/precursor/observers/gum_source.py) and run the relevant unit tests or a small smoke-run of the pipeline to confirm the file parses and the Calendar-guarding logic behaves as expected. (confidence: 7)
+[9] Possible gum_source.py path discrepancy observed: screenshot shows src/precursor/config/gum_source.py whereas earlier resource entries and tracebacks referenced src/precursor/observers/gum_source.py. Verify the correct file location before editing/fixing calendar import and async signature to avoid editing a duplicate or outdated copy. (confidence: 5)
+[10] Observed terminal log: websearch.brave_web_search tool call failed with an input-validation error referencing an invalid enum/value (logs show ""Invalid enum value 'pd'"" or similar) immediately before the agent repeatedly called drive.search_files. Treat this as likely root cause evidence for the tool-selection loop (invalid websearch args → fallback/loop to Drive). Save the full log snippet (dev/survey/tool_selection_repro.log) when reproducing and prioritize adding input validation/mapping for websearch args and improved decision-level logging. (confidence: 7)
+[11] Michelle Lam granted permission to include screenshots in slides (Slack DM visible: “oh yeah go for it!”). Treat as collaborator consent for using captured assets in presentations; verify before public distribution if necessary. (confidence: 6)
+[12] Screenshot shows recommended loader-compatible mcp_servers.yaml forms for the 'fetch' entry: either a single load string (e.g., ""python -m mcp_server_fetch --ignore-robots-txt --user-agent=Precursor/1.0"") or a dict form with command: ""python"" and args: [""-m"",""mcp_server_fetch"",""--ignore-robots-txt"",""--user-agent=Precursor/1.0""]. Prefer the dict form to avoid loader parsing errors (e.g., ""load_child_string thinks 'load' is a dict without command""); capture both forms as attempted fixes when creating the fetch-config patch. (confidence: 7)
+[13] Rebaseline (Dec 18): archived pre‑Nov 22 objectives; promoted new priorities — Interviewer feature, Ablation study, and Paper intro framing; added Overleaf + canonical plan doc links under Project Resources. (confidence: 9)
+[14] UIST submission target noted: March. Skipping Overleaf sync for now; will revisit backward plan later if needed. (confidence: 9)
+
+## Project Resources
+### Files
+[0] src/precursor/observers/gum_source.py — file referenced in the Slack traceback that imports `Calendar` from `gum.observers`. Partial path visible: /Users/michellel.../Documents/__School/background-agents/src/precursor/observers/gum_source.py (treat as observed/uncertain). (confidence: 3)
+[1] /Users/michellelam/opt/anaconda3/envs/precursor/lib/python3.10/site-packages/gum/observers/__init__.py — upstream installed gum package file referenced by the ImportError traceback (defines observers.Calendar import point). Path observed in Slack DM/screenshot; treat as observed/uncertain. (confidence: 4)
+[2] test_project_transition_observer.py — test file visible in the VS Code editor tabs; likely contains tests for transition/observer behavior relevant to screenshot ingestion and cadence/processing issues. Path not fully visible; treat as observed/uncertain. (confidence: 4)
+[3] requirements.txt — Python dependency file visible in the VS Code editor tabs; may list the project's pinned gum version or other deps relevant to reproducing the ImportError and environment setup. Path 'requirements.txt' in the repo observed in the editor (treat as observed/uncertain). (confidence: 4)
+[4] dev/survey/screenshots/20251119_052948_Misc.png — screenshot currently open in the editor showing VS Code explorer (screenshot folder), terminal logs, and an open Google Doc; useful for reproducing the screenshot ingestion/cadence behavior and diagnosing the ImportError/logs visible in the terminal. Path observed in editor tab and VS Code explorer (treat as observed/uncertain). (confidence: 4)
+[5] dev/survey/pipeline_run.csv — CSV open in the editor (contains timestamp, project, context_update, and other columns). Likely used to record pipeline observations / screenshot ingestion runs and useful for reproducing cadence/processing issues seen in the terminal logs and screenshot. Observed in VS Code editor and in the screenshot (treat as observed/uncertain). (confidence: 4)
+[6] main.py — repository entrypoint / script visible in the open editor tab; likely used to start the background-agents pipeline and reproduce the observed logs/behavior. Observed in VS Code editor tabs in the screenshot (treat as observed/uncertain). (confidence: 4)
+[7] ui_manager.py — UI manager module visible in the open editor tabs/screenshot; likely contains notification logic (e.g., skipping notifications) and orchestration code referenced in terminal logs. Useful for debugging notification skipping and pipeline behavior. Observed in VS Code editor tabs in the screenshot (treat as observed/uncertain). (confidence: 4)
+[8] dev/survey/screenshots/20251119_061354_Background_Agents_Precursor.png — currently-open screenshot capturing VS Code workspace, terminal logs, and the 'Investigate GUM' note panel (useful for reproducing observed ImportError/log cadence). Path observed in editor (treat as observed/uncertain). (confidence: 4)
+[9] src/precursor/observers/csv_simulator.py — CSV input simulator visible in the repo explorer; can be used to generate deterministic rapid streams of context/screenshot updates for repros and CI-friendly tests that validate queue/coalescing behavior (observed in VS Code explorer; treat as uncertain). (confidence: 4)
+[10] src/precursor/project_transition.py — module visible in the repo explorer; likely handles project transition logic referenced by tests and relevant to notification/queue behavior (observed/uncertain). (confidence: 4)
+[11] dev/survey/survey_responses.csv — CSV of survey responses visible in the VS Code explorer; likely used by the dev/survey pipeline/tests and useful for reproducing ingestion/processing behavior (observed/uncertain). (uri: dev/survey/survey_responses.csv) (confidence: 4)
+[12] dev/survey/pipeline_run.agent_candidates.csv — CSV of agent-candidate tasks (open in editor; contains columns like project, task_description, value_score, feasibility_score). Primary source for the 'enrich CSV rows' objective and useful for dry-run generation of artifacts. (uri: dev/survey/pipeline_run.agent_candidates.csv). (confidence: 8)
+[13] src/precursor/managers/agent_manager.py — Agent manager module visible in the workspace/panel; orchestrates deploying MCP/agent tasks and appears relevant to notification, pipeline, and project-transition logic (observed in screenshot/panel). (confidence: 5)
+[14] src/precursor/managers/state_manager.py — State manager module referenced in logs/panels; likely responsible for processing events and managing project state transitions (observed in potential_resources/list). (confidence: 5)
+[15] src/precursor/config/projects.yaml — projects configuration file observed in workspace/panel; appears to control per-project agent_enabled flags and other project metadata (uri: src/precursor/config/projects.yaml). (confidence: 5)
+[16] Precursor Keynote presentation file (title bar shows 'Precursor — Edited'; slide 'Areas for Feedback' visible). Likely the talk/deck used for upcoming feedback and meetings. Suggested savepath (guess): presentations/Precursor.key. Exact filepath not visible in screenshot — treat as uncertain. (confidence: 5)
+[17] Precursor Keynote presentation file (title bar: 'Precursor — Edited'; 'Areas for Feedback' and 'Motivation' slides visible). Exact filepath not shown in screenshot — likely in the repo or a local Presentations/ folder. Treat as uncertain/verify before publishing slides. (confidence: 5)
+[18] Precursor Keynote presentation — currently open in Keynote (window title: 'Precursor — Edited'); slides visible include 'Motivation' and 'Areas for Feedback'. Likely saved in a local presentations/ or dev/presentations/ folder (e.g., presentations/Precursor.key or dev/presentations/Precursor_20251119.pdf). Exact filepath not visible in screenshot — verify before publishing. (confidence: 5)
+[19] Precursor Keynote presentation file ('Precursor — Edited') — currently open in Keynote. Likely saved locally (possible locations: presentations/Precursor.key or dev/presentations/Precursor_20251119.pdf) but exact filepath not visible in screenshot; verify the actual save location before exporting or publishing slides. (confidence: 4)
+[20] Google Doc: 'Just-in-Time Objectives: Fall 25 planning' — planning and user-study doc visible open in browser (likely the primary planning doc for the Background Agents project). Possible URI: https://docs.google.com (verify exact share link before external reference). (confidence: 3)
+[21] dev/survey/pipeline_run.agent_candidates.csv — CSV of agent-candidate tasks (open in the editor; contains columns like project, task_description, value_score, feasibility_score). Primary source for the 'enrich CSV rows' objective and useful for generating deterministic test fixtures / dry-runs. (observed in workspace; verify exact path/URI before publishing). (confidence: 8)
+[22] Precursor Keynote presentation file ('Precursor — Edited') — Keynote window visible in screenshot. Likely saved locally (possible locations: presentations/Precursor.key or dev/presentations/Precursor_20251119.pdf). Verify actual save path before exporting or referencing externally. (confidence: 6)
+[23] Precursor Keynote presentation file — Keynote window titled 'Precursor — Edited' is currently open and contains slides like 'Motivation' and 'Areas for Feedback'. Likely saved locally (possible locations: presentations/Precursor.key or dev/presentations/Precursor_20251119.pdf). Exact filepath not visible in screenshot — verify before exporting or referencing externally. (confidence: 5)
+[24] Precursor Keynote presentation file — Keynote window titled 'Precursor — Edited' is open (slides include 'Motivation' and 'Areas for Feedback'). Likely saved locally (e.g., presentations/Precursor.key or dev/presentations/Precursor_20251119.pdf). Exact filepath not visible in screenshot; verify before exporting or referencing externally. (confidence: 5)
+[25] Precursor Keynote — System Architecture slide (slide 26). Keynote window titled 'Precursor — Edited' currently open with slide 26 selected (title: 'System Architecture'). Useful for finalizing speaker notes, animation build order, and exporting meeting-ready PDF/Keynote for the Nov 22 meeting. Exact file path not visible in screenshot — verify save location before exporting. (confidence: 7)
+[26] Precursor Keynote presentation (window title: 'Precursor — Edited') — currently open in Keynote. Likely saved locally (possible locations: presentations/Precursor.key or dev/presentations/Precursor_20251119.key) but exact filepath not visible in screenshot; verify actual save path before exporting or referencing externally. (confidence: 3)
+[27] Precursor Keynote presentation file (window title: 'Precursor — Edited') — primary deck being edited for the Nov 22 meeting. Likely saved locally; possible locations to verify before publishing: presentations/Precursor.key or dev/presentations/Precursor_20251119.key. Mark the path as a guess and verify actual save location before exporting or sharing. (confidence: 5)
+[28] Precursor Keynote presentation — window titled 'Precursor — Edited' is currently open in Keynote. Primary deck for Nov 22 meeting; likely saved locally (possible locations: presentations/Precursor.key or dev/presentations/Precursor_20251119.key). Verify actual save path before exporting PDF/.key. (confidence: 7)
+[29] Precursor Keynote presentation — window titled 'Precursor — Edited' is currently open in Keynote (primary deck for Nov 22 / Michael | Michelle meeting). Suggested save/export names for meeting handoff: presentations/Precursor_MEETING.key (backup) and presentations/Precursor_MEETING.pdf (PDF with speaker notes). Verify the actual file path before publishing or linking externally. (confidence: 5)
+[30] Precursor Keynote presentation (window title: 'Precursor — Edited') — primary meeting deck currently open in Keynote (System Architecture / Observers slides visible). Likely saved locally; suggested/guessed save locations to verify before exporting: presentations/Precursor_MEETING.key and presentations/Precursor_MEETING.pdf. Verify actual filepath in Finder/Keynote before publishing or linking. (observed in screenshot; path not visible) (confidence: 5)
+[31] Precursor Keynote presentation currently open (window title: 'Precursor — Edited'). Suggested save/export names for meeting handoff: presentations/Precursor_MEETING.key (backup) and presentations/Precursor_MEETING.pdf (PDF with speaker notes). Verify actual Keynote file path in Finder/Keynote before exporting or publishing. (confidence: 5)
+[32] dev/survey/pipeline_run.agent_candidates.csv — CSV of agent-candidate tasks (columns include project, task_description, value_score, feasibility_score). Primary source for generating agent tasks, enriching rows with deliverable metadata, and creating deterministic test fixtures / dry-run inputs. Observed open in the editor; verify exact path before external references. (confidence: 8)
+[33] src/precursor/config/gum_source.py — file shown open in the editor/screenshot containing the GumSource class and the malformed async run/calendar query lines; may be a duplicate or alternate location to src/precursor/observers/gum_source.py. Verify which path is the canonical source before applying syntax/calendar-import fixes. (confidence: 5)
+[34] dev/presentations/one_pager_Precursor_MEETING.md — one‑page meeting brief (<=300 words) generated for the Michael | Michelle meeting. Contains: current status, embedded CSV snippet from dev/survey/pipeline_run.csv, top 3 accomplishments, top 3 blockers/questions, and 3 proposed next actions (owner + suggested deadline). Marked as agent-generated and pending review. (confidence: 9)
+[35] src/precursor/agents/context_agent.py — ContextBuilderAgent / context-building logic (open in VS Code during session); relevant to the core.gather_project_context tool_call seen in Slack logs and useful for reproducing the drive.search_files vs websearch repro. (confidence: 8)
+[36] src/precursor/agents/mcp_agent.py — MCP agent implementation (defines MCPTaskSignature / AgentResult and documents available toolset: drive, filesystem, websearch). Relevant to reproducing and fixing the tool-selection loop (drive.search_files vs websearch) and appears modified in the current git status. (confidence: 8)
+[37] dev/survey/pipeline_run.goals_incidents.csv — untracked CSV fixture observed in the terminal during the session (likely contains goals/incidents or targeted repro rows). Useful as a deterministic test fixture and for generating agent-candidate dry-runs / meeting snippets. Verify path in repo and include in tests/dev fixtures if confirmed. (confidence: 6)
+[38] dev/survey/tool_selection_repro.log — captured tool-selection trace showing websearch.brave_web_search input-validation error (e.g., ""Invalid enum value 'pd'"") immediately before repeated drive.search_files calls; save full log snippet for reproducing the failure and adding defensive validation/mapping and loop-guards. (confidence: 7)
+[39] tests/fixtures/context_agent_malformed_outputs.jsonl — planned test fixture capturing representative malformed LM + webscrape outputs (whitespace-only fields, missing keys, empty strings) to reproduce the ContextBuilderAgent Zod InvalidLiteralError. Purpose: used by tests/test_context_agent_zod_fallback.py and saved raw offending outputs to dev/survey/debug_context_agent_output.jsonl if/when reproduced. (confidence: 4)
+[40] src/precursor/agents/context_agent.py — ContextBuilderAgent / context_agent implementation (open in VS Code; contains incomplete/malformed code and placeholder returns that need repair as part of the context_agent / mcp_agent integration work). Visible in screenshot/editor and relevant to reproducing the InvalidLiteralError and tool-selection issues. (confidence: 8)
+[41] src/precursor/agents/mcp_agent.py — MCP agent implementation (open in VS Code; defines MCPTaskSignature / AgentResult and documents available toolset: filesystem, drive, websearch, fetch). Relevant to reproducing and fixing the tool-selection loop where agents repeatedly call drive.search_files instead of websearch and for finishing context_agent / mcp_agent integration work. (confidence: 8)
+[42] servers/src/fetch/README.md — fetch MCP server README (visible in GitHub preview in the screenshot). Useful for configuring and running the fetch tool (HTML→markdown), proxy/user-agent options, and debugging; verify the exact path in the repo before using externally. (confidence: 5)
+[43] dev/survey/tool_selection_repro.log — captured tool-selection trace showing a websearch.brave_web_search input-validation error (e.g., invalid enum value 'pd') immediately before repeated drive.search_files calls. Useful for reproducing the tool-selection loop and adding defensive validation/mapping and loop-guards; verify full log contents when investigating. (path guessed: dev/survey/tool_selection_repro.log) (confidence: 7)
+[44] src/precursor/config/mcp_servers.yaml — MCP servers configuration file (contains server entries for coder, websearch, slides and an npx mcp-remote entry for Tavily). Observed open in VS Code editor (used to register Brave/Tavily/fetch MCP remotes); verify actual file before editing or publishing. (confidence: 8)
+[45] src/precursor/utils.py — contains apply_env(spec) implementation that appears to loop over spec.get('id') instead of an environment dict (buggy snippet visible in editor). Action: fix apply_env to iterate over the correct env mapping (e.g., spec.get('env') or spec.get('env_vars')), add a unit test using a temporary spec to assert os.environ updates, and include a short docstring explaining expected spec shape. Visible in workspace screenshot/editor (verify path before editing). (confidence: 8)
+[46] dev/presentations/one_pager_Precursor_MEETING.md — one‑page meeting brief (<=300 words) generated for the Michael | Michelle meeting; contains current status, embedded CSV snippet, top 3 accomplishments, top 3 blockers/questions, and 3 proposed next actions. Marked as agent-generated and pending review. (confidence: 9)
+[47] src/precursor/mcp_loader/loader.py — MCP server loader module (reads config/mcp_servers.yaml via mcp2py, compiles allow_fn for tool filtering, and starts MCP servers). Observed open in VS Code during the session; useful starting point for reproducing/repairing the mcp loader workflow. (confidence: 7)
+[48] src/precursor/mcp_loader/mcp_servers.yaml — MCP servers configuration used by the loader (defines coder/websearch/fetch remotes and any per-server options). Observed in the VS Code mcp_loader folder; useful for reproducing/repairing the loader behavior and verifying fetch/websearch entries when debugging the httpx/mcp-server-fetch conflict. (confidence: 7)
+[49] tavily-mcp/src/index.ts — observed in the open GitHub screenshot; defines a 'tavily-extract' MCP tool. Input schema includes: urls (array of strings) and extract_depth (enum [""basic"",""advanced""]). package.json and README.md also present in the tavily-mcp repo (useful for integration and dependency notes). Mark as candidate for registering a web-extraction MCP (tavily-extract) in mcp_servers.yaml. (confidence: 5)
+[50] dev/presentations/one_pager_Precursor_MEETING.md — generated one‑page meeting brief (<=300 words) for the Michael | Michelle meeting; contains current status, embedded CSV snippet from dev/survey/pipeline_run.csv, top 3 accomplishments, top 3 blockers/questions, and 3 proposed next actions. Marked as pending review / READY_FOR_HANDOFF. (confidence: 9)
+[51] dev/presentations/one_pager_Precursor_MEETING.md — generated one‑page meeting brief (<=300 words) summarizing current status, recent agent observations (CSV snippet), top accomplishments, blockers, and next actions. Marked READY_FOR_HANDOFF for Michael | Michelle meeting. (confidence: 9)
+[52] .env.example — environment template observed open in the editor; contains placeholders/keys: OPENAI_API_KEY, ANTHROPIC_API_KEY, CALENDAR_ICS, GITHUB_TOKEN, BRAVE_API_KEY. Useful for bootstrapping local dev environment and documenting required credentials/feature flags. Verify before publishing any real keys. (confidence: 8)
+[53] src/precursor/config/mcp_servers.yaml — MCP servers configuration (defines coder/websearch/fetch remotes, Tavily/Brave entries, and loader-compatible forms). Useful for reproducing loader/startup issues, validating required env vars (e.g., TAVILY_API_KEY), and for the fetch/httpx troubleshooting. Verify exact path before editing. (confidence: 8)
+[54] dev/survey/pipeline_run.agent_candidates.csv — CSV of agent-candidate tasks (columns include project, task_description, value_score, feasibility_score). Primary source for generating agent tasks, enriching rows with deliverable metadata, and creating deterministic test fixtures / dry-run inputs. Observed open in the editor; verify exact path before external referencing. (confidence: 8)
+[55] Google Doc — Canonical Plan for Precursor: https://docs.google.com/document/d/12niNZihXYF_PPW5fnY7TRL1ILJiepDQnmhd6OLLVRDs (access pending; please share as needed). (confidence: 9)
+[56] Google Doc — Precursor — Introduction (Shared Project Context): https://docs.google.com/document/d/1sonFWMhoH4a5y82GftCXWf251aKPRl_pXlak9A5BUuo/edit (confidence: 9)
+[57] credentials.json — local credentials file visible in the repository root (likely used for API/service auth). Treat as observed/uncertain; verify path and contents and ensure no secrets are committed before sharing. (confidence: 3)
+
+### Repos
+[0] XenonMolecule/background-agents — GitHub repository for the Background Agents (Precursor) project. Observed in the browser (PR creation/compare pages) and used for branches/PRs (e.g., fix/guard-calendar-import). URI (observed): https://github.com/XenonMolecule/background-agents (treat as observed/uncertain; verify before external referencing). (confidence: 9)
+[1] mikechao/brave-search-mcp — example MCP server for Brave web search (GitHub): https://github.com/mikechao/brave-search-mcp — observed in Spotlight/Safari suggestions; use as an implementation/example when wiring a websearch MCP or testing websearch tool integration. (marked uncertain; verify before relying on this repo as a dependency). (confidence: 3)
+
+### Folders
+[0] background-agents local project folder — contains src/precursor/observers (includes gum_source.py referenced in the Slack traceback). Partial path visible in screenshot: /Users/michellel.../Documents/__School/background-agents (path is partially obscured; treat as an observed/uncertain path). (confidence: 3)
+[1] dev/survey/screenshots/ — folder in the background-agents repo containing many captured screenshots (PNG) used for testing and reproducing screenshot ingestion/processing issues; observed in VS Code explorer in the screenshot (path partially visible; treat as observed/uncertain). (confidence: 4)
+[2] servers/src/fetch — local/checked-in fetch MCP implementation (README visible in screenshot). Provides a web-content fetching tool (fetch) that converts HTML→markdown; path shown in workspace: servers/src/fetch/ (verify actual path/URI before using). (confidence: 5)
+
+### Core Collaborators
+[0] Michelle Lam — reported the ImportError in the Slack DM and is running the local background-agents setup (visible in the screenshot/transcript). Contact via Stanford Slack DM (treat as observed/uncertain). (confidence: 9)
+[1] Will Held — Slack DM visible in SALT workspace (chat window shown in screenshot). Possible collaborator/contact for coordination and context; add as a core collaborator reference (verify Slack handle/channel before outreach). (confidence: 3)
+[2] Saurabh Shah — iMessage thread visible in Messages app (contact mentioned in screenshot; phone number shared). Add as a possible collaborator/contact for coordination and follow-up (verify before outreach). (confidence: 3)
+
+### Other
+[0] gum (Python package / repo) — referenced by the ImportError traceback (gum.observers.__init__.py) in the user's conda env site-packages; likely the upstream package/repo that defines Calendar and which may need a fix or a matching version. No URI captured; treat as observed/uncertain. (confidence: 4)
+[1] Unmerged PR on the upstream GUM repo (pushed by Michael) that disables or guards the Calendar observer as a temporary unblock. Mentioned in Slack: Michael said he pushed changes and Omar hasn't merged yet — no PR URL captured (treat as observed/uncertain). (confidence: 5)
+[2] ""Good Science paper examples"" — Google Doc visible in the Safari window (docs.google.com) with the user's notes on papers; currently signed in as MichaelEV3@gmail.com in the screenshot (treat as observed/uncertain). (confidence: 4)
+[3] VSCode 'Investigate GUM' side panel / note — contains observed behavior and proposed fixes for screenshot cadence and GUM handler (mentions asyncio.create_task, asyncio.to_thread/offloading, cooldown + latest-wins coalescing, and hybrid worker queue options). Visible in the screenshot/editor side column in the background-agents workspace (treat as observed/uncertain). (confidence: 4)
+[4] GitHub PR/branch 'fix/guard-calendar-import' visible in browser with short commit SHA '1a2ae0e' and commit author shown as 'openhands-agent' (evidence: screenshot of PR create page). Treat as observed/uncertain. (confidence: 6)
+[5] PR diff summary: showing 1 changed file with 38 additions and 8 deletions (visible on the GitHub PR create/compare page in the screenshot). Treat as observed/uncertain. (confidence: 6)
+[6] GitHub compare/PR URL for the calendar-import guard branch: https://github.com/XenonMolecule/background-agents/compare/fix/guard-calendar-import?expand=1 (visible in screenshot/Slack; treat as observed/uncertain). (confidence: 6)
+[7] Draft pull request: 'Add comprehensive integration tests for project transition and notifications' (branch: precursor-tests → main) in XenonMolecule/background-agents. PR create page visible in screenshot; description lists implementing MockTelemetrySink and MockNotificationSink, a deterministic CSV simulator / test harness, four main test scenarios (project transition detection, batch processing metrics, notification skipped when no pending tasks, notification sent when pending tasks exist), README/test instructions, and test fixtures. (observed in screenshot; treat as uncertain). (confidence: 6)
+[8] Slack channel: #phds — channel visible in the screenshot; contains scheduling messages and shared links relevant to the Nov 22 meeting and group coordination (exact URI not captured). Useful for extracting agenda items, links, and discussion context when compiling the meeting brief and slides. (confidence: 4)
+[9] Google Doc: ""Human-Agent Collaboration Working Group SALT Lab 2025 Fall"" — meeting notes / agenda for Nov 22 (observed open in the screenshot; exact URI not captured). Useful for extracting agenda items, mini-hackathon steps, and demo plan when preparing the one-slide executive summary and slide exports. (observed/uncertain) (confidence: 4)
+[10] GitHub compare/PR URL for branch `fix/guard-calendar-import`: https://github.com/XenonMolecule/background-agents/compare/fix/guard-calendar-import?expand=1 — visible in the embedded Slack/Keynote screenshot; useful for opening the PR for review or linking in slides. Verify the PR is created/updated before referencing externally. (confidence: 6)
+[11] PrecursorApp local dashboard — a local UI window titled ""Here's what I worked on for Background Agents (Precursor)"" observed in the screenshot. Appears to summarize recent agent updates and can surface/export meeting-ready summaries/screenshots (exact app binary/path unknown; observed in macOS window). (confidence: 6)
+[12] Google Doc: 'User Study Design' — open in the screenshot; contains pre/post survey drafts, task descriptions, and the study plan for the Nov 22 meeting. Exact share link/URI not captured in screenshot — verify before referencing externally. (confidence: 7)
+[13] Google Doc: 'Just-in-Time Objectives: Fall 25 planning' — primary planning doc currently open in the browser; contains weekly objectives table, planning tabs (Planning, Midpoint Planning, User Study Design, Literature Survey). Observed in screenshot; exact share link not captured (visible as https://docs.google.com). Verify actual share URL before referencing externally. (confidence: 6)
+[14] Google Doc: ""Michael R | Flash Meeting Feedback"" — open in browser (contains Michael Bernstein / Lindsay / Dora feedback bullets useful for extracting slide bullets, speaker notes, and the one‑page meeting brief). URI not captured in screenshot; verify before external sharing. (confidence: 4)
+[15] Slack workspace: 'Stanford University' — channel `#opennlp` visible in the Slack window (useful for finding community discussion, reviewer requests, or coordination messages relevant to meetings/related-work). Exact workspace URI not captured; verify before external linking. (confidence: 4)
+[16] Local Zotero library (open in screenshot) — contains the arXiv paper 'Completion ≠ Collaboration' (PDF open) plus other collected PDFs (e.g., 1183.pdf, 2021.naacl-main.184.pdf, 2311.04155.pdf). Useful as the canonical literature stash for the related-work summary, slide snippets, and one-paragraph TL;DRs. (Observed in screenshot; verify exact collection/folder names when re-checking.) (confidence: 7)
+[17] ArXiv paper: ""Completion ≠ Collaboration: Scaling Collaborative Effort with Agents"" (arXiv:2510.25744) — PDF/abstract observed open in the browser (useful for related-work, slide snippets, and 1-paragraph TL;DR). Observed URI: https://arxiv.org/abs/2510.25744 — verify the exact PDF/URL before external citation. (confidence: 3)
+[18] Zotero — 'Bernstein Group' collection (Zotero desktop app visible in screenshot; appears to contain the 'Completion ≠ Collaboration' PDF and other related papers). Observed in current workspace; verify collection contents and shareable links before external use. (confidence: 3)
+[19] OpenAI Platform — Usage dashboard / account spend screenshot (visible in workspace). Shows total spend, monthly budget, requests, and input token counts; useful for budgeting notes on API-driven demos. Observed in screenshot (possible URI: https://platform.openai.com/usage). Verify actual account details before external sharing. (confidence: 3)
+[20] GitHub compare/PR URL for branch fix/guard-calendar-import: https://github.com/XenonMolecule/background-agents/compare/fix/guard-calendar-import?expand=1 (observed in browser/PR create page; verify before external referencing). (confidence: 6)
+[21] Slack workspace: SALT — team discussion and file sharing workspace shown in the screenshot. Useful for finding meeting coordination, shared files (e.g., feature10_feature11 references), quick threads with collaborators (Arpan, Michelle, Peter), and context for ongoing debugging. (Visible in current workspace screenshot; verify channel/URL before referencing externally.) (confidence: 4)
+[22] Slack channel: 'SALT' — team Slack channel visible in the screenshot containing the Boltz/hiring discussion and relevant links (useful for coordination and follow-ups). Exact workspace/URL not captured; verify before referencing externally. (confidence: 4)
+[23] EPFL 'JDIPs People' page (captured by websearch.tavily_search in the terminal; contains people entries useful as example context/sources for ContextBuilderAgent tasks) — https://www.epfl.ch/education/people/id/jdpls-learning-sciences/ (confidence: 6)
+[24] Claude.ai public artifact — ""EPFL Interview Prep Guide - Academic Research Brief Template"" (previewed in Slack DM). URI (observed in screenshot/Slack): https://claude.ai/public/artifacts/16500a12-2c0c-4fac-854c-0e2362d6c3b6. Useful for generating interviewer briefs, slide-ready summaries, and demo snippets for the Nov 22 / Michael | Michelle meeting. (observed in workspace screenshot) (confidence: 6)
+[25] Google Doc — Background Agents: Fall ’25 planning [Michael Ryan]: https://docs.google.com/document/d/1WuSye9cXI8cFoUQqYaT8znrcApxSTwkkQ2sPhDYjhyM (confidence: 8)
+[26] Overleaf project (paper draft): https://www.overleaf.com/project/690b9a4a748320438f624574 (confidence: 8)
+[27] Canonical plan doc (Google Doc): https://docs.google.com/document/d/1WuSye9cXI8cFoUQqYaT8znrcApxSTwkkQ2sPhDYjhyM (confidence: 8)
+
+## Agent Completed Tasks (Pending Review)
+None
+
+## Accepted Agent Completed Tasks
+[0] Implement a feature-guarded fix for the Calendar observer import error.
+
+Goals:
+- In src/precursor/observers/gum_source.py, wrap the Calendar import in a try/except ImportError. If import fails, set Calendar = None.
+- Add a runtime feature flag to disable Calendar even if import succeeds. Prefer an env var named PRECURSOR_DISABLE_CALENDAR; treat values '1', 'true', 'True' as disabling. Default behavior: enabled when import succeeds and flag not set.
+- Gate any usage/registration of the Calendar observer behind checks: only instantiate/register when (Calendar is not None) and (feature flag is not disabling). If disabled or unavailable, log a concise info/warn message and proceed without raising.
+- Ensure all references to Calendar are safe (no NameError when None).
+- Create a branch named fix/guard-calendar-import.
+- Commit with a clear message and include a one-line test instruction. Example to include literally in the commit message:
+  ""Test: PRECURSOR_DISABLE_CALENDAR=1 python -m precursor.main (or run main.py) -> no ImportError; unset flag (and with gum Calendar available) -> Calendar observer loads.""
+- Open a PR titled ""Guard Calendar import and add feature flag"" with a short description of the change and test instructions.
+
+Considerations:
+- Keep the change minimal and localized to gum_source.py and any directly related wiring (e.g., registration list) so we can quickly unblock users.
+- Add a small comment above the guarded import explaining the rationale.
+- Use the project’s existing logging utilities for warnings/infos as appropriate.
+
+Acceptance Criteria:
+- Running with PRECURSOR_DISABLE_CALENDAR=1 does not crash on environments missing gum.observers.Calendar and shows a skip message in logs.
+- PR opened from branch fix/guard-calendar-import with commit message containing the one-line test instructions. [The Calendar import error was fixed by adding a try/except guard and a feature flag, allowing for safe usage in environments where Calendar may not be available.] (uri: https://github.com/XenonMolecule/background-agents/pull/new/fix/guard-calendar-import) (confidence: 10)
+[1] Extend and harden tests for project transition + notifications using deterministic integration scenarios driven by src/precursor/observers/csv_simulator.py.
+
+High-level objective:
+- Strengthen test_project_transition_observer.py (or create tests/test_project_transition_observer.py if needed) with end-to-end-ish, deterministic tests that reproduce:
+  1) Project transition detection
+  2) Batch processing with coalescing/queue updates
+  3) The ""skipping notification"" case when there are no pending agent-completed tasks
+- Assert that correct notifications are emitted (or intentionally skipped) and that new telemetry events are produced with expected payloads.
+
+Context and relevant files (from scratchpad):
+- src/precursor/observers/csv_simulator.py (drive deterministic input from CSV)
+- ui_manager.py (notification logic; logs previously showed: ""ui_manager: skipping notification for Background Agents (Precursor) (no pending agent-completed tasks)"")
+- src/precursor/project_transition.py (project transition logic)
+- dev/survey/pipeline_run.csv and dev/survey/pipeline_run.agent_candidates.csv (realistic CSV inputs; OK to synthesize test-local CSV fixtures)
+- main.py, agent_manager code (if needed for glue or reference)
+
+What to implement (guidance, leave design details to you):
+1) Deterministic test harness
+   - Use csv_simulator to feed a controlled sequence of observations without real time.sleep calls.
+   - If csv_simulator requires small tweaks for determinism (e.g., injectable clock, step mode, max rows), add a minimal, backwards-compatible parameter to run synchronously and advance time by fixed increments.
+   - Avoid network and external IO beyond reading small local CSV fixtures created by the tests.
+
+2) Scenarios to cover (suggested test cases)
+   - test_project_transition_detected: Feed a sequence that starts with Project A observations and then switches to Project B. Assert that project transition logic triggers exactly one transition event and that a notification is sent for the new active project.
+   - test_batch_processing_metrics_and_notifications: Feed a batch (e.g., 5 observations). Assert we emit telemetry for queue growth/shrink and a batch_processed event with count=5; assert any expected notification behavior (e.g., single coalesced notification) occurs.
+   - test_notification_skipped_when_no_pending_tasks: Reproduce the case where the system would display ""skipping notification for Background Agents (Precursor) (no pending agent-completed tasks)"". Assert we emit a telemetry event notification_skipped with reason=""no_pending_agent_tasks"" and that no notification is sent.
+   - test_notification_sent_when_pending_tasks_exist: Ensure that when pending agent-completed tasks are present, a notification is sent and telemetry notification_sent is emitted with the correct project and counts.
+
+3) Telemetry and observability
+   - Introduce or leverage a lightweight TelemetrySink interface (or simple event emitter) that can be injected/mocked in tests to capture events without parsing logs. Minimal event names/payloads:
+     • observation_queued {project, queue_size}
+     • batch_processed {count}
+     • project_transition_detected {from, to}
+     • notification_sent {project, reason}
+     • notification_skipped {project, reason}
+   - If refactoring is required, do minimal, backward-compatible changes to ui_manager/agent_manager to allow injecting MockNotificationSink and MockTelemetrySink in tests. Default behavior in production should remain unchanged.
+
+4) Assertions and style
+   - Prefer asserting on telemetry sink calls and notification sink calls over brittle log string matches. You may still assert that a log line exists if that’s all that’s available, but normalize on telemetry events.
+   - Keep tests hermetic and fast. Use pytest fixtures and tmp_path to write small CSVs for the simulator.
+   - Add clear docstrings and comments explaining the intent of each scenario and acceptance criteria.
+
+5) Acceptance criteria
+   - New tests pass locally and in CI.
+   - Tests deterministically reproduce the three scenarios (project transition, batch processing/coalescing, and skipping notification) without real sleeps.
+   - Notifications are asserted as sent or skipped as appropriate using an injectable sink or robust log capture.
+   - Telemetry events are asserted with expected names and minimal payloads described above.
+   - Any small refactor to enable injection is covered by unit tests and remains backward-compatible.
+
+Deliverables
+- Updated/added test files (e.g., tests/test_project_transition_observer.py) and any minimal source changes to enable determinism/injection.
+- Brief addition to README or a short comment in tests describing how to run these tests locally (e.g., `pytest -k project_transition`). [The agent enhanced the testing framework for project transitions and notifications, ensuring reliable and deterministic test scenarios.] (uri: https://github.com/XenonMolecule/background-agents/pull/new/precursor-tests) (confidence: 10)
+
+## Rejected Agent Completed Tasks
+[0] Add a deterministic mode to src/precursor/observers/csv_simulator.py and accompanying tests.
+
+Goal
+- Enable tests to run the CSV-driven observation simulator synchronously without time.sleep by introducing:
+  1) An injectable clock (defaulting to real time) and
+  2) A deterministic mode that exposes:
+     - run_once(): process at most one eligible row given the current clock
+     - step(clock_tick): advance the simulator deterministically and process all rows that become eligible in this tick
+
+High-level requirements
+- csv_simulator.py should support both existing non-deterministic/real-time usage AND a new deterministic mode for tests. Preserve backward compatibility for production paths.
+- Provide a simple clock abstraction, e.g., a callable or object with now() or time() returning a monotonically increasing timestamp. Default should mirror current behavior (e.g., time.time or datetime.now).
+- Deterministic mode behavior:
+  - No reliance on time.sleep; the simulator emits rows strictly based on the injected clock.
+  - run_once(): emits at most one row if eligible; returns None/False when no row is eligible.
+  - step(clock_tick): advances the injected clock by the specified amount (e.g., seconds) and then emits all newly eligible rows; return the list/count emitted for test assertions.
+- Ordering & timing:
+  - Ensure row emission order is deterministic across runs for the same CSV and clock progression.
+  - If the existing simulator expects a timestamp or relative time column, honor the current schema. If ordering by an explicit timestamp is already present, keep that; otherwise define a stable, documented ordering (e.g., input order) when timestamps are equal.
+- Logging/telemetry: keep any existing logging; no extra external dependencies.
+
+Unit tests (pytest)
+- Add tests under tests/ (e.g., tests/test_csv_simulator_deterministic.py).
+- Use tmp_path to create small CSV fixtures consistent with current csv_simulator expectations (e.g., the same columns used by dev/survey/pipeline_run.csv or whatever csv_simulator.py currently parses).
+- Write tests that:
+  1) Validate row ordering determinism: create a CSV with multiple rows whose timestamps order is known; step the clock in fixed increments and assert emitted rows are in the expected, stable order across runs.
+  2) Validate timing determinism: advancing the clock by the same ticks across two separate fresh simulator instances yields identical emission counts and sequences, with no dependence on wall-clock time.
+  3) Validate run_once(): calling run_once repeatedly with a frozen clock emits at most one row when eligible and none when not, and that advancing the clock makes the next row eligible.
+- Avoid sleeps and external IO beyond fixture reads. Tests should be hermetic and fast.
+
+Implementation guidance (leave design specifics to you):
+- Consider a small Clock interface (e.g., class FakeClock with now() and an advance(delta) method) used in tests; in production, default to time.time.
+- The simulator may need refactoring to separate scheduling/eligibility logic from the emission loop to enable run_once/step.
+- Ensure default behavior remains unchanged unless deterministic mode/clock is provided.
+
+Acceptance criteria
+- New deterministic mode with injectable clock implemented in csv_simulator.py supporting run_once() and step(clock_tick).
+- Default (non-deterministic) behavior is unchanged and continues to work as before (backward-compatible API).
+- Pytest tests using tmp_path fixtures validate ordering and timing determinism; no time.sleep is used.
+- CI passes locally (e.g., pytest -k csv_simulator or run all tests).
+- Open a PR with a concise title and description summarizing the deterministic mode, new APIs, and tests, plus a short how-to-run snippet.
+
+Nice-to-have (optional)
+- Minimal docstring/comments in csv_simulator.py explaining the deterministic mode and clock injection.
+
+Please create a branch, commit, push, and open a PR. Include a short PR body: motivation (deterministic tests), high-level design (injectable clock + run_once/step), files touched, and how to run tests: `pytest -k csv_simulator` or `pytest tests/test_csv_simulator_deterministic.py`. Ensure no external dependencies are introduced. [A deterministic mode was added to the CSV simulator, enabling synchronous testing without time delays and ensuring backward compatibility.] (uri: https://github.com/XenonMolecule/background-agents/pull/new/fix/guard-calendar-import) (confidence: 10)
+[1] Create deterministic integration tests for project transitions and notifications.
+
+Goal:
+- Add tests/tests_project_transition_observer.py implementing four pytest scenarios:
+  1) test_project_transition_detected
+  2) test_batch_processing_metrics_and_coalescing
+  3) test_notification_skipped_when_no_pending_tasks
+  4) test_notification_sent_when_pending_tasks_exist
+
+Requirements:
+- Drive tests via src/precursor/observers/csv_simulator.py in a fully deterministic mode: no sleeps, no network, hermetic and fast. If csv_simulator lacks a deterministic/step mode, add a minimal, backward-compatible option (e.g., step_mode=True, max_rows, injectable clock) to run synchronously. Keep defaults preserving current behavior.
+- Use small tmp_path CSV fixtures created inside the tests to simulate observations. Include sequences for:
+  • A→B project transition (assert exactly one transition event and notification for new active project)
+  • A batch of 5 observations (assert telemetry for queue growth/shrink and a single coalesced notification behavior as appropriate)
+  • Skipping notification when there are no pending agent-completed tasks (assert notification_skipped with reason=""no_pending_agent_tasks"")
+  • Sending notification when pending agent-completed tasks exist (assert notification_sent with correct project and counts)
+- Prefer assertions on sinks over log strings. Introduce/ leverage lightweight, injectable sinks:
+  • TelemetrySink interface (or simple event emitter)
+  • NotificationSink interface
+  Provide MockTelemetrySink and MockNotificationSink for tests to capture calls. Maintain backward compatibility by defaulting to existing behavior (logging/real notifications) when sinks are not provided.
+- Minimal event names/payloads to assert:
+  • observation_queued {project, queue_size}
+  • batch_processed {count}
+  • project_transition_detected {from, to}
+  • notification_sent {project, reason}
+  • notification_skipped {project, reason}
+- Keep changes minimal and localized. If needed, add optional injection points to src/precursor/ui_manager.py and src/precursor/managers/agent_manager.py for TelemetrySink and NotificationSink. Defaults must preserve existing behavior.
+- Tests must be hermetic and deterministic: avoid network and external IO beyond reading the small CSV fixtures you write within tests. If observers like Calendar could interfere, ensure tests run with PRECURSOR_DISABLE_CALENDAR=1 or otherwise isolate.
+- Add clear docstrings per test and brief usage notes (e.g., pytest -k project_transition). If appropriate, add/adjust README testing section succinctly.
+- Ensure CI passes.
+
+Files/areas likely involved (do not over-prescribe):
+- tests/tests_project_transition_observer.py (new tests)
+- src/precursor/observers/csv_simulator.py (add deterministic/step mode if needed)
+- src/precursor/ui_manager.py and src/precursor/managers/agent_manager.py (optional sink injection points)
+- tests/mocks or src/precursor/testing for MockTelemetrySink / MockNotificationSink (your choice; keep simple and test-local if easier)
+
+Acceptance Criteria:
+- All four tests implemented and passing locally/CI deterministically.
+- Assertions rely on MockTelemetrySink/MockNotificationSink calls, not brittle log matching.
+- Telemetry events emitted with the minimal payloads above and asserted in tests.
+- Any minor refactor for injection is backward-compatible.
+- No sleeps, no network, fast runtime. Use tmp_path CSV fixtures inside tests.
+
+Nice-to-have:
+- A tiny README note or test docstring showing how to run: `pytest -k project_transition`.
+
+Open a PR with a concise title and a reviewer-friendly description summarizing the deterministic harness and new scenarios. Include how to run the tests. Request relevant reviewers if known. [The agent added deterministic integration tests for project transitions and notifications, ensuring reliable and fast test execution.] (uri: https://github.com/XenonMolecule/background-agents/pull/new/fix/guard-calendar-import) (confidence: 10)
+[2] Draft a one‑page meeting brief (<=300 words) at dev/presentations/one_pager_Precursor_MEETING.md that synthesizes current status, the embedded CSV snippet, top 3 accomplishments, top 3 blockers/questions, and 3 proposed next actions using content from the project scratchpad and meeting notes. [One-page meeting brief with grounded status, accomplishments, blockers, next actions, and an embedded CSV snippet.] (uri: /Users/michaelryan/Documents/School/Stanford/Research/background-agents/dev/presentations/one_pager_Precursor_MEETING.md) (confidence: 10)
+"

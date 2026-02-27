@@ -103,14 +103,40 @@ def _build_cmd_string(load_field: Any) -> str:
     raise TypeError(f"Unsupported 'load' type: {type(load_field)!r}")
 
 
-def start_server(spec: Dict[str, Any]) -> Any:
-    """Spawn one MCP server via mcp2py with helpful error context."""
+_DEFAULT_SERVER_TIMEOUT: float = 60.0  # seconds
+
+
+def start_server(
+    spec: Dict[str, Any],
+    *,
+    timeout: float = _DEFAULT_SERVER_TIMEOUT,
+) -> Any:
+    """Spawn one MCP server via mcp2py with helpful error context.
+
+    Args:
+        spec: Server specification dict from mcp_servers.yaml.
+        timeout: Maximum seconds to wait for the server to initialize.
+                 Defaults to 60s. Set to 0 or negative to wait indefinitely.
+    """
     cmd: str | None = None
+    sid = spec.get("id", "<unknown-id>")
     try:
         cmd = _build_cmd_string(spec["load"])
-        return mcp2py_load(cmd, auto_auth=True, headers=spec.get("headers"))
+        if timeout > 0:
+            import concurrent.futures
+            with concurrent.futures.ThreadPoolExecutor(max_workers=1) as pool:
+                future = pool.submit(
+                    mcp2py_load, cmd, auto_auth=True, headers=spec.get("headers"),
+                )
+                try:
+                    return future.result(timeout=timeout)
+                except concurrent.futures.TimeoutError:
+                    raise TimeoutError(
+                        f"MCP server '{sid}' did not initialize within {timeout}s"
+                    )
+        else:
+            return mcp2py_load(cmd, auto_auth=True, headers=spec.get("headers"))
     except Exception as e:
-        sid = spec.get("id", "<unknown-id>")
         # Build a richer error with expanded command and unresolved env var hints
         msg = f"Failed to start MCP '{sid}' with command: {spec['load']}"
         if cmd:

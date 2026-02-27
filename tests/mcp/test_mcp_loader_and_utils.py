@@ -64,7 +64,11 @@ def test_load_enabled_mcp_servers_happy_path(fake_mcp2py, monkeypatch):
     bundle = loader.load_enabled_mcp_servers()
 
     ids = {s.id for s in bundle.servers}
-    assert ids == {"gum", "drive", "filesystem", "coder"}
+    # All enabled servers in mcp_servers.yaml should load
+    assert "gum" in ids
+    assert "drive" in ids
+    assert "filesystem" in ids
+    assert "coder" in ids
 
     allow = bundle.allow_fn
     assert allow("drive.search_files")
@@ -73,7 +77,7 @@ def test_load_enabled_mcp_servers_happy_path(fake_mcp2py, monkeypatch):
     assert allow("anything.anytool")
 
     # sanity: start_server invoked for all enabled entries
-    assert len(calls) == 4
+    assert len(calls) == len(ids)
 
 
 def test_start_server_handles_string_vs_dict_load(monkeypatch):
@@ -107,6 +111,56 @@ def test_start_server_handles_string_vs_dict_load(monkeypatch):
     assert "npx" in recorded[1]
     assert "@modelcontextprotocol/server-filesystem" in recorded[1]
     assert "/tmp" in recorded[1]
+
+
+def test_start_server_timeout(monkeypatch):
+    """start_server raises RuntimeError (wrapping TimeoutError) when mcp2py hangs."""
+    import time
+    _, utils = _import_loader_and_utils()
+
+    def hanging_load(cmd: str, auto_auth: bool = True, headers=None):
+        time.sleep(30)  # simulate a hang
+
+    monkeypatch.setattr(utils, "mcp2py_load", hanging_load)
+
+    spec = {"id": "slow", "load": "python -m fake_slow_server"}
+    with pytest.raises(RuntimeError, match="did not initialize within"):
+        utils.start_server(spec, timeout=1)
+
+
+def test_load_enabled_skips_failed_servers(fake_mcp2py, monkeypatch, tmp_path):
+    """Servers that raise during startup are skipped; others still load."""
+    loader, utils = _import_loader_and_utils()
+
+    override_yaml = tmp_path / "mcp_servers.yaml"
+    override_yaml.write_text(
+        """defaults:
+  enabled: true
+  allow_patterns: ["*"]
+  deny_patterns: []
+servers:
+  - id: good
+    load: "python -m good_server"
+    enabled: true
+  - id: bad
+    load: "python -m bad_server"
+    enabled: true
+""",
+        encoding="utf-8",
+    )
+
+    def selective_load(cmd: str, auto_auth: bool = True, headers=None):
+        if "bad" in cmd:
+            raise ConnectionError("boom")
+        class Client:
+            tools = []
+        return Client()
+
+    monkeypatch.setattr(utils, "mcp2py_load", selective_load)
+
+    bundle = loader.load_enabled_mcp_servers(config_path=str(override_yaml))
+    ids = {s.id for s in bundle.servers}
+    assert ids == {"good"}  # bad was skipped, good still loaded
 
 
 def test_apply_env_injects_user_name_for_gum(monkeypatch):

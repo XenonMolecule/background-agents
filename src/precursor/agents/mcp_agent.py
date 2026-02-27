@@ -12,7 +12,7 @@ from typing import Optional
 import dspy
 from precursor.mcp_loader.loader import load_enabled_mcp_servers
 from precursor.toolset.builder import build_toolset
-from precursor.config.loader import get_user_profile
+from precursor.config.loader import get_user_profile, get_settings
 import logging
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
@@ -231,7 +231,9 @@ class MCPAgent:
         logger.info(f"MCPAgent: project context: \n===\n{project_context}\n===\n")
 
         # 1) Load MCP servers + global allow/deny filter
-        bundle = load_enabled_mcp_servers()
+        settings = get_settings() or {}
+        server_timeout = float(settings.get("server_startup_timeout", 60))
+        bundle = load_enabled_mcp_servers(timeout=server_timeout)
 
         # 2) Build DSPy toolset (MCP + core.* filtered by allow_fn)
         tools = build_toolset(bundle)

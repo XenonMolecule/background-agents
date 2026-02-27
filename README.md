@@ -27,10 +27,18 @@ Note: `pip install -e .` installs the `precursor` package in editable mode so im
 
 1. Node.js 18+ (for MCP servers and slides)
    - Install via nvm or package manager; ensure `node` and `npx` are available.
+   - Verify: `node --version && npx --version`
 2. Docker (recommended for the coding agent)
    - Required by OpenHands to run the sandbox container for code edits and PRs.
+   - Verify: `docker info`
 3. Xcode 15+ (or Command Line Tools) on macOS
    - Required to build and run the Swift app (`PrecursorApp`).
+
+> **Note on MCP server resilience:** Each MCP server is started with a 60-second
+> timeout (configurable via `server_startup_timeout` in `settings.yaml`). Servers
+> that fail or time out are skipped and the agent proceeds with whichever servers
+> loaded successfully. Check agent logs for lines like
+> `mcp_loader: server 'X' failed to start — skipping` to diagnose missing tools.
 
 ### 🔗 Get an ICS Link for Outlook
 
@@ -119,6 +127,7 @@ swift build
 3. `src/precursor/config/settings.yaml`
    - Tune decision-making: `value_weight`, `feasibility_weight`, `user_preference_alignment_weight`.
    - Control deployment: `max_deployed_tasks`, `deployment_threshold`, `safety_threshold`.
+   - MCP startup: `server_startup_timeout` (seconds; default 60). Increase on slow networks.
    - Raise thresholds to be more conservative; lower to be more active.
 4. `src/precursor/config/mcp_servers.yaml`
    - Enable/disable servers under `servers:`; no Python changes needed.
@@ -174,3 +183,30 @@ Other useful flags:
 - `--no-deploy` — score/log tasks without executing next steps
 - `--max-steps N` — stop after N events
 - `--force-reset` — delete the scratchpad DB on startup
+
+### Troubleshooting: agents proposed but never execute
+
+If you see tasks being proposed in the logs but agents never produce results,
+the most common cause is one or more MCP servers failing to start. To diagnose:
+
+1. **Check agent logs** in `~/Library/Application Support/precursor/logs/`
+   (macOS). Look for lines containing `failed to start — skipping` or
+   tracebacks right after `ListToolsRequest` / `ListPromptsRequest`.
+
+2. **Common fixes by server:**
+
+   | Server | Symptom | Fix |
+   |--------|---------|-----|
+   | `drive` | Missing credentials | Place `credentials.json` at repo root and run once interactively to create `token.pickle` (see Google Drive section above) |
+   | `filesystem` | `npx` not found | Install Node.js 18+ and ensure `npx` is on PATH |
+   | `websearch` | Brave API errors | Set `BRAVE_API_KEY` in `.env` |
+   | `slides` | `node` not found / module error | Run `cd src/precursor/mcp_servers/slides && npm run setup` |
+   | `coder` | Docker not running | Start Docker Desktop; also set `GITHUB_TOKEN` in `.env` |
+   | `fetch` | Module not found | `pip install mcp-server-fetch` |
+
+3. **Disable servers you don't need:** edit `src/precursor/config/mcp_servers.yaml`
+   and set `enabled: false` on any server you haven't configured yet. The agent
+   will run with whatever servers are available.
+
+4. **Increase timeout on slow connections:** set `server_startup_timeout: 120`
+   in `settings.yaml` (default is 60 seconds).

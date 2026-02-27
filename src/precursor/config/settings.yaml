@@ -20,6 +20,10 @@ deployment_threshold: 0.900
 
 safety_threshold: 7
 
+# MCP server startup
+# ---------------------------------------------------------------------------
+server_startup_timeout: 60  # seconds per server; 0 = wait indefinitely
+
 # Notification / transition sensitivities
 # ---------------------------------------------------------------------------
 departure_time_threshold_minutes: 3
